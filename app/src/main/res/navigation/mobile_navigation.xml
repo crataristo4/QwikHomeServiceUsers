@@ -11,30 +11,9 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_activities"
-            app:destination="@id/navigation_activities"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/navigation_home" />
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_profile"
-            app:destination="@id/navigation_styles"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/navigation_activities" />
-    </fragment>
-    <fragment
-        android:id="@+id/navigation_styles"
-        android:name="com.users.quickhomeservices.activities.home.fragments.AccountFragment"
-        android:label="Your styles"
-        tools:layout="@layout/fragment_account">
 
     </fragment>
+
     <fragment
         android:id="@+id/navigation_activities"
         android:name="com.users.quickhomeservices.activities.home.fragments.ActivitiesFragment"
@@ -46,5 +25,7 @@
         android:id="@+id/navigation_request"
         android:name="com.users.quickhomeservices.activities.home.fragments.RequestFragment"
         android:label="Requests"
-        tools:layout="@layout/fragment_request" />
+        tools:layout="@layout/fragment_request">
+
+    </fragment>
 </navigation>

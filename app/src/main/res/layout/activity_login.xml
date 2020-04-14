@@ -6,6 +6,10 @@
         <variable
             name="onItemClick"
             type="com.users.quickhomeservices.activities.ItemViewClickEvents" />
+
+        <variable
+            name="validateInput"
+            type="com.users.quickhomeservices.activities.ItemViewClickEvents" />
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -105,7 +109,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="@dimen/eightyDp"
                 android:background="@drawable/curvebotton"
-                android:onClick="gotoMainPage"
+                android:onClick="@{validateInput::signIn}"
                 android:text="@string/log_in"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"

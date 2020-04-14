@@ -13,17 +13,10 @@
         android:orderInCategory="2"
         android:title="@string/home" />
 
-
-    <item
-        android:id="@+id/navigation_styles"
-        android:icon="@drawable/ic_bubble"
-        android:orderInCategory="3"
-        android:title="@string/styles" />
-
     <item
         android:id="@+id/navigation_request"
         android:icon="@drawable/ic_request"
-        android:orderInCategory="4"
+        android:orderInCategory="3"
         android:title="@string/requests" />
 
 

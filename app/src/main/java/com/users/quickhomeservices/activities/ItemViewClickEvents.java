@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
-import com.users.quickhomeservices.activities.auth.signup.SignUpServicePersonelActivity;
 import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.utils.DisplayViewUI;
@@ -63,8 +62,14 @@ public class ItemViewClickEvents {
         } else {
             txtEmail.setErrorEnabled(false);
         }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            txtEmail.setErrorEnabled(true);
+            txtEmail.setError("invalid email");
+        } else {
+            txtEmail.setErrorEnabled(false);
+        }
 
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             // loadingbar.setTitle("");
             final ProgressDialog loading = DisplayViewUI.displayProgress(view.getContext(), "Please wait...");
             loading.show();

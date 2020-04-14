@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.auth.LoginActivity;
-import com.google.android.material.textfield.TextInputLayout;
 import com.users.quickhomeservices.databinding.ActivitySignupBinding;
 import com.users.quickhomeservices.utils.MyConstants;
 
@@ -67,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
             txtEmail.setErrorEnabled(false);
         }
 
-        if ( ! android.util.Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()){
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()) {
             txtEmail.setErrorEnabled(true);
             txtEmail.setError("invalid email");
         } else {

@@ -1,33 +1,24 @@
 package com.users.quickhomeservices.activities.auth;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.ItemViewClickEvents;
-import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
-import com.users.quickhomeservices.activities.auth.signup.SignUpServicePersonelActivity;
-import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
-import com.users.quickhomeservices.activities.home.MainActivity;
-import com.users.quickhomeservices.databinding.ActivityLoginBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.ItemViewClickEvents;
+import com.users.quickhomeservices.databinding.ActivityLoginBinding;
 import com.users.quickhomeservices.utils.MyConstants;
 
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mLoginEmail, mLoginPassword;
-    ItemViewClickEvents itemViewClickEvents;
+    private ItemViewClickEvents itemViewClickEvents;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private ActivityLoginBinding activityLoginBinding;
@@ -44,12 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         itemViewClickEvents = new ItemViewClickEvents(this);
         activityLoginBinding.setOnItemClick(itemViewClickEvents);
 
-        mAuth = FirebaseAuth.getInstance();
+        itemViewClickEvents = new ItemViewClickEvents(activityLoginBinding.txtEmailLayout, activityLoginBinding.txtPasswordLayout);
+        activityLoginBinding.setValidateInput(itemViewClickEvents);
+
+       /* mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
 
         mLoginEmail = activityLoginBinding.txtEmailLayout;
-        mLoginPassword = activityLoginBinding.txtPasswordLayout;
+        mLoginPassword = activityLoginBinding.txtPasswordLayout;*/
 
 
 
@@ -57,10 +51,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+/*
     public void gotoMainPage(View view) {
         validateLogin(view);
     }
+*/
 
+/*
     private void validateLogin(View view) {
         String email = Objects.requireNonNull(mLoginEmail.getEditText()).getText().toString();
         String password = Objects.requireNonNull(mLoginPassword.getEditText()).getText().toString();
@@ -116,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+*/
 
     @Override
     public void onBackPressed() {

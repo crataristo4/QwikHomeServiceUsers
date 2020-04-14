@@ -34,15 +34,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.about.AboutActivity;
-import com.users.quickhomeservices.activities.home.about.JobTypesActivity;
-import com.users.quickhomeservices.activities.home.about.SettingsActivity;
-import com.users.quickhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity;
-import com.users.quickhomeservices.activities.welcome.SplashScreenActivity;
-import com.users.quickhomeservices.databinding.ActivityMainBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.users.quickhomeservices.utils.MyConstants;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -58,6 +49,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.about.AboutActivity;
+import com.users.quickhomeservices.activities.home.about.SettingsActivity;
+import com.users.quickhomeservices.activities.welcome.SplashScreenActivity;
+import com.users.quickhomeservices.databinding.ActivityMainBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
+import com.users.quickhomeservices.utils.MyConstants;
 
 import java.io.IOException;
 import java.util.List;
@@ -450,20 +448,6 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.action_addStyles:
-                Intent intent = new Intent(MainActivity.this, JobTypesActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("image", imageUrl);
-                intent.putExtra("serviceType", serviceType);
-                startActivity(intent);
-                break;
-
-            /*case R.id.action_viewAllStyles:
-                startActivity(new Intent(MainActivity.this, TestPaginatioinActivity.class));
-                */
-
-            case R.id.action_viewAllRequests:
-                startActivity(new Intent(MainActivity.this, TestAcceptOrRejectActivity.class));
 
 
             default:
@@ -475,8 +459,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpAppBarConfig() {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_activities, R.id.navigation_home,
-                R.id.navigation_styles, R.id.navigation_request)
+                R.id.navigation_activities, R.id.navigation_home, R.id.navigation_request)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
