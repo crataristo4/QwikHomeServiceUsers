@@ -102,8 +102,8 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
-        Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.CONFIRM_PASS));
+        Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.NAME));
+        Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
     }
 
 

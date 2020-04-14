@@ -110,7 +110,6 @@
             android:configChanges="screenSize|orientation"
             android:parentActivityName="com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.activities.customeractivity.MyMapActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -130,23 +129,14 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.customeractivity.HandyManMapsActivity"
-            android:label="@string/title_activity_handy_man_maps" />
-        <activity
             android:name="com.users.quickhomeservices.activities.welcome.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.users.quickhomeservices.activities.handymanactivity.AcceptOrRejectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.users.quickhomeservices.models.Listofrequest" />
-        <activity android:name="com.users.quickhomeservices.Chooseurregistertype" />
         <activity android:name="com.users.quickhomeservices.EditProfile" />
-        <activity android:name="com.users.quickhomeservices.Forgotpassword" />
         <activity android:name="com.users.quickhomeservices.Handymantypes" />
-        <activity
-            android:name="com.users.quickhomeservices.activities.customeractivity.MainActivityCustomers"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.users.quickhomeservices.activities.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

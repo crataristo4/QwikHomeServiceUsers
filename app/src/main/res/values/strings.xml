@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwikHome Services</string>
+    <string name="app_name">QwikHome Users</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
     <string name="title_activity_main2">QwikHome Services</string>

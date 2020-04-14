@@ -344,22 +344,19 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("Location: ", "Latitude " + location.getLatitude());
                         Log.i("Location: ", "Longitude " + location.getLongitude());
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                        runOnUiThread(() -> {
 
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
 
-                                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-                                try {
-                                    List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
-                                    if (addressList.size() > 0) {
-                                        Log.i(TAG, "getLastLocation: " + addressList.get(0).getLocality());
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                            Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                            try {
+                                List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                                if (addressList.size() > 0) {
+                                    Log.i(TAG, "getLastLocation: " + addressList.get(0).getLocality());
                                 }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         });
 

@@ -9,7 +9,6 @@ import android.view.View;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
 import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
 import com.users.quickhomeservices.activities.home.MainActivity;
@@ -28,11 +27,6 @@ public class ItemViewClickEvents {
 
     public ItemViewClickEvents(Context context) {
         this.context = context;
-    }
-
-
-    public void onWelcomeLoginButtonClicked(View view) {
-        context.startActivity(new Intent(context, LoginActivity.class));
     }
 
 

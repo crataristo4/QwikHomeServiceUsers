@@ -90,7 +90,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/buttonpink"
-            android:onClick="@{onItemClick::onWelcomeLSignUpButtonClicked}"
+            android:onClick="@{onItemClick::toSignUp}"
             android:text="@string/sign_up"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
