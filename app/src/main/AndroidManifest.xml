@@ -138,11 +138,8 @@
         <activity
             android:name="com.users.quickhomeservices.activities.handymanactivity.AcceptOrRejectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.HandyManLogin" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.MainActivityHandyMen" />
         <activity android:name="com.users.quickhomeservices.models.Listofrequest" />
         <activity android:name="com.users.quickhomeservices.Chooseurregistertype" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.HandymanRegister" />
         <activity android:name="com.users.quickhomeservices.EditProfile" />
         <activity android:name="com.users.quickhomeservices.Forgotpassword" />
         <activity android:name="com.users.quickhomeservices.Handymantypes" />
@@ -151,12 +148,8 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.users.quickhomeservices.activities.customeractivity.CustomerRegister"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.users.quickhomeservices.activities.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.activities.customeractivity.CustomerLogin" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -170,15 +163,6 @@
         </receiver>
 
 
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.TvInstallerActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.TilerListActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.RollerListActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.PlumberListActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.PestControlListActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.ActivityMechanicList" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.PainterActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.CarpenterActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.GardenerListActivity" />
         <activity android:name="com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity" />
         <activity android:name="com.users.quickhomeservices.activities.home.bottomsheets.AddPhoneNumberActivity" />
     </application>

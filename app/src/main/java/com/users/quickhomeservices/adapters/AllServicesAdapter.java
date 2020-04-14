@@ -22,23 +22,23 @@ import com.bumptech.glide.request.target.Target;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.quickhomeservices.databinding.LayoutListServicePersonsBinding;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-public class AllServicesAdapter extends FirebaseRecyclerAdapter<ServicePerson,
+public class AllServicesAdapter extends FirebaseRecyclerAdapter<Users,
         AllServicesAdapter.AllServiceViewHolder> {
 
 
-    public AllServicesAdapter(@NonNull FirebaseRecyclerOptions<ServicePerson> options) {
+    public AllServicesAdapter(@NonNull FirebaseRecyclerOptions<Users> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull AllServiceViewHolder allServiceViewHolder,
                                     int i,
-                                    @NonNull ServicePerson singlePerson) {
+                                    @NonNull Users singlePerson) {
 
         allServiceViewHolder.layoutListServicePersonsBinding.setUser(singlePerson);
 

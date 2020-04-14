@@ -24,7 +24,7 @@ import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.adapters.HandyManTypesAdapter;
 import com.users.quickhomeservices.directionhelpers.FetchURL;
 import com.users.quickhomeservices.directionhelpers.TaskLoadedCallback;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -414,8 +414,8 @@ public class HandyManMapsActivity extends FragmentActivity implements OnMapReady
         }
 
 
-        FirebaseRecyclerOptions<ServicePerson> options = new FirebaseRecyclerOptions.Builder<ServicePerson>().
-                setQuery(CarpenterDbRef, ServicePerson.class).build();
+        FirebaseRecyclerOptions<Users> options = new FirebaseRecyclerOptions.Builder<Users>().
+                setQuery(CarpenterDbRef, Users.class).build();
 
         adapter = new HandyManTypesAdapter(options);
 

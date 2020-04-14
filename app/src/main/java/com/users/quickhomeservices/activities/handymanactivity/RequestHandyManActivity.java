@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.adapters.CustomerRequestSent;
 import com.users.quickhomeservices.interfaces.RecyclerItemTouchHelperDeleteRequest;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -114,8 +114,8 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
         Query query = mRequests.orderByChild("senderId").equalTo(uid);
 
 
-        FirebaseRecyclerOptions<ServicePerson> options = new FirebaseRecyclerOptions.Builder<ServicePerson>().
-                setQuery(query, ServicePerson.class).build();
+        FirebaseRecyclerOptions<Users> options = new FirebaseRecyclerOptions.Builder<Users>().
+                setQuery(query, Users.class).build();
 
         adapter = new CustomerRequestSent(options);
 

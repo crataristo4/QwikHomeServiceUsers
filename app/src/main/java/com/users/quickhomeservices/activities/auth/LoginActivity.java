@@ -6,62 +6,64 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.ItemViewClickEvents;
 import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
 import com.users.quickhomeservices.activities.auth.signup.SignUpServicePersonelActivity;
+import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
 import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.databinding.ActivityLoginBinding;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.users.quickhomeservices.utils.MyConstants;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mLoginEmail, mLoginPassword;
-
+    ItemViewClickEvents itemViewClickEvents;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
-    private String currentUserId, passAccountTypeValue;
+    private ActivityLoginBinding activityLoginBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            Objects.requireNonNull(mLoginEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
+            Objects.requireNonNull(mLoginPassword.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+        }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
+        activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        itemViewClickEvents = new ItemViewClickEvents(this);
+        activityLoginBinding.setOnItemClick(itemViewClickEvents);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
 
-        mLoginEmail = findViewById(R.id.txtEmailLayout);
-        mLoginPassword = findViewById(R.id.txtPasswordLayout);
+        mLoginEmail = activityLoginBinding.txtEmailLayout;
+        mLoginPassword = activityLoginBinding.txtPasswordLayout;
 
-        /*Intent intent = getIntent();
-        if (intent != null) {
-            passAccountTypeValue = intent.getStringExtra("accountType");
-        }*/
+
 
     }
 
-    public void forgotPassword(View view) {
-        startActivity(
-                new Intent(LoginActivity.this, ResetPasswordActivity.class)
-        );
-    }
 
-    public void gotoSignUp(View view) {
-        startActivity(
-                new Intent(LoginActivity.this, SignUpServicePersonelActivity.class)
-        );
-    }
 
     public void gotoMainPage(View view) {
         validateLogin(view);
     }
 
     private void validateLogin(View view) {
-         String email = mLoginEmail.getEditText().getText().toString();
-        String password = mLoginPassword.getEditText().getText().toString();
+        String email = Objects.requireNonNull(mLoginEmail.getEditText()).getText().toString();
+        String password = Objects.requireNonNull(mLoginPassword.getEditText()).getText().toString();
 
         if (password.trim().isEmpty()) {
             mLoginPassword.setErrorEnabled(true);
@@ -119,5 +121,19 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(MyConstants.PASS, Objects.requireNonNull(mLoginPassword.getEditText()).getText().toString());
+        outState.putString(MyConstants.EMAIL, Objects.requireNonNull(mLoginEmail.getEditText()).getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Objects.requireNonNull(mLoginPassword.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+        Objects.requireNonNull(mLoginEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
     }
 }

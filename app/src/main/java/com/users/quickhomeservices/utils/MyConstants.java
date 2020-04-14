@@ -1,6 +1,8 @@
 package com.users.quickhomeservices.utils;
 
 public final class MyConstants {
+    public static final String PASS = "pass";
+    public static final String CONFIRM_PASS = "confirmPass";
     public static final String PREFS = "prefs";
     public static final String IS_DIALOG_SHOWN = "dialogShown";
     public static String ACCOUNT_TYPE = "accountType";
@@ -10,6 +12,7 @@ public final class MyConstants {
     public static final String WOMEN_HAIR_STYLIST = "Women Hairstylists";
     public static final String INTERIOR_DERCORATOR = "Interior Decorators";
     public static String NAME = "name";
+    public static String EMAIL = "email";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static String ABOUT = "about";
     public static String IMAGE_URL = "imageUrl";

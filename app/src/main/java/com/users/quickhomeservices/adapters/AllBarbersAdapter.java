@@ -25,17 +25,17 @@ import com.bumptech.glide.request.target.Target;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.quickhomeservices.databinding.LayoutListItemsBinding;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 //TODO change class name
-public class AllBarbersAdapter extends FirebaseRecyclerAdapter<ServicePerson,
+public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
         AllBarbersAdapter.AllBarbersViewHolder> {
     private Context mContext;
 
-    public AllBarbersAdapter(@NonNull FirebaseRecyclerOptions<ServicePerson> options, Context context) {
+    public AllBarbersAdapter(@NonNull FirebaseRecyclerOptions<Users> options, Context context) {
         super(options);
         mContext = context;
 
@@ -43,7 +43,7 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<ServicePerson,
 
     @Override
     protected void onBindViewHolder(@NonNull AllBarbersViewHolder allBarbersViewHolder,
-                                    int i, @NonNull ServicePerson singlePerson) {
+                                    int i, @NonNull Users singlePerson) {
 
         allBarbersViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allBarbersViewHolder.listItemsServicesBinding.setServiceType(singlePerson);

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.adapters.AllBarbersAdapter;
 import com.users.quickhomeservices.databinding.FragmentAllBarbersBinding;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.MyConstants;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -69,9 +69,9 @@ public class AllBarbersFragment extends Fragment {
         //querying the database base of the time posted
         Query query = allBarbersDbRef.orderByChild("name");
 
-        FirebaseRecyclerOptions<ServicePerson> options =
-                new FirebaseRecyclerOptions.Builder<ServicePerson>().setQuery(query,
-                        ServicePerson.class)
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
+                        Users.class)
                         .build();
 
         allBarbersAdapter = new AllBarbersAdapter(options, getContext());

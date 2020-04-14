@@ -5,23 +5,34 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.google.android.material.textfield.TextInputLayout;
+import com.users.quickhomeservices.databinding.ActivitySignupBinding;
+import com.users.quickhomeservices.utils.MyConstants;
+
+import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
     private TextInputLayout txtFullName, txtEmail ;
+    private ActivitySignupBinding activitySignupBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
+            Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.NAME));
+        }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        activitySignupBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
 
-        txtEmail = findViewById(R.id.txtEmailLayout);
-        txtFullName = findViewById(R.id.txtfullNameLayout);
+        txtEmail = activitySignupBinding.txtEmailLayout;
+        txtFullName = activitySignupBinding.txtfullNameLayout;
 
     }
 
@@ -39,8 +50,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void validateAndProceed() {
-        String getFullName = txtFullName.getEditText().getText().toString();
-        String getEmail = txtEmail.getEditText().getText().toString();
+        String getFullName = Objects.requireNonNull(txtFullName.getEditText()).getText().toString();
+        String getEmail = Objects.requireNonNull(txtEmail.getEditText()).getText().toString();
 
         if (getFullName.trim().isEmpty()) {
             txtFullName.setErrorEnabled(true);
@@ -79,6 +90,20 @@ public class SignupActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(MyConstants.NAME, Objects.requireNonNull(txtFullName.getEditText()).getText().toString());
+        outState.putString(MyConstants.EMAIL, Objects.requireNonNull(txtEmail.getEditText()).getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+        Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.CONFIRM_PASS));
     }
 
 

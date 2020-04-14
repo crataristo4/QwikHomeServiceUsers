@@ -26,13 +26,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         activitySplashScreenBinding.imageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_top));
         activitySplashScreenBinding.textView2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_bottom));
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Opens the Welcome Screen Activity once the time elapses
-                startActivity(new Intent(SplashScreenActivity.this, WelcomeActivity.class));
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            //Opens the Welcome Screen Activity once the time elapses
+            startActivity(new Intent(SplashScreenActivity.this, WelcomeActivity.class));
+            finish();
         }, 3000);
     }
 

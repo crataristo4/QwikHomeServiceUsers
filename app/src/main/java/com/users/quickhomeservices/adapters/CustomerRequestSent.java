@@ -22,13 +22,13 @@ import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.customeractivity.ChatActivity;
 import com.users.quickhomeservices.activities.customeractivity.RatingActivity;
 import com.users.quickhomeservices.activities.customeractivity.ShowRouteActivity;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomerRequestSent extends FirebaseRecyclerAdapter<ServicePerson, CustomerRequestSent.HandyManRequest> {
+public class CustomerRequestSent extends FirebaseRecyclerAdapter<Users, CustomerRequestSent.HandyManRequest> {
     private Intent intent;
     FragmentManager fragmentManager;
 
@@ -38,13 +38,13 @@ public class CustomerRequestSent extends FirebaseRecyclerAdapter<ServicePerson, 
      *
      * @param options
      */
-    public CustomerRequestSent(@NonNull FirebaseRecyclerOptions<ServicePerson> options) {
+    public CustomerRequestSent(@NonNull FirebaseRecyclerOptions<Users> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull final HandyManRequest holder, int position,
-                                    @NonNull final ServicePerson model) {
+                                    @NonNull final Users model) {
 
         holder.showName(model.getSenderName());
         holder.showUserPhoto(model.getSenderPhoto());

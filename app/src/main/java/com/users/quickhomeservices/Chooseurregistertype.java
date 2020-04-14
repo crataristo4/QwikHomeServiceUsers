@@ -6,10 +6,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.customeractivity.CustomerRegister;
-import com.users.quickhomeservices.activities.handymanactivity.HandymanRegister;
-
 public class Chooseurregistertype extends AppCompatActivity {
     Button btncustomer,btnhandyman;
 

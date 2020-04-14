@@ -17,7 +17,7 @@ import com.bumptech.glide.request.target.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ServicePerson extends BaseObservable {
+public class Users extends BaseObservable {
 
     public float rating;
     public String userId;
@@ -44,18 +44,16 @@ public class ServicePerson extends BaseObservable {
     public String dateRequested;
 
 
-
-    public ServicePerson() {
+    public Users() {
     }
 
-    public ServicePerson(String userId, String name, String email, String accountType) {
+    public Users(String userId, String name, String email) {
         this.userId = userId;
         this.name = name;
         this.email = email;
-        this.accountType = accountType;
     }
 
-    public ServicePerson(int price, String styleItem, String image) {
+    public Users(int price, String styleItem, String image) {
         this.price = price;
         this.styleItem = styleItem;
         this.image = image;

@@ -15,38 +15,35 @@ import androidx.databinding.DataBindingUtil;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.users.quickhomeservices.databinding.ActivitySignupCompleteBinding;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.users.quickhomeservices.utils.MyConstants;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class SignupCompleteActivity extends AppCompatActivity {
-    public static final String PASS = "pass";
-    public static final String CONFIRM_PASS = "confirmPass";
+
     private String name, email, accountType, currentUserId;
     private TextInputLayout txtPass, txtConfirmPass;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private Vibrator vibrator;
-    private DatabaseReference usersDbRef, serviceAccountDbRef;
-    private ActivitySignupCompleteBinding activitySignupCompleteBinding;
+    private DatabaseReference usersDbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            Objects.requireNonNull(txtPass.getEditText()).setText(savedInstanceState.getString(PASS));
-            Objects.requireNonNull(txtConfirmPass.getEditText()).setText(savedInstanceState.getString(CONFIRM_PASS));
+            Objects.requireNonNull(txtPass.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+            Objects.requireNonNull(txtConfirmPass.getEditText()).setText(savedInstanceState.getString(MyConstants.CONFIRM_PASS));
         }
 
         super.onCreate(savedInstanceState);
-        activitySignupCompleteBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup_complete);
+        ActivitySignupCompleteBinding activitySignupCompleteBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup_complete);
 
         txtConfirmPass = activitySignupCompleteBinding.ConfirmPasswordLayout;
         txtPass = activitySignupCompleteBinding.PasswordLayout;
@@ -55,13 +52,12 @@ public class SignupCompleteActivity extends AppCompatActivity {
         if (getNameEmailIntent != null) {
             name = getNameEmailIntent.getStringExtra("name");
             email = getNameEmailIntent.getStringExtra("email");
-            accountType = getNameEmailIntent.getStringExtra("accountType");
         }
 
         mAuth = FirebaseAuth.getInstance();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         // usersDbRef = FirebaseDatabase.getInstance().getReference("Users");
-        serviceAccountDbRef = FirebaseDatabase.getInstance().getReference("Services");
+        usersDbRef = FirebaseDatabase.getInstance().getReference("Users");
 
 
     }
@@ -116,21 +112,11 @@ public class SignupCompleteActivity extends AppCompatActivity {
                 assert firebaseUser != null;
                 currentUserId = firebaseUser.getUid();
 
-                // Customer customer = new Customer(currentUserId,email,name);
-                ServicePerson servicePerson = new ServicePerson(currentUserId, name, email, accountType);
-                Map<String, Object> serviceType = new HashMap<>();
-                serviceType.put("accountType", accountType);
-                serviceType.put("name", name);
-
                 //send email verification to user
                 firebaseUser.sendEmailVerification();
 
-                //create a service type to identify all services
-                serviceAccountDbRef.child("ServiceType").child(currentUserId).setValue(serviceType);
-
-                //create user details
-                serviceAccountDbRef.child(accountType).child(currentUserId).setValue(servicePerson);
-
+                Users users = new Users(currentUserId, name, email);
+                usersDbRef.setValue(users);
 
                 //vibrates to alert success for android M and above
                 if (Build.VERSION.SDK_INT >= 26) {
@@ -157,7 +143,7 @@ public class SignupCompleteActivity extends AppCompatActivity {
             } else {
 
                 loading.dismiss();
-                String error = task.getException().getMessage();
+                String error = Objects.requireNonNull(task.getException()).getMessage();
                 DisplayViewUI.displayToast(this, error);
 
             }
@@ -169,14 +155,14 @@ public class SignupCompleteActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(PASS, Objects.requireNonNull(txtPass.getEditText()).getText().toString());
-        outState.putString(CONFIRM_PASS, Objects.requireNonNull(txtConfirmPass.getEditText()).getText().toString());
+        outState.putString(MyConstants.PASS, Objects.requireNonNull(txtPass.getEditText()).getText().toString());
+        outState.putString(MyConstants.CONFIRM_PASS, Objects.requireNonNull(txtConfirmPass.getEditText()).getText().toString());
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Objects.requireNonNull(txtPass.getEditText()).setText(savedInstanceState.getString(PASS));
-        Objects.requireNonNull(txtConfirmPass.getEditText()).setText(savedInstanceState.getString(CONFIRM_PASS));
+        Objects.requireNonNull(txtPass.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+        Objects.requireNonNull(txtConfirmPass.getEditText()).setText(savedInstanceState.getString(MyConstants.CONFIRM_PASS));
     }
 }

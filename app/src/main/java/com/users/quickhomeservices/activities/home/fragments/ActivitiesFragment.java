@@ -110,9 +110,9 @@ public class ActivitiesFragment extends Fragment {
         //querying the database base of the time posted
         Query query = dbBarbersRef.orderByChild("name");
 
-        FirebaseRecyclerOptions<ServicePerson> options =
-                new FirebaseRecyclerOptions.Builder<ServicePerson>().setQuery(query,
-                        ServicePerson.class)
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
+                        Users.class)
                         .build();
 
         allServicesAdapter1 = new AllServicesAdapter(options);
@@ -128,9 +128,9 @@ public class ActivitiesFragment extends Fragment {
         //querying the database base of the time posted
         Query query = dbBarbersRef.orderByChild("name");
 
-        FirebaseRecyclerOptions<ServicePerson> options =
-                new FirebaseRecyclerOptions.Builder<ServicePerson>().setQuery(query,
-                        ServicePerson.class)
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
+                        Users.class)
                         .build();
 
         allServicesAdapter2 = new AllServicesAdapter(options);
@@ -147,9 +147,9 @@ public class ActivitiesFragment extends Fragment {
         //querying the database base of the time posted
         Query query = dbBarbersRef.orderByChild("name");
 
-        FirebaseRecyclerOptions<ServicePerson> options =
-                new FirebaseRecyclerOptions.Builder<ServicePerson>().setQuery(query,
-                        ServicePerson.class)
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
+                        Users.class)
                         .build();
 
         allServicesAdapter = new AllServicesAdapter(options);

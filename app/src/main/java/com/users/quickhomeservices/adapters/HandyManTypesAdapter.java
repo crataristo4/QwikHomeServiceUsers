@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity;
-import com.users.quickhomeservices.models.ServicePerson;
+import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +29,7 @@ import java.text.MessageFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<ServicePerson, HandyManTypesAdapter.MechanicViewHolder> {
+public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<Users, HandyManTypesAdapter.MechanicViewHolder> {
     private Intent intent;
     private  double lat, lng;
 
@@ -40,13 +40,13 @@ public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<ServicePerson,
      *
      * @param options
      */
-    public HandyManTypesAdapter(@NonNull FirebaseRecyclerOptions<ServicePerson> options) {
+    public HandyManTypesAdapter(@NonNull FirebaseRecyclerOptions<Users> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull MechanicViewHolder holder,
-                                    int position, @NonNull final ServicePerson model) {
+                                    int position, @NonNull final Users model) {
         double distance;
         Location locationA = new Location("Point A");
         locationA.setLatitude(lat);
