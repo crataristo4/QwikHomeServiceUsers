@@ -6,9 +6,16 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
 import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
@@ -43,6 +50,7 @@ public class ItemViewClickEvents {
 
         firebaseUser = firebaseAuth.getCurrentUser();
 
+
         if (password.trim().isEmpty()) {
             txtPassword.setErrorEnabled(true);
             txtPassword.setError("password required");
@@ -70,15 +78,41 @@ public class ItemViewClickEvents {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            loading.dismiss();
                             if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()) {
-                                assert firebaseUser != null;
-                                //currentUserId = firebaseUser.getUid();
 
-                                Intent gotoHome = new Intent(view.getContext(), MainActivity.class);
-                                view.getContext().startActivity(gotoHome
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                final String currentUserId = firebaseAuth.getCurrentUser().getUid();
+                                DatabaseReference usersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+                                // TODO: 15-Apr-20 check if user id matches the database else user can not log in
+                                usersDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.hasChildren() && dataSnapshot.exists()) {
+                                            assert firebaseUser != null;
+                                            String uid = firebaseUser.getUid();
+                                            //check matching uid
+
+                                            if (!dataSnapshot.hasChild(uid)) {
+                                                loading.dismiss();
+                                                DisplayViewUI.displayToast(view.getContext(), "Can not log in");
+
+
+                                            } else if (dataSnapshot.hasChild(uid)) {
+                                                loading.dismiss();
+                                                //user can log in
+                                                Intent gotoHome = new Intent(view.getContext(), MainActivity.class);
+                                                view.getContext().startActivity(gotoHome
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
 
                             } else {
                                 loading.dismiss();

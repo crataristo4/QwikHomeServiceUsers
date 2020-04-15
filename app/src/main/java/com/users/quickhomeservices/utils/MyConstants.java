@@ -26,4 +26,5 @@ public final class MyConstants {
     public static final int NUM_HASHED_BYTES = 9;
     public static final int NUM_BASE64_CHAR = 11;
     public static String SERVICE_PERSON_NAME = "servicePersonName";
+    public static String SERVICE_PERSON_ID = "servicePersonId";
 }

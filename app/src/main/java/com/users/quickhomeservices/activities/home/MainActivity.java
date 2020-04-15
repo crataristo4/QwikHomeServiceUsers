@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MainActivity";
-    public static String serviceType, name, imageUrl, email, uid;
+    public static String serviceType, name, imageUrl, email, uid, compareUid;
     private static FirebaseUser firebaseUser;
     private ActivityMainBinding activityMainBinding;
     public static DatabaseReference serviceTypeDbRef, usersAccountDbRef;
@@ -109,8 +109,10 @@ public class MainActivity extends AppCompatActivity {
                 email = (String) dataSnapshot.child("email").getValue();
                 name = (String) dataSnapshot.child("name").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
+                compareUid = (String) dataSnapshot.child("userId").getValue();
 
-                Log.i(TAG, "onDataChange: " + email + " " + name + " " + imageUrl);
+
+                Log.i(TAG, "onDataChange: " + email + " " + name + " " + imageUrl + "" + compareUid);
 
 
             }
@@ -256,11 +258,10 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-        assert firebaseUser != null;
-        if (mAuth.getCurrentUser() == null) {
+       /* if (mAuth.getCurrentUser() == null) {
             SendUserToLoginActivity();
             return;
-        }
+        }*/
 
         //initialize step 5
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -473,23 +474,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void checkUid() {
+        usersAccountDbRef = FirebaseDatabase.getInstance()
+                .getReference().child("Users");
+        usersAccountDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (!dataSnapshot.hasChild(firebaseUser.getUid())) {
+
+                    Log.i(TAG, "id does not exist: ");
+                    SendUserToLoginActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
     @Override
     protected void onStart() {
         super.onStart();
 
         try {
             assert firebaseUser != null;
+            uid = firebaseUser.getUid();
+            usersAccountDbRef = FirebaseDatabase.getInstance()
+                    .getReference().child("Users")
+                    .child(uid);
+            usersAccountDbRef.keepSynced(true);
 
-            if (mAuth.getCurrentUser() == null || !firebaseUser.isEmailVerified()) {
+            checkUid();
+
+            if (!firebaseUser.isEmailVerified()) {
                 SendUserToLoginActivity();
             } else {
-                uid = firebaseUser.getUid();
-                usersAccountDbRef = FirebaseDatabase.getInstance()
-                        .getReference().child("Users")
-                        .child(uid);
-                usersAccountDbRef.keepSynced(true);
+                Log.i(TAG, "Current id: " + uid);
                 checkDisplayAlertDialog();
                 retrieveServiceType();
+
+            }
+
+            if (!compareUid.equals(uid)) {
+                SendUserToLoginActivity();
 
             }
 

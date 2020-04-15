@@ -22,13 +22,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.quickhomeservices.databinding.LayoutListItemsBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 //TODO change class name
 public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
@@ -89,7 +89,7 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
             gotoDetailsIntent.putExtra("name", singlePerson.getName());
             gotoDetailsIntent.putExtra("about", singlePerson.getAbout());
             gotoDetailsIntent.putExtra("image", singlePerson.getImage());
-            gotoDetailsIntent.putExtra("userId", singlePerson.getUserId());
+            gotoDetailsIntent.putExtra("servicePersonId", singlePerson.getUserId());
 
             allBarbersViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
 

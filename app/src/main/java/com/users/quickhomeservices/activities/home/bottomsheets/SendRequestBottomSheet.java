@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.databinding.LayoutSendRequestBinding;
+import com.users.quickhomeservices.models.RequestModel;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.users.quickhomeservices.utils.MyConstants;
 
@@ -32,15 +33,13 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
     private LayoutSendRequestBinding layoutSendRequestBinding;
-    private String servicePersonName, userName, userPhotoUrl, uid;
+    private String servicePersonName, userName, userPhotoUrl, uid, servicePersonId;
     private String notApproved = "Not yet Approved";
     private String itemName, itemPrice, itemImage;
     private String dateRequested, getReason;
@@ -90,6 +89,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             itemPrice = bundle.getString(MyConstants.PRICE);
             itemImage = bundle.getString(MyConstants.IMAGE_URL);
             servicePersonName = bundle.getString(MyConstants.SERVICE_PERSON_NAME);
+            servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
             userName = bundle.getString(MyConstants.NAME);
             uid = bundle.getString(MyConstants.UID);
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
@@ -140,8 +140,6 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
     //send request method
     private void sendItemRequest() {
-
-
         SimpleDateFormat sfd = new SimpleDateFormat("EEE dd-MM-yyyy '@' hh:mm aa",
                 Locale.US);
 
@@ -178,7 +176,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
                             //user wants to send request
                             dialog.dismiss();
                             assert inputMethodManager != null;
-                            inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
                             validateRequest();
                         } else if (which == -2) {
                             //user does not want to send request
@@ -199,12 +197,19 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
 
             progressBar.setVisibility(View.VISIBLE);
+            RequestModel requestSent = new RequestModel(
+                    0, uid, servicePersonId,
+                    getReason, itemPrice, itemName,
+                    notApproved, itemImage, userPhotoUrl,
+                    userName, servicePersonName, dateRequested);
 
+/*
             Map<String, Object> requestSent = new HashMap<>();
             requestSent.put("dateRequested", dateRequested);
             requestSent.put("senderName", userName);
             requestSent.put("senderPhoto", userPhotoUrl);
             requestSent.put("senderId", uid);
+            requestSent.put("servicePersonId",servicePersonId);
 
             requestSent.put("servicePersonName", servicePersonName);
             requestSent.put("itemName", itemName);
@@ -214,6 +219,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             requestSent.put("reason", getReason);
             requestSent.put("response", notApproved);
             requestSent.put("rating", 0);
+*/
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

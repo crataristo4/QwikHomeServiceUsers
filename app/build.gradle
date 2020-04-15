@@ -78,14 +78,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
 
-
-
     //room , paging
     implementation 'android.arch.paging:runtime:2.1.2'
     def room_version = "2.2.5"
 
     implementation "androidx.room:room-runtime:$room_version"
-
 
     //others
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'

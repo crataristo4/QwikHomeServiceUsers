@@ -16,13 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.MainActivity;
-import com.users.quickhomeservices.activities.home.bottomsheets.SendRequestBottomSheet;
-import com.users.quickhomeservices.adapters.StylesAdapter;
-import com.users.quickhomeservices.databinding.ActivityDetailsScrollingBinding;
-import com.users.quickhomeservices.models.StylesItemModel;
-import com.users.quickhomeservices.utils.MyConstants;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.activities.home.bottomsheets.SendRequestBottomSheet;
+import com.users.quickhomeservices.adapters.StylesAdapter;
+import com.users.quickhomeservices.databinding.ActivityDetailsScrollingBinding;
+import com.users.quickhomeservices.models.StylesItemModel;
+import com.users.quickhomeservices.utils.MyConstants;
 
 import java.util.Objects;
 
@@ -40,7 +40,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StylesAdapter adapter;
     //FirebaseRecyclerPagingAdapter<StylesItemModel, StylesAdapter.StylesViewHolder> adapter;
-    private String name, about, image, userId;
+    private String name, about, image, servicePersonId;
     int numberOfItems = 0;
     private static final String TAG = "DetailsActivity";
     //BottomSheetBehavior mBottomSheetBehavior;
@@ -54,10 +54,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
                 | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
-
-
         activityDetailsScrollingBinding = DataBindingUtil.setContentView(this, R.layout.activity_details_scrolling);
-
         setSupportActionBar(activityDetailsScrollingBinding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -70,9 +67,10 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             name = intent.getStringExtra("name");
             about = intent.getStringExtra("about");
             image = intent.getStringExtra("image");
-            userId = intent.getStringExtra("userId");
+            servicePersonId = intent.getStringExtra("servicePersonId");
         }
 
+        //todo get phone and call
         activityDetailsScrollingBinding.fabCall.setOnClickListener(view -> Snackbar.make(view,
                 "Call ".concat(name),
                 Snackbar.LENGTH_LONG)
@@ -84,7 +82,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Styles")
-                .child(userId);
+                .child(servicePersonId);
         databaseReference.keepSynced(true);
         //get number of items in database
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -193,6 +191,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
             //pass details of service person to bottom sheet
             bundle.putString(MyConstants.SERVICE_PERSON_NAME, name);
+            bundle.putString(MyConstants.SERVICE_PERSON_ID, servicePersonId);
 
             //pass users name , user photo , user id to bundle
             String userName = MainActivity.name;
@@ -203,19 +202,14 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             bundle.putString(MyConstants.UID, userId);
             bundle.putString(MyConstants.USER_IMAGE_URL, userPhoto);
 
-
             SendRequestBottomSheet sendRequestBottomSheet = new SendRequestBottomSheet();
             sendRequestBottomSheet.setCancelable(false);
             sendRequestBottomSheet.setArguments(bundle);
             sendRequestBottomSheet.show(getSupportFragmentManager(), MyConstants.SEND_REQUEST_TAG);
 
-
-
         });
 
         recyclerView.setAdapter(adapter);
-
-
     }
 
     @Override

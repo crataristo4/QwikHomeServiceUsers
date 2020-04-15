@@ -22,7 +22,7 @@ public class RequestModel extends BaseObservable {
     public String receiverId;
     public String name;
     public String reason;
-    public int price;
+    public String price;
     public String itemName;
     public double latitude;
     public double longitude;
@@ -40,17 +40,14 @@ public class RequestModel extends BaseObservable {
     public String paymentAmount;
 
 
-    public RequestModel() {
-    }
 
     public RequestModel(float rating, String senderId, String receiverId,
-                        String name, String reason, int price, String itemName,
+                        String reason, String price, String itemName,
                         String response, String itemImage, String senderPhoto, String senderName,
-                        String servicePersonName, String servicePersonPhoto, String dateRequested) {
+                        String servicePersonName, String dateRequested) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.name = name;
         this.reason = reason;
         this.price = price;
         this.itemName = itemName;
@@ -59,7 +56,6 @@ public class RequestModel extends BaseObservable {
         this.senderPhoto = senderPhoto;
         this.senderName = senderName;
         this.servicePersonName = servicePersonName;
-        this.servicePersonPhoto = servicePersonPhoto;
         this.dateRequested = dateRequested;
     }
 
@@ -129,11 +125,11 @@ public class RequestModel extends BaseObservable {
     }
 
     @Bindable
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
