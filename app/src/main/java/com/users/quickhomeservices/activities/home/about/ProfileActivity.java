@@ -38,6 +38,8 @@ import id.zelory.compressor.Compressor;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
+    private static final int DELAY = 2000;
+    private static long backPressed;
     private Uri uri;
     private ActivityProfileBinding activityProfileBinding;
     private long mLastClickTime = 0;
@@ -48,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         MainActivity.retrieveSingleUserDetails(activityProfileBinding.txtUserName, activityProfileBinding.txtEmail, activityProfileBinding.imgUploadPhoto);
@@ -126,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
             fileReference.putFile(uri).continueWithTask(task -> {
                 if (!task.isSuccessful()) {
                     progressDialog.dismiss();
+
                     //throw task.getException();
                     Log.d(TAG, "then: " + task.getException().getMessage());
 
@@ -147,6 +151,7 @@ public class ProfileActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             DisplayViewUI.displayToast(this, "Photo uploaded");
 
+                            onBackPressed();
 
                         } else {
                             progressDialog.dismiss();
@@ -197,5 +202,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (backPressed + DELAY > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            DisplayViewUI.displayToast(this, "Press back again to exit");
+        }
+        backPressed = System.currentTimeMillis();
     }
 }

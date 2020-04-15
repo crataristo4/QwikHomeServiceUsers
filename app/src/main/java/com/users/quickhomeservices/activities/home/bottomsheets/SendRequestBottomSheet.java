@@ -1,6 +1,7 @@
 package com.users.quickhomeservices.activities.home.bottomsheets;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +19,16 @@ import androidx.fragment.app.DialogFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.databinding.LayoutSendRequestBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.users.quickhomeservices.utils.MyConstants;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.databinding.LayoutSendRequestBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
+import com.users.quickhomeservices.utils.MyConstants;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -93,8 +95,10 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
 
 
+            layoutSendRequestBinding.toolBarRequestTo.setTitle(MessageFormat.format("Send request to {0}", servicePersonName));
+            layoutSendRequestBinding.toolBarRequestTo.setTitleTextColor(Color.WHITE);
             layoutSendRequestBinding.txtStyleName.setText(itemName);
-            layoutSendRequestBinding.txtPrice.setText(itemPrice);
+            layoutSendRequestBinding.txtPrice.setText(MessageFormat.format("GH {0}", itemPrice));
             Glide.with(Objects.requireNonNull(getActivity()))
                     .load(itemImage)
                     .transition(DrawableTransitionOptions.withCrossFade())
