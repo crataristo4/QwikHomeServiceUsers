@@ -14,15 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.adapters.RequestAdapter;
 import com.users.quickhomeservices.databinding.FragmentRequestBinding;
 import com.users.quickhomeservices.models.RequestModel;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 
 public class RequestFragment extends Fragment {
@@ -90,7 +90,6 @@ public class RequestFragment extends Fragment {
 
         Query query = requestDbRef.orderByChild("senderId").equalTo(uid);
 
-
         FirebaseRecyclerOptions<RequestModel> options = new FirebaseRecyclerOptions.Builder<RequestModel>().
                 setQuery(query, RequestModel.class).build();
         requestAdapter = new RequestAdapter(options);
@@ -98,12 +97,10 @@ public class RequestFragment extends Fragment {
 
         swipeRefreshLayout.setRefreshing(true);
         new Handler().postDelayed(() -> {
-
             swipeRefreshLayout.setRefreshing(false);
             recyclerView.setAdapter(requestAdapter);
 
-
-        }, 3000);
+        }, 5000);
 
 
     }

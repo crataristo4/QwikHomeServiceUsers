@@ -39,7 +39,8 @@ public class RequestModel extends BaseObservable {
     public String paymentStatus;
     public String paymentAmount;
 
-
+    public RequestModel() {
+    }
 
     public RequestModel(float rating, String senderId, String receiverId,
                         String reason, String price, String itemName,

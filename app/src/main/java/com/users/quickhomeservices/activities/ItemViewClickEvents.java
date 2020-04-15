@@ -88,16 +88,13 @@ public class ItemViewClickEvents {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.hasChildren() && dataSnapshot.exists()) {
-                                            assert firebaseUser != null;
-                                            String uid = firebaseUser.getUid();
-                                            //check matching uid
 
-                                            if (!dataSnapshot.hasChild(uid)) {
+
+                                            if (!dataSnapshot.hasChild(currentUserId)) {
                                                 loading.dismiss();
-                                                DisplayViewUI.displayToast(view.getContext(), "Can not log in");
+                                                DisplayViewUI.displayToast(view.getContext(), "Sorry you can not log in.\nNo details associated with this account.");
 
-
-                                            } else if (dataSnapshot.hasChild(uid)) {
+                                            } else if (dataSnapshot.hasChild(currentUserId)) {
                                                 loading.dismiss();
                                                 //user can log in
                                                 Intent gotoHome = new Intent(view.getContext(), MainActivity.class);

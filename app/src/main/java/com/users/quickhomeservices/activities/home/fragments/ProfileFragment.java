@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Settings");
+        Objects.requireNonNull(getActivity()).setTitle("Settings");
         // Inflate the layout for this fragment
         fragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         return fragmentProfileBinding.getRoot();
@@ -48,7 +48,6 @@ public class ProfileFragment extends Fragment {
 
         MainActivity.retrieveSingleUserDetails(fragmentProfileBinding.txtName,
                 fragmentProfileBinding.txtAbout, fragmentProfileBinding.imgPhoto);
-        fragmentProfileBinding.txtAccountType.setText(MainActivity.serviceType);
         fragmentProfileBinding.imgPhoto.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fadein));
 
         fragmentProfileBinding.mConstrainProfile.setOnClickListener(this::onClick);

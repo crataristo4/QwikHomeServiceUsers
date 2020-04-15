@@ -502,16 +502,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             assert firebaseUser != null;
             uid = firebaseUser.getUid();
-            usersAccountDbRef = FirebaseDatabase.getInstance()
-                    .getReference().child("Users")
-                    .child(uid);
-            usersAccountDbRef.keepSynced(true);
+
 
             checkUid();
 
             if (!firebaseUser.isEmailVerified()) {
                 SendUserToLoginActivity();
             } else {
+                assert firebaseUser != null;
+                uid = firebaseUser.getUid();
+                usersAccountDbRef = FirebaseDatabase.getInstance()
+                        .getReference().child("Users")
+                        .child(uid);
+                usersAccountDbRef.keepSynced(true);
                 Log.i(TAG, "Current id: " + uid);
                 checkDisplayAlertDialog();
                 retrieveServiceType();
