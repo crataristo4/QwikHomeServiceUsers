@@ -18,25 +18,25 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mLoginEmail, mLoginPassword;
-    private ItemViewClickEvents itemViewClickEvents;
+    private ItemViewClickEvents itemViewClickEvents, itemViewClickEvent;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private ActivityLoginBinding activityLoginBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            Objects.requireNonNull(mLoginEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
-            Objects.requireNonNull(mLoginPassword.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
-        }
         super.onCreate(savedInstanceState);
 
         activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        if (savedInstanceState != null) {
+            Objects.requireNonNull(activityLoginBinding.txtPasswordLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+            Objects.requireNonNull(activityLoginBinding.txtEmailLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
+        }
         itemViewClickEvents = new ItemViewClickEvents(this);
         activityLoginBinding.setOnItemClick(itemViewClickEvents);
 
-        itemViewClickEvents = new ItemViewClickEvents(activityLoginBinding.txtEmailLayout, activityLoginBinding.txtPasswordLayout);
-        activityLoginBinding.setValidateInput(itemViewClickEvents);
+        itemViewClickEvent = new ItemViewClickEvents(activityLoginBinding.txtEmailLayout, activityLoginBinding.txtPasswordLayout);
+        activityLoginBinding.setValidateInput(itemViewClickEvent);
 
        /* mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -123,15 +123,16 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(MyConstants.PASS, Objects.requireNonNull(activityLoginBinding.txtPasswordLayout.getEditText()).getText().toString());
+        outState.putString(MyConstants.EMAIL, Objects.requireNonNull(activityLoginBinding.txtEmailLayout.getEditText()).getText().toString());
+
         super.onSaveInstanceState(outState);
-        outState.putString(MyConstants.PASS, Objects.requireNonNull(mLoginPassword.getEditText()).getText().toString());
-        outState.putString(MyConstants.EMAIL, Objects.requireNonNull(mLoginEmail.getEditText()).getText().toString());
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Objects.requireNonNull(mLoginPassword.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
-        Objects.requireNonNull(mLoginEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
+        Objects.requireNonNull(activityLoginBinding.txtPasswordLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
+        Objects.requireNonNull(activityLoginBinding.txtEmailLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
     }
 }

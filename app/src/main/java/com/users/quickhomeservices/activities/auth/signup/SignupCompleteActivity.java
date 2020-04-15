@@ -12,16 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.auth.LoginActivity;
-import com.users.quickhomeservices.databinding.ActivitySignupCompleteBinding;
-import com.users.quickhomeservices.models.Users;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.auth.LoginActivity;
+import com.users.quickhomeservices.databinding.ActivitySignupCompleteBinding;
+import com.users.quickhomeservices.models.Users;
+import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.users.quickhomeservices.utils.MyConstants;
 
 import java.util.Objects;
@@ -108,6 +108,8 @@ public class SignupCompleteActivity extends AppCompatActivity {
 
             if (task.isSuccessful()) {
 
+                loading.dismiss();
+
                 firebaseUser = mAuth.getCurrentUser();
                 assert firebaseUser != null;
                 currentUserId = firebaseUser.getUid();
@@ -116,7 +118,7 @@ public class SignupCompleteActivity extends AppCompatActivity {
                 firebaseUser.sendEmailVerification();
 
                 Users users = new Users(currentUserId, name, email);
-                usersDbRef.setValue(users);
+                usersDbRef.child(currentUserId).setValue(users);
 
                 //vibrates to alert success for android M and above
                 if (Build.VERSION.SDK_INT >= 26) {

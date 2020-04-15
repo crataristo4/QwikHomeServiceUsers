@@ -2,7 +2,6 @@ package com.users.quickhomeservices.activities.home.bottomsheets;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,12 @@ import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputLayout;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.databinding.LayoutEditItemBottomSheetBinding;
 import com.users.quickhomeservices.utils.MyConstants;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,11 +63,6 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
                 Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout
                         .getEditText()).setText(bundle.getString(MyConstants.NAME));
 
-            } else if (Objects.equals(bundle.getString(MyConstants.ABOUT), MainActivity.about)) {
-                Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).setImeOptions(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                layoutEditItemBottomSheetBinding.textInputLayout.setHint("Edit about");
-                Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout
-                        .getEditText()).setText(bundle.getString(MyConstants.ABOUT));
             }
 
 
@@ -96,35 +90,12 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
 
             updateUserName();
 
-        } else if (Objects.equals(bundle.getString(MyConstants.ABOUT), MainActivity.about)) {
-
-            updateUserAbout();
         }
 
 
     }
 
-    private void updateUserAbout() {
 
-        String about = Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).getText().toString();
-
-        if (about.trim().isEmpty()) {
-            txtInputItem.setErrorEnabled(true);
-            txtInputItem.setError("about field required");
-        } else {
-            txtInputItem.setErrorEnabled(false);
-        }
-
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            if (!about.trim().isEmpty()) {
-
-                updateItem.put("about", about);
-                MainActivity.serviceAccountDbRef.updateChildren(updateItem);
-                dismiss();
-            }
-
-        });
-    }
 
     private void updateUserName() {
         String name = Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).getText().toString();
@@ -141,7 +112,7 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
 
 
                 updateItem.put("name", name);
-                MainActivity.serviceAccountDbRef.updateChildren(updateItem);
+                MainActivity.usersAccountDbRef.updateChildren(updateItem);
                 dismiss();
             }
 

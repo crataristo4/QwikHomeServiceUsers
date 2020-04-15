@@ -50,8 +50,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.about.AboutActivity;
 import com.users.quickhomeservices.activities.home.about.SettingsActivity;
+import com.users.quickhomeservices.activities.home.bottomsheets.WelcomeNoticeBottomSheet;
 import com.users.quickhomeservices.activities.welcome.SplashScreenActivity;
 import com.users.quickhomeservices.databinding.ActivityMainBinding;
 import com.users.quickhomeservices.utils.DisplayViewUI;
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MainActivity";
-    public static String serviceType, name, imageUrl, about, uid;
+    public static String serviceType, name, imageUrl, email, uid;
     private static FirebaseUser firebaseUser;
     private ActivityMainBinding activityMainBinding;
-    public static DatabaseReference serviceTypeDbRef, serviceAccountDbRef;
+    public static DatabaseReference serviceTypeDbRef, usersAccountDbRef;
     private static FirebaseAuth mAuth;
     private static Object mContext;
     //adds
@@ -87,11 +87,9 @@ public class MainActivity extends AppCompatActivity {
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
 
-            Location lastLocation = locationResult.getLastLocation();
+
             //TODO update database with location results
 
-            Log.i("Locationx: ", "Latitude " + lastLocation.getLatitude());
-            Log.i("Locationx: ", "longitude " + lastLocation.getLongitude());
 
 
 
@@ -104,22 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static void retrieveServiceType() {
 
-        serviceTypeDbRef = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Services")
-                .child("ServiceType")
-                .child(uid);
-        serviceTypeDbRef.keepSynced(true);
-
-        serviceTypeDbRef.addValueEventListener(new ValueEventListener() {
+        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                serviceType = (String) dataSnapshot.child("accountType").getValue();
+                email = (String) dataSnapshot.child("email").getValue();
                 name = (String) dataSnapshot.child("name").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
-                Log.i(TAG, "onDataChange: " + serviceType + " " + name + " " + imageUrl);
+                Log.i(TAG, "onDataChange: " + email + " " + name + " " + imageUrl);
 
 
             }
@@ -133,27 +124,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void retrieveSingleUserDetails(TextView txtName, TextView txtAbout, CircleImageView photo) {
-        serviceAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Services")
-                .child(serviceType)
-                .child(uid);
-        serviceAccountDbRef.keepSynced(true);
+    public static void retrieveSingleUserDetails(TextView txtName, TextView txtEmail, CircleImageView photo) {
 
-        serviceAccountDbRef.addValueEventListener(new ValueEventListener() {
+        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 name = (String) dataSnapshot.child("name").getValue();
-                about = (String) dataSnapshot.child("about").getValue();
+                email = (String) dataSnapshot.child("email").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
-                txtAbout.setText(about);
-                Glide.with(getAppContext())
-                        .load(MainActivity.imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(photo);
+                txtEmail.setText(email);
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+
+                    Glide.with(getAppContext())
+                            .load(MainActivity.imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(photo);
+                } else {
+                    Glide.with(getAppContext())
+                            .load(R.drawable.photoe)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(photo);
+                }
 
 
             }
@@ -167,22 +161,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void retrieveSingleUserDetails(AppCompatImageView photo) {
-        serviceAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Services")
-                .child(serviceType)
-                .child(uid);
-        serviceAccountDbRef.keepSynced(true);
-
-        serviceAccountDbRef.addValueEventListener(new ValueEventListener() {
+        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
-                Glide.with(getAppContext())
-                        .load(MainActivity.imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(photo);
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+
+                    Glide.with(getAppContext())
+                            .load(MainActivity.imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(photo);
+                } else {
+                    Glide.with(getAppContext())
+                            .load(R.drawable.photoe)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(photo);
+                }
+
+
 
             }
 
@@ -194,24 +192,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void retrieveSingleUserDetails(String position, TextView txtName, TextView txtAbout, ImageView photo) {
+    public static void retrieveSingleUserDetails(String position, TextView txtName, TextView txtEmail, ImageView photo) {
 
-        serviceAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Services")
-                .child(serviceType)
+        usersAccountDbRef = FirebaseDatabase.getInstance()
+                .getReference().child("Users")
                 .child(position);
-        serviceAccountDbRef.keepSynced(true);
+        usersAccountDbRef.keepSynced(true);
 
-        serviceAccountDbRef.addValueEventListener(new ValueEventListener() {
+        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 name = (String) dataSnapshot.child("name").getValue();
-                about = (String) dataSnapshot.child("about").getValue();
+                email = (String) dataSnapshot.child("email").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
-                txtAbout.setText(about);
+                txtEmail.setText(email);
                 Glide.with(getAppContext())
                         .load(MainActivity.imageUrl)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -231,19 +228,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static void retrieveSingleUserDetails() {
 
-        serviceAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Services")
-                .child(serviceType)
-                .child(uid);
-        serviceAccountDbRef.keepSynced(true);
-
-        serviceAccountDbRef.addValueEventListener(new ValueEventListener() {
+        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 name = (String) dataSnapshot.child("name").getValue();
-                about = (String) dataSnapshot.child("about").getValue();
+                email = (String) dataSnapshot.child("email").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
+
 
             }
 
@@ -278,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
         // getLastLocation();
 
         //load add
-        loadAdds();
+        // loadAdds();
+
+
 
 
     }
@@ -395,17 +389,13 @@ public class MainActivity extends AppCompatActivity {
         boolean alertShown = pref.getBoolean(MyConstants.IS_DIALOG_SHOWN, false);
 
         if (!alertShown) {
-            new Handler().postDelayed(() -> DisplayViewUI.displayAlertDialogMsg(this,
-                    "Want to be seen by more users?\nPlease edit profile and add more skills",
-                    "OK", (dialog, which) -> {
-                        if (which == -1) {
+            new Handler().postDelayed(() -> {
 
-                            dialog.dismiss();
-                            Intent gotoAbout = new Intent(MainActivity.this, AboutActivity.class);
-                            gotoAbout.putExtra(MyConstants.ACCOUNT_TYPE, serviceType);
-                            startActivity(gotoAbout);
-                        }
-                    }), 15000);
+                WelcomeNoticeBottomSheet welcomeNoticeBottomSheet = new WelcomeNoticeBottomSheet();
+                welcomeNoticeBottomSheet.setCancelable(false);
+                welcomeNoticeBottomSheet.show(getSupportFragmentManager(), "welcome");
+
+            }, 2000);
 
             SharedPreferences.Editor edit = pref.edit();
             edit.putBoolean(MyConstants.IS_DIALOG_SHOWN, true);
@@ -494,6 +484,10 @@ public class MainActivity extends AppCompatActivity {
                 SendUserToLoginActivity();
             } else {
                 uid = firebaseUser.getUid();
+                usersAccountDbRef = FirebaseDatabase.getInstance()
+                        .getReference().child("Users")
+                        .child(uid);
+                usersAccountDbRef.keepSynced(true);
                 checkDisplayAlertDialog();
                 retrieveServiceType();
 

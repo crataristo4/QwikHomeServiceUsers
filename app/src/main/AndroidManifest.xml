@@ -38,21 +38,32 @@
             android:label="@string/title_activity_details_scrolling"
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.DetailsActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.home.about.ProfileActivity" />
+
+
+        <activity
+            android:name="com.users.quickhomeservices.activities.home.about.ProfileActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName=".activities.home.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.home.about.SettingsActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.home.serviceTypes.AllBarbersActivity"
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.auth.signup.SignUpServicePersonelActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.home.about.JobTypesActivity"
             android:alwaysRetainTaskState="true"
@@ -60,11 +71,13 @@
             android:exported="true"
             android:parentActivityName="com.users.quickhomeservices.activities.home.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.home.about.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.home.MainActivity"
             android:configChanges="keyboardHidden"
@@ -75,20 +88,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.auth.signup.SignupCompleteActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.users.quickhomeservices.activities.auth.signup.SignupActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"

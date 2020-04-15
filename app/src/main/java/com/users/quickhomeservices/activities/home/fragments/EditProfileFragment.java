@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.activities.home.bottomsheets.EditItemBottomSheet;
@@ -25,7 +26,6 @@ import com.users.quickhomeservices.activities.home.bottomsheets.VerifyPhoneBotto
 import com.users.quickhomeservices.databinding.FragmentEditProfileBinding;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.users.quickhomeservices.utils.MyConstants;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.Objects;
 
@@ -81,7 +81,7 @@ public class EditProfileFragment extends Fragment {
         fragmentEditProfileBinding.fabUploadPhoto.setOnClickListener(v -> openGallery());
 
         MainActivity.retrieveSingleUserDetails(fragmentEditProfileBinding.txtUserName,
-                fragmentEditProfileBinding.txtAboutUser, fragmentEditProfileBinding.imgUploadPhoto);
+                fragmentEditProfileBinding.txtEmail, fragmentEditProfileBinding.imgUploadPhoto);
 
         //  fragmentEditProfileBinding.nameLayout.setEnabled(true);
         fragmentEditProfileBinding.nameLayout.setOnClickListener(//open bottom sheet to edit name
@@ -127,7 +127,7 @@ public class EditProfileFragment extends Fragment {
 
         } else if (v.getId() == R.id.aboutLayout) {
 
-            String getAbout = String.valueOf(fragmentEditProfileBinding.txtAboutUser.getText());
+            String getAbout = String.valueOf(fragmentEditProfileBinding.txtEmail.getText());
             bundle.putString(MyConstants.ABOUT, getAbout);
             editItemBottomSheet.setArguments(bundle);
             editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.ABOUT);

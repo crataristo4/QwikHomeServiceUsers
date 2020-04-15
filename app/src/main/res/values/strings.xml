@@ -234,4 +234,37 @@
     <string name="confirmCode">Confirm code</string>
     <string name="verify">Verify</string>
     <string name="addPhoneNumber">Add phone number</string>
+    <string name="welcome_to_qwik_home_services">Welcome to Qwik Home Services</string>
+    <string name="complete_profile">Complete profile</string>
+
+    <string name="welcomeNote">
+        <![CDATA[
+
+        Thank you creating an account with <b>Qwik Home Services. </b>
+        We hope you will enjoy using this our services<br>
+<br>
+         <b>Please <b>TAKE NOTE<b> of these <b>RULES</b></b>
+         <ol>
+        <li>Please do not make any transaction if you do not feel safe</li>
+        <li>Get to know  more about whoever the transaction may be with</li>
+        <li>When ever a request is approved , and your work is completed please insist a job confirmation from <b>service person</b></li>
+        <li><b>Before you make any payment check your job done status<b></li>
+        <li><b>Make all payment through the application to improve our security <b></li>
+        <li><b>Report any suspicious / fraudulent account <b></li>
+        <li>Do not be rude, act professional</li>
+        </ol>
+
+        <br><br>
+
+          <b>We also recommend the following </b>
+        <ol>
+        <li>Spice up your profile by completing the account set up</li>
+        <li>Add a profile picture for easy identification</li>
+        <li>Add a mobile number  </li>
+        </ol>
+
+
+        ]]>
+    </string>
+
 </resources>

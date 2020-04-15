@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.users.quickhomeservices.activities.auth.LoginActivity;
 import com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity;
 import com.users.quickhomeservices.activities.auth.signup.SignupActivity;
 import com.users.quickhomeservices.activities.home.MainActivity;
@@ -29,7 +30,6 @@ public class ItemViewClickEvents {
         this.context = context;
     }
 
-
     public void signIn(View view) {
         validateInputs(view);
     }
@@ -42,7 +42,6 @@ public class ItemViewClickEvents {
         FirebaseUser firebaseUser;
 
         firebaseUser = firebaseAuth.getCurrentUser();
-
 
         if (password.trim().isEmpty()) {
             txtPassword.setErrorEnabled(true);
@@ -64,26 +63,23 @@ public class ItemViewClickEvents {
         }
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            // loadingbar.setTitle("");
+
             final ProgressDialog loading = DisplayViewUI.displayProgress(view.getContext(), "Please wait...");
             loading.show();
-
 
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            loading.dismiss();
                             if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()) {
                                 assert firebaseUser != null;
                                 //currentUserId = firebaseUser.getUid();
 
-                                Intent gotoAbout = new Intent(context, MainActivity.class);
-                                //gotoAbout.putExtra("userId", currentUserId);
-                                // gotoAbout.putExtra("accountType", passAccountTypeValue);
-
-                                context.startActivity(gotoAbout
+                                Intent gotoHome = new Intent(view.getContext(), MainActivity.class);
+                                view.getContext().startActivity(gotoHome
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
 
-                                loading.dismiss();
+
                             } else {
                                 loading.dismiss();
                                 DisplayViewUI.displayAlertDialogMsg(view.getContext(), "Hello" + " " + email + " "
@@ -106,6 +102,11 @@ public class ItemViewClickEvents {
 
     public void toSignUp(View view) {
         context.startActivity(new Intent(context, SignupActivity.class));
+
+    }
+
+    public void toLogin(View view) {
+        context.startActivity(new Intent(context, LoginActivity.class));
 
     }
 

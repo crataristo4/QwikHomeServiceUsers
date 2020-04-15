@@ -66,8 +66,8 @@
                         android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
                         android:contentDescription="@string/name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -75,36 +75,35 @@
 
                     <TextView
                         android:id="@+id/textView8"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:drawableEnd="@drawable/ic_edit_purple"
+                        android:drawableRight="@drawable/ic_edit_purple"
                         android:text="@string/name"
                         android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/txtUserName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="@string/app_name"
+                        android:singleLine="true"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/textView8"
                         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="@string/app_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_edit_purple" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -121,45 +120,45 @@
                         android:id="@+id/imgInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
                         android:contentDescription="@string/app_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_info" />
+                        app:srcCompat="@drawable/ic_email_" />
 
                     <TextView
                         android:id="@+id/txtt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
-                        android:text="@string/about"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:includeFontPadding="true"
+                        android:padding="@dimen/eightDp"
+                        android:text="@string/email"
                         android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imgInfo"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/txtAboutUser"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txtEmail"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="@string/app_name"
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/txtt"
                         app:layout_constraintTop_toBottomOf="@+id/txtt" />
 
-                    <ImageView
-                        android:id="@+id/imgInfoEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:contentDescription="@string/app_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_edit_purple" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -204,8 +203,8 @@
                         android:id="@+id/imgPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
                         android:contentDescription="@string/app_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -217,6 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
+                        android:padding="@dimen/eightDp"
                         android:text="@string/phone"
                         android:textSize="12sp"
                         app:layout_constraintStart_toEndOf="@+id/imgPhone"
@@ -224,12 +224,17 @@
 
                     <TextView
                         android:id="@+id/txtPhoneNumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="@string/app_name"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:text="@string/addPhoneNumber"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/txttt"
                         app:layout_constraintTop_toBottomOf="@+id/txttt" />
 

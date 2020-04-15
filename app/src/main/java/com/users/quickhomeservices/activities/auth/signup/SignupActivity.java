@@ -23,16 +23,17 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
-            Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.NAME));
-        }
         super.onCreate(savedInstanceState);
         activitySignupBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
 
         txtEmail = activitySignupBinding.txtEmailLayout;
         txtFullName = activitySignupBinding.txtfullNameLayout;
+
+        if (savedInstanceState != null) {
+            Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
+            Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(MyConstants.NAME));
+        }
 
     }
 
