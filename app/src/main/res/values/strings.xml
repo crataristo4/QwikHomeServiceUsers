@@ -266,5 +266,6 @@
 
         ]]>
     </string>
+    <string name="presence_state">Presence State</string>
 
 </resources>

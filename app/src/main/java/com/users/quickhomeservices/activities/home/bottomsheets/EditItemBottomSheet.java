@@ -39,7 +39,6 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         layoutEditItemBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.layout_edit_item_bottom_sheet, container, false);
 
         Objects.requireNonNull(Objects.requireNonNull(getDialog()).getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -50,12 +49,9 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         txtInputItem = layoutEditItemBottomSheetBinding.textInputLayout;
-
         bundle = getArguments();
         if (bundle != null) {
-
             if (Objects.equals(bundle.getString(MyConstants.NAME), MainActivity.name)) {
 
                 layoutEditItemBottomSheetBinding.textInputLayout.setHint("Edit name");
@@ -65,7 +61,6 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
 
             }
 
-
         }
 
     }
@@ -74,32 +69,20 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-            layoutEditItemBottomSheetBinding.txtCancel.setOnClickListener(v -> {
-
-                dismiss();
-            });
-
+        layoutEditItemBottomSheetBinding.txtCancel.setOnClickListener(v -> dismiss());
         layoutEditItemBottomSheetBinding.btnOk.setOnClickListener(this::onOkClicked);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void onOkClicked(View view) {
-
         if (Objects.equals(bundle.getString(MyConstants.NAME), MainActivity.name)) {
-
             updateUserName();
-
         }
-
 
     }
 
-
-
     private void updateUserName() {
         String name = Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).getText().toString();
-
         if (name.trim().isEmpty()) {
             txtInputItem.setErrorEnabled(true);
             txtInputItem.setError("name field required");
@@ -109,15 +92,12 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
 
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (!name.trim().isEmpty()) {
-
-
                 updateItem.put("name", name);
                 MainActivity.usersAccountDbRef.updateChildren(updateItem);
                 dismiss();
             }
 
         });
-
 
     }
 }

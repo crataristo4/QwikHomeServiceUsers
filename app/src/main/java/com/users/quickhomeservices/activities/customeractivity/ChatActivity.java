@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.ChatAdapter;
-import com.users.quickhomeservices.models.Chat;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.adapters.ChatAdapter;
+import com.users.quickhomeservices.models.Chat;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.chatToolBar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         findViewById(R.id.btnReplyBack).setOnClickListener(v -> addChat());
 
@@ -87,8 +88,7 @@ public class ChatActivity extends AppCompatActivity {
         Glide.with(this).load(getHandyManPhoto).into(handyManPhoto);
 
 
-        chatsDbRef = FirebaseDatabase.getInstance().getReference().child("Requests").child(getAdapterPosition);
-
+        chatsDbRef = FirebaseDatabase.getInstance().getReference().child("Requests").child(Objects.requireNonNull(getAdapterPosition));
 
 
     }
@@ -107,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
         //now set the drawable of the item decorator
         try {
             itemDecoration.setDrawable(
-                    ContextCompat.getDrawable(ChatActivity.this, R.drawable.recycler_divider)
+                    Objects.requireNonNull(ContextCompat.getDrawable(ChatActivity.this, R.drawable.recycler_divider))
             );
 
         } catch (Exception e) {
@@ -137,7 +137,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void addChat() {
 
-        String postChat = edtComment.getEditText().getText().toString();
+        String postChat = Objects.requireNonNull(edtComment.getEditText()).getText().toString();
 
         if (!postChat.isEmpty()) {
             HashMap<String, Object> chats = new HashMap<>();
@@ -171,7 +171,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    void makeToast(String s) {
+    private void makeToast(String s) {
         Toast toast = Toast.makeText(ChatActivity.this, s, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();

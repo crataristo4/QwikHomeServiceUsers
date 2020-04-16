@@ -21,10 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.CustomerRequestSent;
-import com.users.quickhomeservices.interfaces.RecyclerItemTouchHelperDeleteRequest;
-import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +30,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.adapters.CustomerRequestSent;
+import com.users.quickhomeservices.interfaces.RecyclerItemTouchHelperDeleteRequest;
+import com.users.quickhomeservices.models.Users;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,33 +42,34 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RequestHandyManActivity extends AppCompatActivity implements View.OnClickListener, RecyclerItemTouchHelperDeleteRequest.RecyclerItemTouchHelperDeleteListenerRequest {
-    private TextView txtName, txtOccupation, edtAbt;
     private static final String TAG = "RequestHandyManActivity";
+    private final Calendar calendar = Calendar.getInstance();
+    DatabaseReference request;
+    private ProgressDialog loading;
+    private SimpleDateFormat sfd;
+    private CustomerRequestSent adapter;
+    private RecyclerView recyclerView;
+    private TextView txtName, txtOccupation, edtAbt;
     private CircleImageView mPhoto;
-    private EditText edtReason,txtDate;
+    private EditText edtReason, txtDate;
     private Button btnRequest, btnStartDate;
     private String uid, getHandyManId, getLocation, getName, getAbt, getOccupation, getPhoto, adapterPosition;
     private Intent intent;
-    ProgressDialog loading;
     private String dayOfTheWeek, startDateSelected, ownName, ownerPhoto;
-    DatabaseReference request;
     private DatePickerDialog datePicker;
-    private final Calendar calendar = Calendar.getInstance();
     private int year = calendar.get(Calendar.YEAR);
     private int month = calendar.get(Calendar.MONTH);
     private int day = calendar.get(Calendar.DAY_OF_MONTH);
     private String getStartDate;
     private Date date;
-    SimpleDateFormat sfd;
     private DatabaseReference UserRef, requestDbRef;
     private String notApproved = "Not yet Approved";
-    CustomerRequestSent adapter;
     private DatabaseReference mRequests;
-    RecyclerView recyclerView;
     private String datePosted;
 
 
@@ -90,7 +91,7 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
     }
 
     private void setUpRecycler() {
-      recyclerView = findViewById(R.id.recyclerRequestResponse);
+        recyclerView = findViewById(R.id.recyclerRequestResponse);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -103,7 +104,7 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
         //now set the drawable of the item decorator
         try {
             itemDecoration.setDrawable(
-                    ContextCompat.getDrawable(RequestHandyManActivity.this, R.drawable.recycler_divider)
+                    Objects.requireNonNull(ContextCompat.getDrawable(RequestHandyManActivity.this, R.drawable.recycler_divider))
             );
 
         } catch (Exception e) {
@@ -283,7 +284,7 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
 
                 startDateSelected = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
-                Log.i(TAG, "onDateSet: " +  startDateSelected);
+                Log.i(TAG, "onDateSet: " + startDateSelected);
 
                 if (date.before(new Date(startDateSelected))) {
                     checkSuccessSelectStartDate();
@@ -306,28 +307,28 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
 
 
     //checks corresponding date from the user and allows them to proceed
-    void checkSuccessSelectStartDate() {
+    private void checkSuccessSelectStartDate() {
         txtDate.setText(sfd.format(new Date(startDateSelected)));
         txtDate.setTextColor(getResources().getColor(R.color.colorGreen));
         btnRequest.setEnabled(true);
     }
 
     //if date selected is before the current date ... display error
-    void displayErrorOnStartDateSelected() {
+    private void displayErrorOnStartDateSelected() {
         makeToast("Please select a day after today");
         txtDate.setText("");
         btnRequest.setEnabled(false);
 
     }
 
-    public void makeToast(String text) {
+    private void makeToast(String text) {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
 
-    void clear() {
+    private void clear() {
         txtDate.setText("");
         edtReason.setText("");
     }
@@ -366,7 +367,7 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
                 requestSent.put("date", datePosted);
                 requestSent.put("reason", getReason);
                 requestSent.put("response", notApproved);
-                requestSent.put("rating",0);
+                requestSent.put("rating", 0);
 
 
                 String requestId = requestDbRef.push().getKey();
@@ -393,8 +394,7 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
         } else if (edtReason.getText().toString().isEmpty()) {
             makeToast("Please state your reason");
             btnRequest.setEnabled(false);
-        }
-        else if (txtDate.getText().toString().isEmpty()) {
+        } else if (txtDate.getText().toString().isEmpty()) {
             makeToast("Please select your start date");
             btnRequest.setEnabled(false);
         }
@@ -414,7 +414,6 @@ public class RequestHandyManActivity extends AppCompatActivity implements View.O
         super.onStop();
         adapter.stopListening();
     }
-
 
 
 }

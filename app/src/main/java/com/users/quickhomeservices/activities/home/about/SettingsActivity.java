@@ -22,8 +22,8 @@ public class SettingsActivity extends AppCompatActivity implements
         ProfilePhotoEditFragment.OnFragmentInteractionListener,
         EditProfileFragment.OnFragmentInteractionListener {
 
-    SettingsActivityBinding settingsActivityBinding;
-    ProfileFragment profileFragment = new ProfileFragment();
+    private SettingsActivityBinding settingsActivityBinding;
+    private ProfileFragment profileFragment = new ProfileFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -72,9 +72,6 @@ public class EditProfileFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
 
-            // getActivity().setTitle("Profile photo");
-
-
 
         });
 
@@ -102,7 +99,7 @@ public class EditProfileFragment extends Fragment {
                 .start(Objects.requireNonNull(getActivity()));
     }
 
-    public void onClick(View v) {
+    private void onClick(View v) {
         Bundle bundle = new Bundle();
         EditItemBottomSheet editItemBottomSheet = new EditItemBottomSheet();
         VerifyPhoneBottomSheet verifyPhoneBottomSheet = new VerifyPhoneBottomSheet();
@@ -116,7 +113,6 @@ public class EditProfileFragment extends Fragment {
 
         if (v.getId() == R.id.nameLayout) {
             if (fragmentEditProfileBinding.nameLayout.isEnabled()) {
-                // fragmentEditProfileBinding.nameLayout.setEnabled(false);
                 String getName = String.valueOf(fragmentEditProfileBinding.txtUserName.getText());
                 bundle.putString(MyConstants.NAME, getName);
                 editItemBottomSheet.setArguments(bundle);
@@ -125,15 +121,7 @@ public class EditProfileFragment extends Fragment {
             }
 
 
-        } else if (v.getId() == R.id.aboutLayout) {
-
-            String getAbout = String.valueOf(fragmentEditProfileBinding.txtEmail.getText());
-            bundle.putString(MyConstants.ABOUT, getAbout);
-            editItemBottomSheet.setArguments(bundle);
-            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.ABOUT);
         } else if (v.getId() == R.id.editPhoneLayout) {
-            //open phone number verification
-            //Objects.requireNonNull(getActivity()).startActivity(new Intent(getContext(), AddPhoneNumberActivity.class));
 
             verifyPhoneBottomSheet.setCancelable(false);
             verifyPhoneBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.PHONE_NUMBER);

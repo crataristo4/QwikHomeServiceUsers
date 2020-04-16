@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,37 +48,45 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
 
         allBarbersViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allBarbersViewHolder.listItemsServicesBinding.setServiceType(singlePerson);
+        allBarbersViewHolder.showPresence(singlePerson.isOnline());
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
-        requestOptions.error(DisplayViewUI.getRandomDrawableColor());
-        requestOptions.centerCrop();
+        if (singlePerson.getImage().isEmpty()) {
+            Glide.with(allBarbersViewHolder.itemView.getContext())
+                    .load(mContext.getResources().getDrawable(R.drawable.photoe))
+                    .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
+        } else if (!singlePerson.getImage().isEmpty()) {
 
-        Glide.with(allBarbersViewHolder.itemView.getContext())
-                .load(singlePerson.image)
-                .apply(requestOptions)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
+            requestOptions.error(DisplayViewUI.getRandomDrawableColor());
+            requestOptions.centerCrop();
 
-                        if (isFirstResource) {
-                            allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
 
+            Glide.with(allBarbersViewHolder.itemView.getContext())
+                    .load(singlePerson.image)
+                    .apply(requestOptions)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+
+                            if (isFirstResource) {
+                                allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+
+                            }
+                            allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
+                            return false;
                         }
-                        allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
 
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+                            return false;
+                        }
+                    }).transition(DrawableTransitionOptions.withCrossFade())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
 
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
-                        return false;
-                    }
-                }).transition(DrawableTransitionOptions.withCrossFade())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
+        }
 
         //on item click listener
         allBarbersViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {
@@ -96,7 +105,6 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
         });
 
 
-
     }
 
     @NonNull
@@ -113,12 +121,29 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
 
         LayoutListItemsBinding listItemsServicesBinding;
         CardView cardView;
+        ImageView isOnline;
 
         AllBarbersViewHolder(@NonNull LayoutListItemsBinding listItemsServicesBinding) {
             super(listItemsServicesBinding.getRoot());
 
             this.listItemsServicesBinding = listItemsServicesBinding;
             cardView = listItemsServicesBinding.mMaterialCard;
+            isOnline = listItemsServicesBinding.imgPresence;
+        }
+
+        void showPresence(boolean online) {
+            if (online) {
+                isOnline.setVisibility(View.VISIBLE);
+                isOnline.setImageResource(R.drawable.online);
+
+            } else {
+                isOnline.setVisibility(View.VISIBLE);
+                isOnline.setImageResource(R.drawable.offline);
+
+            }
+
         }
     }
+
+
 }

@@ -18,12 +18,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.databinding.LayoutActivityItemsBinding;
 import com.users.quickhomeservices.models.StylesItemModel;
 import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class ActivityItemAdapter extends FirebaseRecyclerAdapter<StylesItemModel, ActivityItemAdapter.ActivityItemAdapterViewHolder> {
 
@@ -83,7 +83,7 @@ public class ActivityItemAdapter extends FirebaseRecyclerAdapter<StylesItemModel
 
     }
 
-    class ActivityItemAdapterViewHolder extends RecyclerView.ViewHolder {
+    static class ActivityItemAdapterViewHolder extends RecyclerView.ViewHolder {
 
         LayoutActivityItemsBinding activityItemsBinding;
 

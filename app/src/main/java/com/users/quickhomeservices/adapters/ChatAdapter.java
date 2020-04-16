@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.models.Chat;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.models.Chat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class ChatAdapter extends FirebaseRecyclerAdapter<Chat, ChatAdapter.ShowC
                 .inflate(R.layout.layout_chat_list_items, viewGroup, false));
     }
 
-    public class ShowChatHolder extends RecyclerView.ViewHolder {
+    public static class ShowChatHolder extends RecyclerView.ViewHolder {
         View view;
 
         ShowChatHolder(@NonNull View itemView) {

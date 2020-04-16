@@ -12,9 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.users.quickhomeservices.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class RatingActivity extends AppCompatActivity {
 
                         rateHandyMan();
                         //String rating = "Rating is :" + mRateHandyMan.getRating();
-                       // makeToast(rating);
+                        // makeToast(rating);
 
                     }
 
@@ -76,17 +76,17 @@ public class RatingActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
 
                     rating = mRateHandyMan.getRating();
-                    Map<String,Object> rateHandy = new HashMap<>();
-                    rateHandy.put("rating",rating);
+                    Map<String, Object> rateHandy = new HashMap<>();
+                    rateHandy.put("rating", rating);
 
                     //update the request database
                     requestDbRef.updateChildren(rateHandy).addOnCompleteListener(task -> {
 
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
                             makeToast("Handy man has been rated!!");
                             finish();
-                        }else{
+                        } else {
                             progressBar.setVisibility(View.GONE);
                             makeToast("Sorry please try again");
                         }
@@ -99,7 +99,7 @@ public class RatingActivity extends AppCompatActivity {
 
     }
 
-    public void makeToast(String text) {
+    private void makeToast(String text) {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();

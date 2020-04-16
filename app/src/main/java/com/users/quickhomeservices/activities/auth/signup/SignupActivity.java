@@ -18,7 +18,7 @@ import com.users.quickhomeservices.utils.MyConstants;
 import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
-    private TextInputLayout txtFullName, txtEmail ;
+    private TextInputLayout txtFullName, txtEmail;
     private ActivitySignupBinding activitySignupBinding;
 
     @Override
@@ -90,7 +90,6 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     @Override
@@ -116,8 +115,8 @@ public class SignupActivity extends AppCompatActivity {
             SharedPreferences preferences = getSharedPreferences("namePrefs",
                     MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("fullName", txtFullName.getEditText().getText().toString());
-            editor.putString("email", txtEmail.getEditText().getText().toString());
+            editor.putString("fullName", Objects.requireNonNull(txtFullName.getEditText()).getText().toString());
+            editor.putString("email", Objects.requireNonNull(txtEmail.getEditText()).getText().toString());
             editor.apply();
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,8 +134,8 @@ public class SignupActivity extends AppCompatActivity {
             String name = sharedPreferences.getString("fullName", "");
             String email = sharedPreferences.getString("email", "");
 
-            txtFullName.getEditText().setText(name);
-            txtEmail.getEditText().setText(email);
+            Objects.requireNonNull(txtFullName.getEditText()).setText(name);
+            Objects.requireNonNull(txtEmail.getEditText()).setText(email);
         } catch (Exception e) {
             e.printStackTrace();
         }

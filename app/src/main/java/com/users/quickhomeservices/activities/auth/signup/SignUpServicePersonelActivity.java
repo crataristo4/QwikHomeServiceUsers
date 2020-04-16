@@ -9,19 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.databinding.ActivitySignUpServicePersonelBinding;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 public class SignUpServicePersonelActivity extends AppCompatActivity {
 
-    private String getAccountType;
-    private static final String FULLNAME = "fullName";
-    private TextInputLayout txtFullName, txtEmail;
-    private static final String EMAIL = "email";
     public static final String ACCOUNT_TYPE = "accountType";
+    private static final String FULLNAME = "fullName";
+    private static final String EMAIL = "email";
+    private String getAccountType;
+    private TextInputLayout txtFullName, txtEmail;
     private Spinner spinnerAccountType;
 
     @Override
@@ -71,7 +71,7 @@ public class SignUpServicePersonelActivity extends AppCompatActivity {
         } else {
             txtEmail.setErrorEnabled(false);
         }
-        if ( ! android.util.Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()){
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()) {
             txtEmail.setErrorEnabled(true);
             txtEmail.setError("invalid email");
         } else {
@@ -111,8 +111,6 @@ public class SignUpServicePersonelActivity extends AppCompatActivity {
         Objects.requireNonNull(txtEmail.getEditText()).setText(savedInstanceState.getString(EMAIL));
         Objects.requireNonNull(txtFullName.getEditText()).setText(savedInstanceState.getString(FULLNAME));
     }
-
-
 
 
 }

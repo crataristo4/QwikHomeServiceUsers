@@ -14,7 +14,7 @@ import com.users.quickhomeservices.databinding.ActivitySplashScreenBinding;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    ActivitySplashScreenBinding activitySplashScreenBinding;
+    private ActivitySplashScreenBinding activitySplashScreenBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

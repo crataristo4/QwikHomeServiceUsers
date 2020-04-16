@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name="com.users.quickhomeservices.HandyManApp"
+        android:name="com.users.quickhomeservices.QwikHomeUsers"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity"></activity>
+        <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity" />
         <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.TestPaginatioinActivity" />
         <activity
             android:name="com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity"
@@ -35,8 +35,6 @@
             android:label="@string/title_activity_details_scrolling"
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.DetailsActivity" />
 
 
         <activity
@@ -109,9 +107,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.users.quickhomeservices.activities.auth.LoginActivity"
-            android:alwaysRetainTaskState="true"
+            android:launchMode="singleInstance"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.users.quickhomeservices.activities.welcome.OnboardingScreenActivity" />
         <activity android:name="com.users.quickhomeservices.activities.customeractivity.ShowRouteActivity" />
@@ -148,9 +145,7 @@
         <activity
             android:name="com.users.quickhomeservices.activities.handymanactivity.AcceptOrRejectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.models.Listofrequest" />
         <activity android:name="com.users.quickhomeservices.EditProfile" />
-        <activity android:name="com.users.quickhomeservices.Handymantypes" />
         <activity
             android:name="com.users.quickhomeservices.activities.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -160,7 +155,8 @@
 
         <receiver
             android:name="com.users.quickhomeservices.broadcastreceivers.SmsBroadcastReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:permission="TODO">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>

@@ -65,7 +65,6 @@ public class ProfileActivity extends AppCompatActivity {
         activityProfileBinding.imgUploadPhoto.setOnClickListener(this::openGallery);
 
 
-
     }
 
 
@@ -75,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .start(Objects.requireNonNull(this));
     }
 
-    public void onClick(View v) {
+    private void onClick(View v) {
         Bundle bundle = new Bundle();
         EditItemBottomSheet editItemBottomSheet = new EditItemBottomSheet();
         VerifyPhoneBottomSheet verifyPhoneBottomSheet = new VerifyPhoneBottomSheet();
@@ -131,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     //throw task.getException();
-                    Log.d(TAG, "then: " + task.getException().getMessage());
+                    Log.d(TAG, "then: " + Objects.requireNonNull(task.getException()).getMessage());
 
                 }
                 return fileReference.getDownloadUrl();

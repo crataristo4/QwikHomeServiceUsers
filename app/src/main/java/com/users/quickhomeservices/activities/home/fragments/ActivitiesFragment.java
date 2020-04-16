@@ -13,26 +13,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.ActivityItemAdapter;
-import com.users.quickhomeservices.databinding.FragmentActivitiesBinding;
-import com.users.quickhomeservices.models.StylesItemModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.adapters.ActivityItemAdapter;
+import com.users.quickhomeservices.databinding.FragmentActivitiesBinding;
+import com.users.quickhomeservices.models.StylesItemModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActivitiesFragment extends Fragment {
+class ActivitiesFragment extends Fragment {
 
+    private static final String TAG = "ActivityFragment";
     private FragmentActivitiesBinding fragmentActivitiesBinding;
     private RecyclerView rvBarbers, rvHairStylist, rvInteriorDeco, rvItems;
     // private AllServicesAdapter allServicesAdapter, allServicesAdapter1, allServicesAdapter2;
     private DatabaseReference dbRef;
     private ActivityItemAdapter activityItemAdapter;
-    private static final String TAG = "ActivityFragment";
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -44,7 +44,7 @@ public class ActivitiesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-            fragmentActivitiesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
+        fragmentActivitiesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_activities, container, false);
 
         return fragmentActivitiesBinding.getRoot();
     }
@@ -177,8 +177,6 @@ public class ActivitiesFragment extends Fragment {
         allServicesAdapter1.stopListening();
         allServicesAdapter2.stopListening();*/
     }
-
-
 
 
 }

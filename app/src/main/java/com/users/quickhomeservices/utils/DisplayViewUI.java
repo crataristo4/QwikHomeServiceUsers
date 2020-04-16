@@ -34,13 +34,13 @@ public class DisplayViewUI {
     }
 
 
-    public static   void  displayToast(Context ctx, String s){
+    public static void displayToast(Context ctx, String s) {
         Toast toast = Toast.makeText(ctx, s, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    public static ProgressDialog displayProgress(Context ctx, String message){
+    public static ProgressDialog displayProgress(Context ctx, String message) {
         ProgressDialog loading = new ProgressDialog(ctx);
         loading.setCancelable(false);
         loading.setMessage(message);
@@ -70,7 +70,7 @@ public class DisplayViewUI {
         builder.show();
     }
 
-    static public void displayAlertDialogMsg(Context context, String msg, String btnPos,  DialogInterface.OnClickListener onClickListener) {
+    static public void displayAlertDialogMsg(Context context, String msg, String btnPos, DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(msg);
         builder.setCancelable(false);

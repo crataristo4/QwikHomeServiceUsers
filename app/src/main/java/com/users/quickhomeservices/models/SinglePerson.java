@@ -17,11 +17,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-public class SinglePerson extends BaseObservable {
-    public String uid;
-    public String name;
-    public String about;
-    public String image;
+class SinglePerson extends BaseObservable {
+    private String uid;
+    private String name;
+    private String about;
+    private String image;
 
     public SinglePerson() {
     }

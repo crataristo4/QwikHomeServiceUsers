@@ -25,7 +25,7 @@ import com.users.quickhomeservices.databinding.FragmentRequestBinding;
 import com.users.quickhomeservices.models.RequestModel;
 
 
-public class RequestFragment extends Fragment {
+class RequestFragment extends Fragment {
     private FragmentRequestBinding fragmentRequestBinding;
     private RequestAdapter requestAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -100,7 +100,7 @@ public class RequestFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
             recyclerView.setAdapter(requestAdapter);
 
-        }, 000);
+        }, 3000);
 
 
     }

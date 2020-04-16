@@ -9,15 +9,17 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.adapters.AllBarbersAdapter;
 import com.users.quickhomeservices.databinding.ActivityAllBarbersBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.MyConstants;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
+import java.util.Objects;
 
 //TODO change class name
 public class AllBarbersActivity extends AppCompatActivity {
@@ -43,7 +45,7 @@ public class AllBarbersActivity extends AppCompatActivity {
 
         if (getIntent != null) {
 
-            switch (getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE)) {
+            switch (Objects.requireNonNull(getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE))) {
                 case MyConstants.BARBERS:
                     serviceType = MyConstants.BARBERS;
                     setTitle(serviceType);
@@ -65,7 +67,6 @@ public class AllBarbersActivity extends AppCompatActivity {
 
         }
 
-
         DatabaseReference allBarbersDbRef = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(MyConstants.SERVICES)
@@ -77,7 +78,6 @@ public class AllBarbersActivity extends AppCompatActivity {
 
         //querying the database BY NAME
         Query query = allBarbersDbRef.orderByChild("name");
-
         FirebaseRecyclerOptions<Users> options =
                 new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
                         Users.class)
@@ -88,7 +88,6 @@ public class AllBarbersActivity extends AppCompatActivity {
 
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-
         } else {
 
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -96,12 +95,9 @@ public class AllBarbersActivity extends AppCompatActivity {
         }
 
         adapter = new AllBarbersAdapter(options, AllBarbersActivity.this);
-
         recyclerView.setAdapter(adapter);
 
-
     }
-
 
     @Override
     protected void onStart() {

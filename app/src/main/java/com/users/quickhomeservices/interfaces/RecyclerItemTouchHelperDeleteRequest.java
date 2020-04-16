@@ -57,7 +57,7 @@ public class RecyclerItemTouchHelperDeleteRequest extends ItemTouchHelper.Simple
     }
 
     @Override
-    public void onSwiped( @NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         listener.onSwiped(viewHolder, direction, viewHolder.getAdapterPosition());
     }
 

@@ -2,6 +2,9 @@ package com.users.quickhomeservices.models;
 
 public class Customer {
 
+    private String response;
+    private String reason;
+    private Long date;
     private String userId;
     private String email;
     private String mobileNumber;
@@ -10,12 +13,31 @@ public class Customer {
     private String image;
     private String location;
     private String details;
-    private double latitude,longitude;
+    private double latitude, longitude;
     private String distanceBetween;
-    String response,reason;
-    Long date;
+    private String about;
 
     public Customer() {
+    }
+
+    public Customer(String userId, String email, String fullName) {
+        this.userId = userId;
+        this.email = email;
+        this.fullName = fullName;
+    }
+
+    public Customer(String userId, String email, String mobileNumber,
+                    String fullName, String occupation, String image, String details,
+                    double latitude, double longitude) {
+        this.userId = userId;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.fullName = fullName;
+        this.occupation = occupation;
+        this.image = image;
+        this.details = details;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getReason() {
@@ -48,26 +70,6 @@ public class Customer {
 
     public void setDistanceBetween(String distanceBetween) {
         this.distanceBetween = distanceBetween;
-    }
-
-    public Customer(String userId, String email, String fullName) {
-        this.userId = userId;
-        this.email = email;
-        this.fullName = fullName;
-    }
-
-    public Customer(String userId, String email, String mobileNumber,
-                    String fullName, String occupation, String image, String details,
-                    double latitude, double longitude) {
-        this.userId = userId;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.fullName = fullName;
-        this.occupation = occupation;
-        this.image = image;
-        this.details = details;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     public double getLatitude() {
@@ -117,8 +119,6 @@ public class Customer {
     public void setAbout(String about) {
         this.about = about;
     }
-
-    private String about;
 
     public String getMobileNumber() {
         return mobileNumber;

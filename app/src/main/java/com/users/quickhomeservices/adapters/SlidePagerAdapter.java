@@ -15,10 +15,10 @@ import com.users.quickhomeservices.databinding.LayoutSlidePageItemsBinding;
 
 public class SlidePagerAdapter extends PagerAdapter {
 
-    //Array of type String to display the heading that moves on the screen
-    private final String[] slideHeadings = {"Heading 1", "Heading 2", "Heading 3", "Heading 4"};
     //Array of type String to display the descriptions that moves on the screen
     public final String[] slideDescriptions = {"Dummy Txt1", "Dummy Txt2", "Dummy Txt3", "Dummy Txt4"};
+    //Array of type String to display the heading that moves on the screen
+    private final String[] slideHeadings = {"Heading 1", "Heading 2", "Heading 3", "Heading 4"};
     //object of the Context class to allow views to be passed into another activity
     private final Context context;
     //Array of type int to display the descriptions that moves on the screen

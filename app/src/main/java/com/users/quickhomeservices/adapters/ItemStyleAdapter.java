@@ -94,36 +94,33 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
                 , R.anim.fade_scale_animation));
 
         //on item click
-        itemStyleAdapterViewHolder.layoutStylesListItemBinding.mCardViewItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        itemStyleAdapterViewHolder.layoutStylesListItemBinding.mCardViewItem.setOnClickListener(v -> {
 
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-                    return;
-                }
-
-                mLastClickTime = SystemClock.elapsedRealtime();
-
-                int adapterPosition = itemStyleAdapterViewHolder.getAdapterPosition();
-                String price = String.valueOf(stylesItemModel.getPrice());
-                String itemStyleName = String.valueOf(stylesItemModel.getStyleItem());
-                String itemImage = String.valueOf(stylesItemModel.getItemImage());
-
-
-                Bundle bundle = new Bundle();
-                bundle.putString(MyConstants.PRICE, price);
-                bundle.putString(MyConstants.STYLE, itemStyleName);
-                bundle.putString(MyConstants.IMAGE_URL, itemImage);
-
-                AppCompatActivity appCompatActivity = new AppCompatActivity();
-                FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
-
-
-                SendRequestBottomSheet sendRequestBottomSheet = new SendRequestBottomSheet();
-                sendRequestBottomSheet.setArguments(bundle);
-                sendRequestBottomSheet.show(fragmentManager, "sendRequest");
-
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                return;
             }
+
+            mLastClickTime = SystemClock.elapsedRealtime();
+
+            int adapterPosition = itemStyleAdapterViewHolder.getAdapterPosition();
+            String price = String.valueOf(stylesItemModel.getPrice());
+            String itemStyleName = String.valueOf(stylesItemModel.getStyleItem());
+            String itemImage = String.valueOf(stylesItemModel.getItemImage());
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString(MyConstants.PRICE, price);
+            bundle.putString(MyConstants.STYLE, itemStyleName);
+            bundle.putString(MyConstants.IMAGE_URL, itemImage);
+
+            AppCompatActivity appCompatActivity = new AppCompatActivity();
+            FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
+
+
+            SendRequestBottomSheet sendRequestBottomSheet = new SendRequestBottomSheet();
+            sendRequestBottomSheet.setArguments(bundle);
+            sendRequestBottomSheet.show(fragmentManager, "sendRequest");
+
         });
 
 
@@ -158,7 +155,7 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
         return super.getItemId(position);
     }
 
-    public interface onItemClickListener {
+    interface onItemClickListener {
         void onClick(View view, int position);
     }
 

@@ -13,7 +13,6 @@
         android:id="@+id/mMaterialCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/purple"
         app:cardCornerRadius="@dimen/eightDp"
         app:cardUseCompatPadding="true">
 
@@ -43,6 +42,7 @@
                 android:id="@+id/txtName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -55,7 +55,7 @@
                 android:text="@{serviceType.name}"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/white"
+                android:textColor="@color/purple"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +71,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/imgUserPhoto"
                 app:layout_constraintStart_toStartOf="@+id/imgUserPhoto"
                 app:layout_constraintTop_toTopOf="@+id/imgUserPhoto" />
+
+            <ImageView
+                android:id="@+id/imgPresence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/presence_state"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/away" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

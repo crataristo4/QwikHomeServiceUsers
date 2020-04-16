@@ -14,11 +14,11 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.databinding.LayoutUserRequestSentBinding;
 import com.users.quickhomeservices.models.RequestModel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, RequestAdapter.RequestViewHolder> {
 
@@ -75,7 +75,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         private LinearLayoutCompat linearLayoutCompat;
         private Button btnConfirmPayment;
 
-        public RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
+        RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
             super(layoutUserRequestSentBinding.getRoot());
             this.layoutUserRequestSentBinding = layoutUserRequestSentBinding;
             ratingBar = layoutUserRequestSentBinding.ratedResults;

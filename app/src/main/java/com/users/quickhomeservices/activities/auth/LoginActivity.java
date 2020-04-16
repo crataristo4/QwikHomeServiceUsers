@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginPassword = activityLoginBinding.txtPasswordLayout;*/
 
 
-
     }
 
 

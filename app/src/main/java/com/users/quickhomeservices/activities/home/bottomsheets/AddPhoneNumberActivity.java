@@ -14,9 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.databinding.LayoutAddPhoneBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
@@ -28,6 +25,9 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.hbb20.CountryCodePicker;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.databinding.LayoutAddPhoneBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -55,7 +55,7 @@ public class AddPhoneNumberActivity extends AppCompatActivity implements
             if (code != null) {
                 verifyCode(code);
                 Log.i("VerificationCode: ", code);
-                layoutAddPhoneBinding.textInputLayoutConfirmCode.getEditText().setText(code);
+                Objects.requireNonNull(layoutAddPhoneBinding.textInputLayoutConfirmCode.getEditText()).setText(code);
             }
 
 
@@ -130,9 +130,7 @@ public class AddPhoneNumberActivity extends AppCompatActivity implements
         //method to sign in user
         //signInWithPhoneNumber();
 
-        if (code.equals(phoneAuthCredential.getSmsCode())) {
-            //do something
-        }
+        phoneAuthCredential.getSmsCode();//do something
 
 
     }
@@ -154,7 +152,7 @@ public class AddPhoneNumberActivity extends AppCompatActivity implements
     }
 
 
-    public void getHintPhoneNumber() {
+    private void getHintPhoneNumber() {
         HintRequest hintRequest =
                 new HintRequest.Builder()
                         .setPhoneNumberIdentifierSupported(true)

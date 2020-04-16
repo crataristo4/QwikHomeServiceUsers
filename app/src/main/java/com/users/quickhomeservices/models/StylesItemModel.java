@@ -5,14 +5,14 @@ import androidx.databinding.Bindable;
 
 public class StylesItemModel extends BaseObservable {
 
-    public int price;
-    public String styleItem;
+    private int price;
+    private String styleItem;
     public String itemImage;
-    public double rating;
-    public String userPhoto;
-    public String userName;
-    public String timeStamp;
-    public String accountType;
+    private double rating;
+    private String userPhoto;
+    private String userName;
+    private String timeStamp;
+    private String accountType;
 
 
     public StylesItemModel() {

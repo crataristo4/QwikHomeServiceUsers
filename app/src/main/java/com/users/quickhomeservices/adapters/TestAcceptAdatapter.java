@@ -19,14 +19,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.bottomsheets.AcceptOrRejectBtSheet;
 import com.users.quickhomeservices.models.RequestModel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class TestAcceptAdatapter extends FirebaseRecyclerAdapter<RequestModel, TestAcceptAdatapter.TestAcceptAdatapterViewHolder> {
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
     public TestAcceptAdatapter(@NonNull FirebaseRecyclerOptions<RequestModel> options, FragmentManager fragmentManager) {
         super(options);
@@ -40,17 +40,14 @@ public class TestAcceptAdatapter extends FirebaseRecyclerAdapter<RequestModel, T
         testAcceptAdatapterViewHolder.showUserPhoto(requestModel.getSenderPhoto());
 
         final String getAdapterPosition = getRef(i).getKey();
-        testAcceptAdatapterViewHolder.btnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AcceptOrRejectBtSheet acceptOrRejectBtSheet = new AcceptOrRejectBtSheet();
-                Bundle bundle = new Bundle();
-                bundle.putString("position", getAdapterPosition);
-                bundle.putString("name", requestModel.getSenderName());
-                bundle.putString("photo", requestModel.getSenderPhoto());
-                acceptOrRejectBtSheet.setArguments(bundle);
-                acceptOrRejectBtSheet.show(fragmentManager, "show");
-            }
+        testAcceptAdatapterViewHolder.btnView.setOnClickListener(v -> {
+            AcceptOrRejectBtSheet acceptOrRejectBtSheet = new AcceptOrRejectBtSheet();
+            Bundle bundle = new Bundle();
+            bundle.putString("position", getAdapterPosition);
+            bundle.putString("name", requestModel.getSenderName());
+            bundle.putString("photo", requestModel.getSenderPhoto());
+            acceptOrRejectBtSheet.setArguments(bundle);
+            acceptOrRejectBtSheet.show(fragmentManager, "show");
         });
 
 
@@ -64,8 +61,8 @@ public class TestAcceptAdatapter extends FirebaseRecyclerAdapter<RequestModel, T
     }
 
     //an inner class to hold the views to be inflated
-    public class TestAcceptAdatapterViewHolder extends RecyclerView.ViewHolder {
-        public ConstraintLayout viewForeground;
+    public static class TestAcceptAdatapterViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout viewForeground;
         FrameLayout frameLayout;
         private View view;
         private ImageButton btnView, btnChat, btnRateHandyMan, btnShowRoute;

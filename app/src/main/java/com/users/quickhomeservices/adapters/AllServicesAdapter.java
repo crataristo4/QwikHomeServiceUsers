@@ -19,13 +19,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.quickhomeservices.databinding.LayoutListServicePersonsBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class AllServicesAdapter extends FirebaseRecyclerAdapter<Users,
         AllServicesAdapter.AllServiceViewHolder> {

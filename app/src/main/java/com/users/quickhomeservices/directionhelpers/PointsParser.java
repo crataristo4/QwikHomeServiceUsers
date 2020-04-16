@@ -13,11 +13,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
-public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-    TaskLoadedCallback taskCallback;
-    String directionMode = "driving";
+class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+    private TaskLoadedCallback taskCallback;
+    private String directionMode = "driving";
 
     public PointsParser(Context mContext, String directionMode) {
         this.taskCallback = (TaskLoadedCallback) mContext;
@@ -33,7 +34,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
         try {
             jObject = new JSONObject(jsonData[0]);
-            Log.d("mylog", jsonData[0].toString());
+            Log.d("mylog", jsonData[0]);
             DataParser parser = new DataParser();
             Log.d("mylog", parser.toString());
 
@@ -63,8 +64,8 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             // Fetching all the points in i-th route
             for (int j = 0; j < path.size(); j++) {
                 HashMap<String, String> point = path.get(j);
-                double lat = Double.parseDouble(point.get("lat"));
-                double lng = Double.parseDouble(point.get("lng"));
+                double lat = Double.parseDouble(Objects.requireNonNull(point.get("lat")));
+                double lng = Double.parseDouble(Objects.requireNonNull(point.get("lng")));
                 LatLng position = new LatLng(lat, lng);
                 points.add(position);
             }

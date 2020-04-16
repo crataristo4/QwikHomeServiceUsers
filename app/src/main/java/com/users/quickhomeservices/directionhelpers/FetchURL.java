@@ -10,13 +10,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 
-
-public class FetchURL extends AsyncTask<String, Void, String> {
-    Context mContext;
-    String directionMode = "driving";
+class FetchURL extends AsyncTask<String, Void, String> {
     private static final String TAG = "FetchURL";
+    private Context mContext;
+    private String directionMode = "driving";
 
     public FetchURL(Context mContext) {
         this.mContext = mContext;
@@ -69,8 +69,8 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         } catch (Exception e) {
             Log.d(TAG, "Exception downloading URL: " + e.toString());
         } finally {
-            iStream.close();
-            urlConnection.disconnect();
+            Objects.requireNonNull(iStream).close();
+            Objects.requireNonNull(urlConnection).disconnect();
         }
         return data;
     }

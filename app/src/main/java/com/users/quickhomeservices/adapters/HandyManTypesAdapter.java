@@ -12,9 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity;
-import com.users.quickhomeservices.models.Users;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,14 +21,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity;
+import com.users.quickhomeservices.models.Users;
 
 import java.text.MessageFormat;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<Users, HandyManTypesAdapter.MechanicViewHolder> {
     private Intent intent;
-    private  double lat, lng;
+    private double lat, lng;
 
 
     /**
@@ -117,13 +118,13 @@ public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<Users, HandyMa
     }
 
     //an inner class to hold the views to be inflated
-    public  class MechanicViewHolder extends RecyclerView.ViewHolder {
-        private View view;
-        private ImageButton btnView;
+    public class MechanicViewHolder extends RecyclerView.ViewHolder {
         TextView txtDistance;
-        private FirebaseAuth mAuth;
         FirebaseUser firebaseUser;
         DatabaseReference mUser;
+        private View view;
+        private ImageButton btnView;
+        private FirebaseAuth mAuth;
 
 
         MechanicViewHolder(@NonNull View itemView) {
@@ -133,7 +134,7 @@ public class HandyManTypesAdapter extends FirebaseRecyclerAdapter<Users, HandyMa
             txtDistance = view.findViewById(R.id.txtDistance);
             mAuth = FirebaseAuth.getInstance();
             firebaseUser = mAuth.getCurrentUser();
-            String uid = firebaseUser.getUid();
+            String uid = Objects.requireNonNull(firebaseUser).getUid();
 
             mUser = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
 

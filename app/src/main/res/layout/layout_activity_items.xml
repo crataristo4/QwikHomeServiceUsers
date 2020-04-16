@@ -116,8 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/round_white"
                 android:layout_marginRight="8dp"
+                android:background="@drawable/round_white"
                 android:drawableStart="@drawable/ic_date"
                 android:drawableLeft="@drawable/ic_date"
                 android:drawablePadding="4dp"
@@ -171,6 +171,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/progressBar"
+                android:layout_gravity="center_horizontal"
                 app:layout_constraintTop_toTopOf="@+id/imgItemPhoto" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

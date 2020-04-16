@@ -10,10 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.ItemStyleAdapter;
-import com.users.quickhomeservices.models.StylesItemModel;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,19 +18,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.adapters.ItemStyleAdapter;
+import com.users.quickhomeservices.models.StylesItemModel;
+import com.users.quickhomeservices.utils.DisplayViewUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestPaginatioinActivity extends AppCompatActivity {
     final int pagePerLimit = 3;
-    int currentItem, totalItem = 0, scrolledOutItem, lastVisibleItem;
-    boolean isScrolled = false, isMaxData = false;
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    ItemStyleAdapter itemStyleAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
-    String lastKey = "", lastNode = "";
+    int lastVisibleItem;
+    boolean isMaxData = false;
+    String lastNode = "";
+    private int currentItem;
+    private int totalItem = 0;
+    private int scrolledOutItem;
+    private boolean isScrolled = false;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private ItemStyleAdapter itemStyleAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private String lastKey = "";
     private List<StylesItemModel> stylesItemModelList;
     private DatabaseReference databaseReference;
 

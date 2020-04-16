@@ -37,6 +37,7 @@
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="center_horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -128,6 +129,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:clickable="true"
+                android:focusable="true"
                 app:backgroundTint="@color/purple"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="@+id/imgStylePhoto"
@@ -136,8 +138,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imgStylePhoto"
                 app:layout_constraintTop_toTopOf="@+id/imgStylePhoto"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/ic_camera"
-                android:focusable="true" />
+                app:srcCompat="@drawable/ic_camera" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
 </layout>

@@ -18,19 +18,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.customeractivity.ChatActivity;
 import com.users.quickhomeservices.activities.customeractivity.RatingActivity;
 import com.users.quickhomeservices.activities.customeractivity.ShowRouteActivity;
 import com.users.quickhomeservices.models.Users;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomerRequestSent extends FirebaseRecyclerAdapter<Users, CustomerRequestSent.HandyManRequest> {
-    private Intent intent;
     FragmentManager fragmentManager;
+    private Intent intent;
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -51,9 +51,6 @@ public class CustomerRequestSent extends FirebaseRecyclerAdapter<Users, Customer
         // holder.showResponse(model.getResponse());
         // holder.showDate(model.getDateRequested());
         // holder.showRating(model.getRating());
-
-
-
 
 
         final String getAdapterPosition = getRef(position).getKey();
@@ -144,10 +141,10 @@ public class CustomerRequestSent extends FirebaseRecyclerAdapter<Users, Customer
 
 
     //an inner class to hold the views to be inflated
-    public class HandyManRequest extends RecyclerView.ViewHolder {
+    public static class HandyManRequest extends RecyclerView.ViewHolder {
+        public ConstraintLayout viewForeground;
         private View view;
         private ImageButton btnView, btnChat, btnRateHandyMan, btnShowRoute;
-        public ConstraintLayout viewForeground;
         private RelativeLayout viewBackground;
         private RatingBar ratingBar;
 

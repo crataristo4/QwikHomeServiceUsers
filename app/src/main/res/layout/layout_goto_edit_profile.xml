@@ -35,6 +35,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="center_horizontal"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

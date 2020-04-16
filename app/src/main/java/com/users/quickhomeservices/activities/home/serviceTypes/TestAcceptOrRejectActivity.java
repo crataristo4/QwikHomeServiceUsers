@@ -7,19 +7,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.MainActivity;
-import com.users.quickhomeservices.adapters.TestAcceptAdatapter;
-import com.users.quickhomeservices.models.RequestModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.adapters.TestAcceptAdatapter;
+import com.users.quickhomeservices.models.RequestModel;
 
 public class TestAcceptOrRejectActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    TestAcceptAdatapter customerRequestSent;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private TestAcceptAdatapter customerRequestSent;
     SwipeRefreshLayout swipeRefreshLayout;
     private DatabaseReference databaseReference;
 

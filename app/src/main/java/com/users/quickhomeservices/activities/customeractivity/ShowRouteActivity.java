@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.directionhelpers.TaskLoadedCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,15 +22,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.directionhelpers.TaskLoadedCallback;
 
 public class ShowRouteActivity extends AppCompatActivity
         implements OnMapReadyCallback, TaskLoadedCallback {
 
-    private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 101;
+    private static final String TAG = "ShowRouteActivity";
+    private GoogleMap mMap;
     private MarkerOptions place1, place2;
     private Polyline currentPolyline;
-    private static final String TAG = "ShowRouteActivity";
 
     private void makeLocationPermissionRequest() {
         ActivityCompat.requestPermissions(this,
@@ -90,14 +90,9 @@ public class ShowRouteActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showPolyline();
-                } else {
-                }
-                return;
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showPolyline();
             }
         }
     }
@@ -115,8 +110,7 @@ public class ShowRouteActivity extends AppCompatActivity
         // Output format
         String output = "json";
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
     }
 
     @Override

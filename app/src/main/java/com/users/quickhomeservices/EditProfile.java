@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,12 +33,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class EditProfile extends AppCompatActivity {
 
+    public static final int GALLERY_REQUEST = 100;
+    private static final String TAG = "EditProfile";
+    private String getImageUri;
     private TextInputLayout Userfullname, Useremailprofile, UserphoneNumberprofile, UserOccupationprofile, UserAboutprofile;
     private Button Saveprofile, Deleteprofile;
     private CircleImageView profileImage;
@@ -48,12 +51,9 @@ public class EditProfile extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private ProgressDialog progressDialog;
     private String uid;
-    private static final String TAG = "EditProfile";
     private StorageTask mStorageTask;
     private StorageReference mStorageReference;
     private Uri uri;
-    public static final int GALLERY_REQUEST = 100;
-    String getImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +98,12 @@ public class EditProfile extends AppCompatActivity {
 
     private void Saveuserdetails() {
 
-        String ufullname = Userfullname.getEditText().getText().toString();
-        String unumber = UserphoneNumberprofile.getEditText().getText().toString();
-        String uoccupation = UserOccupationprofile.getEditText().getText().toString();
-        String uabout = UserAboutprofile.getEditText().getText().toString();
+        String ufullname = Objects.requireNonNull(Userfullname.getEditText()).getText().toString();
+        String unumber = Objects.requireNonNull(UserphoneNumberprofile.getEditText()).getText().toString();
+        String uoccupation = Objects.requireNonNull(UserOccupationprofile.getEditText()).getText().toString();
+        String uabout = Objects.requireNonNull(UserAboutprofile.getEditText()).getText().toString();
 
-        if ( ufullname.isEmpty() || unumber.isEmpty() || uoccupation.isEmpty() || uabout.isEmpty()) {
+        if (ufullname.isEmpty() || unumber.isEmpty() || uoccupation.isEmpty() || uabout.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
         }
@@ -111,7 +111,7 @@ public class EditProfile extends AppCompatActivity {
 
         HashMap<String, Object> userDetails = new HashMap<>();
         //userDetails.put("firstName", ufirstname);
-       // userDetails.put("lastName", ulastname);
+        // userDetails.put("lastName", ulastname);
         userDetails.put("mobileNumber", unumber);
         userDetails.put("occupation", uoccupation);
         userDetails.put("about", uabout);
@@ -127,7 +127,7 @@ public class EditProfile extends AppCompatActivity {
                 Toast.makeText(EditProfile.this, "Profile Successfully changed", Toast.LENGTH_LONG).show();
             } else {
                 progressDialog.dismiss();
-                Toast.makeText(EditProfile.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(EditProfile.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -155,11 +155,11 @@ public class EditProfile extends AppCompatActivity {
 
 
                     //display the values into the required fields
-                    Userfullname.getEditText().setText(showfullname);
-                    Useremailprofile.getEditText().setText(showEmail);
-                    UserOccupationprofile.getEditText().setText(showOcc);
-                    UserphoneNumberprofile.getEditText().setText(String.valueOf(showNumber));
-                    UserAboutprofile.getEditText().setText(showAbout);
+                    Objects.requireNonNull(Userfullname.getEditText()).setText(showfullname);
+                    Objects.requireNonNull(Useremailprofile.getEditText()).setText(showEmail);
+                    Objects.requireNonNull(UserOccupationprofile.getEditText()).setText(showOcc);
+                    Objects.requireNonNull(UserphoneNumberprofile.getEditText()).setText(String.valueOf(showNumber));
+                    Objects.requireNonNull(UserAboutprofile.getEditText()).setText(showAbout);
                     Glide.with(getApplicationContext()).load(showImage).into(profileImage);
                 } else {
                     Glide.with(getApplicationContext()).load(R.drawable.defaultavatar).into(profileImage);
@@ -211,7 +211,7 @@ public class EditProfile extends AppCompatActivity {
             progressDialog.show();
 
 
-            final File thumb_imageFile = new File(uri.getPath());
+            final File thumb_imageFile = new File(Objects.requireNonNull(uri.getPath()));
 
             //  compress itemImage file to bitmap surrounding with try catch
             try {
@@ -236,7 +236,7 @@ public class EditProfile extends AppCompatActivity {
             fileReference.putFile(uri).continueWithTask(task -> {
                 if (!task.isSuccessful()) {
                     //throw task.getException();
-                    Log.d(TAG, "then: " + task.getException().getMessage());
+                    Log.d(TAG, "then: " + Objects.requireNonNull(task.getException()).getMessage());
 
                 }
                 return fileReference.getDownloadUrl();
@@ -262,7 +262,7 @@ public class EditProfile extends AppCompatActivity {
 
                         } else {
                             progressDialog.dismiss();
-                            Toast toast = Toast.makeText(EditProfile.this, task1.getException().getMessage(), Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(EditProfile.this, Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                             Log.d(TAG, "onComplete: Image uploading failed");

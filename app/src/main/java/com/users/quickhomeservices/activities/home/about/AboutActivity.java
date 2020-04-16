@@ -18,11 +18,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.MainActivity;
-import com.users.quickhomeservices.databinding.ActivityAboutBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.users.quickhomeservices.utils.MyConstants;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +26,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.databinding.ActivityAboutBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
+import com.users.quickhomeservices.utils.MyConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class AboutActivity extends AppCompatActivity {
-    public static final String ABOUT = "about";
+    private static final String ABOUT = "about";
     private static final String TAG = "AboutActivity";
     private String uid, about, getImageUri, accountType;
     private ActivityAboutBinding activityAboutBinding;
@@ -59,7 +59,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            activityAboutBinding.textInputLayoutAbout.getEditText()
+            Objects.requireNonNull(activityAboutBinding.textInputLayoutAbout.getEditText())
                     .setText(savedInstanceState.getString(ABOUT));
         }
 
@@ -178,7 +178,7 @@ public class AboutActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     progressDialog.dismiss();
                     //throw task.getException();
-                    Log.d(TAG, "then: " + task.getException().getMessage());
+                    Log.d(TAG, "then: " + Objects.requireNonNull(task.getException()).getMessage());
 
                 }
                 return fileReference.getDownloadUrl();
@@ -206,7 +206,7 @@ public class AboutActivity extends AppCompatActivity {
                             DisplayViewUI.displayToast(this, "Successfully updated");
 
                             Intent addItemIntent = new Intent(AboutActivity.this, JobTypesActivity.class);
-                            addItemIntent.putExtra(MyConstants.ACCOUNT_TYPE,accountType);
+                            addItemIntent.putExtra(MyConstants.ACCOUNT_TYPE, accountType);
                             addItemIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(addItemIntent);
                             finish();
@@ -214,7 +214,7 @@ public class AboutActivity extends AppCompatActivity {
 
                         } else {
                             progressDialog.dismiss();
-                            DisplayViewUI.displayToast(this, task1.getException().getMessage());
+                            DisplayViewUI.displayToast(this, Objects.requireNonNull(task1.getException()).getMessage());
 
                         }
 
@@ -222,7 +222,7 @@ public class AboutActivity extends AppCompatActivity {
 
                 } else {
                     progressDialog.dismiss();
-                    DisplayViewUI.displayToast(this, task.getException().getMessage());
+                    DisplayViewUI.displayToast(this, Objects.requireNonNull(task.getException()).getMessage());
 
                 }
 
@@ -248,7 +248,7 @@ public class AboutActivity extends AppCompatActivity {
                 finish();
 
             } else {
-                DisplayViewUI.displayToast(AboutActivity.this, task.getException().getMessage());
+                DisplayViewUI.displayToast(AboutActivity.this, Objects.requireNonNull(task.getException()).getMessage());
             }
 
         });
@@ -259,7 +259,7 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
 
-        outState.putString(ABOUT, activityAboutBinding.textInputLayoutAbout.getEditText().getText().toString());
+        outState.putString(ABOUT, Objects.requireNonNull(activityAboutBinding.textInputLayoutAbout.getEditText()).getText().toString());
         super.onSaveInstanceState(outState);
     }
 

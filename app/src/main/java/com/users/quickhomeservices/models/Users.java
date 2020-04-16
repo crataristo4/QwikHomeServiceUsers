@@ -19,29 +19,30 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Users extends BaseObservable {
 
-    public float rating;
-    public String userId;
-    public String name;
-    public String email;
-    public String reason;
-    public int price;
-    public String styleItem;
-    public double latitude;
-    public double longitude;
-    public String occupation;
-    public String response;
-    public String location;
-    public String date;
-    public String about;
-    public String number;
-    public String accountType;
+    public boolean online;
+    private float rating;
+    private String userId;
+    private String name;
+    private String email;
+    private String reason;
+    private int price;
+    private String styleItem;
+    private double latitude;
+    private double longitude;
+    private String occupation;
+    private String response;
+    private String location;
+    private String date;
+    private String about;
+    private String number;
     public String image;
-    public String distanceBetween;
-    public String senderPhoto;
-    public String senderName;
-    public String servicePersonName;
-    public String servicePersonPhoto;
-    public String dateRequested;
+    private String accountType;
+    private String distanceBetween;
+    private String senderPhoto;
+    private String senderName;
+    private String servicePersonName;
+    private String servicePersonPhoto;
+    private String dateRequested;
 
 
     public Users() {
@@ -59,8 +60,26 @@ public class Users extends BaseObservable {
         this.image = image;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    @BindingAdapter("imageUrl")
+    public static void loadImages(CircleImageView imageView, String imageUrl) {
+        Context context = imageView.getContext();
+        Glide.with(context)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+
+
+                        return false;
+                    }
+                })
+                .into(imageView);
     }
 
     public String getUserId() {
@@ -76,8 +95,8 @@ public class Users extends BaseObservable {
         return rating;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     @Bindable
@@ -85,8 +104,8 @@ public class Users extends BaseObservable {
         return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Bindable
@@ -94,8 +113,8 @@ public class Users extends BaseObservable {
         return email;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public double getLatitude() {
@@ -135,8 +154,8 @@ public class Users extends BaseObservable {
         return reason;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     @Bindable
@@ -144,8 +163,8 @@ public class Users extends BaseObservable {
         return location;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Bindable
@@ -153,8 +172,8 @@ public class Users extends BaseObservable {
         return date;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Bindable
@@ -162,8 +181,8 @@ public class Users extends BaseObservable {
         return about;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     @Bindable
@@ -171,8 +190,8 @@ public class Users extends BaseObservable {
         return number;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     @Bindable
@@ -180,8 +199,8 @@ public class Users extends BaseObservable {
         return accountType;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public String getDistanceBetween() {
@@ -205,13 +224,17 @@ public class Users extends BaseObservable {
         return image;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Bindable
     public String getSenderName() {
         return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getServicePersonPhoto() {
@@ -257,28 +280,11 @@ public class Users extends BaseObservable {
         this.dateRequested = dateRequested;
     }
 
-    @BindingAdapter("imageUrl")
-    public static void loadImages(CircleImageView imageView, String imageUrl) {
-        Context context = imageView.getContext();
-        Glide.with(context)
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
-
-
-                        return false;
-                    }
-                })
-                .into(imageView);
+    public boolean isOnline() {
+        return online;
     }
 
-
-
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 }

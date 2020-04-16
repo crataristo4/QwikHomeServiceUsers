@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.users.quickhomeservices.interfaces.OtpReceivedInterface;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Status;
+import com.users.quickhomeservices.interfaces.OtpReceivedInterface;
 
 import java.util.Objects;
 
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "SmsBroadcastReceiver";
-    OtpReceivedInterface otpReceiveInterface = null;
+    private OtpReceivedInterface otpReceiveInterface = null;
 
     public void setOnOtpListeners(OtpReceivedInterface otpReceiveInterface) {
         this.otpReceiveInterface = otpReceiveInterface;

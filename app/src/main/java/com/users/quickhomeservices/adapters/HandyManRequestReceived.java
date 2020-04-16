@@ -11,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.handymanactivity.AcceptOrRejectActivity;
 import com.users.quickhomeservices.models.Customer;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -70,7 +70,7 @@ public class HandyManRequestReceived extends FirebaseRecyclerAdapter<Customer, H
 
 
     //an inner class to hold the views to be inflated
-  public static   class HandyManRequestViewHolder extends RecyclerView.ViewHolder {
+    public static class HandyManRequestViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private Button btnView;
 

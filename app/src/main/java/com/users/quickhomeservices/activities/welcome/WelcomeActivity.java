@@ -18,12 +18,11 @@ import java.util.TimerTask;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    ActivityWelcomeBinding activityWelcomeBinding;
-    ItemViewClickEvents itemViewClickEvents;
-   private Runnable runnable;
+    private ActivityWelcomeBinding activityWelcomeBinding;
+    private ItemViewClickEvents itemViewClickEvents;
+    private Timer timer = new Timer();
+    private Runnable runnable;
     private Handler handler = new Handler(Looper.getMainLooper());
-    Timer timer = new Timer();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +47,27 @@ public class WelcomeActivity extends AppCompatActivity {
         activityWelcomeBinding.slideDots.setBackgroundColor(Color.BLACK);
 
 
-            runnable = () -> {
+        runnable = () -> {
 
-                int count = activityWelcomeBinding.Viewpager.getCurrentItem();
-                if (count == slidePagerAdapter.slideDescriptions.length - 1) {
-                    count = 0;
-                    activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
-                } else {
-                    count++;
-                    activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
+            int count = activityWelcomeBinding.Viewpager.getCurrentItem();
+            if (count == slidePagerAdapter.slideDescriptions.length - 1) {
+                count = 0;
+                activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
+            } else {
+                count++;
+                activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
 
-                }
+            }
 
-            };
+        };
 
 
-            timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        handler.post(runnable);
-                    }
-                }, 2000, 2000);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        }, 2000, 2000);
 
 
     }

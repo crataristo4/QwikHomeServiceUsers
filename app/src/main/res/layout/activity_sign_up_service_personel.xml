@@ -27,6 +27,7 @@
                 android:textColor="@color/purple"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="center_horizontal"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -53,12 +54,12 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="username"
                     android:drawableStart="@drawable/ic_person_ash"
                     android:drawableLeft="@drawable/ic_person_ash"
                     android:drawablePadding="@dimen/eightDp"
                     android:hint="@string/enter_full_name"
                     android:imeOptions="actionNext"
-                    android:autofillHints="username"
                     android:importantForAutofill="yes"
                     android:inputType="textCapWords"
                     android:paddingStart="@dimen/eightDp"
@@ -94,13 +95,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="email"
                     android:drawableStart="@drawable/ic_email_ash"
                     android:drawableLeft="@drawable/ic_email_ash"
                     android:drawablePadding="@dimen/eightDp"
                     android:hint="@string/enter_email"
                     android:imeOptions="actionDone"
                     android:importantForAutofill="yes"
-                    android:autofillHints="email"
                     android:inputType="textEmailAddress"
                     android:paddingStart="@dimen/eightDp"
                     android:paddingEnd="@dimen/eightDp"

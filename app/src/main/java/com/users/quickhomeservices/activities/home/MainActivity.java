@@ -67,12 +67,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    public static String serviceType, name, imageUrl, email, uid, compareUid;
-    private static FirebaseUser firebaseUser;
-    private ActivityMainBinding activityMainBinding;
+    public static String serviceType;
+    public static String name;
+    public static String imageUrl;
+    public static String uid;
     public static DatabaseReference serviceTypeDbRef, usersAccountDbRef;
-    public static FirebaseAuth mAuth;
+    private static String email;
+    private static String compareUid;
+    private static FirebaseAuth mAuth;
+    private static FirebaseUser firebaseUser;
     private static Object mContext;
+    private ActivityMainBinding activityMainBinding;
     //adds
     private InterstitialAd interstitialAd;
 
@@ -91,16 +96,14 @@ public class MainActivity extends AppCompatActivity {
             //TODO update database with location results
 
 
-
-
         }
     };
 
-    public static Context getAppContext() {
+    private static Context getAppContext() {
         return (Context) mContext;
     }
 
-    public static void retrieveServiceType() {
+    private static void retrieveServiceType() {
 
         usersAccountDbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -181,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(photo);
                 }
-
 
 
             }
@@ -432,7 +434,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
-
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -495,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -512,7 +514,7 @@ public class MainActivity extends AppCompatActivity {
                         .getReference().child("Users")
                         .child(uid);
                 usersAccountDbRef.keepSynced(true);
-                Log.i(TAG, "Current id: " + uid);
+                usersAccountDbRef.child("online").setValue(true);
                 checkDisplayAlertDialog();
                 retrieveServiceType();
 
@@ -526,10 +528,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-       /* if (checkPermission()){
-            getLastLocation();
-        }*/
+    protected void onStop() {
+        super.onStop();
+        if (firebaseUser != null)
+            usersAccountDbRef.child("online").setValue(true);
+
     }
 }

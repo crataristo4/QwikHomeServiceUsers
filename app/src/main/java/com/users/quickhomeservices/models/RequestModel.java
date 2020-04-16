@@ -17,27 +17,27 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 public class RequestModel extends BaseObservable {
-    public float rating;
-    public String senderId;
-    public String receiverId;
-    public String name;
-    public String reason;
-    public String price;
-    public String itemName;
-    public double latitude;
-    public double longitude;
-    public String response;
-    public String location;
-    public String mobileNumber;
-    public String itemImage;
-    public String distanceBetween;
-    public String senderPhoto;
-    public String senderName;
-    public String servicePersonName;
-    public String servicePersonPhoto;
-    public String dateRequested;
-    public String paymentStatus;
-    public String paymentAmount;
+    private float rating;
+    private String senderId;
+    private String receiverId;
+    private String name;
+    private String reason;
+    private String price;
+    private String itemName;
+    private double latitude;
+    private double longitude;
+    private String response;
+    private String location;
+    private String mobileNumber;
+    private String itemImage;
+    private String distanceBetween;
+    private String senderPhoto;
+    private String senderName;
+    private String servicePersonName;
+    private String servicePersonPhoto;
+    private String dateRequested;
+    private String paymentStatus;
+    private String paymentAmount;
 
     public RequestModel() {
     }

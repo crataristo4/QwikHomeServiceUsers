@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class GetDateTime {
     public static String getFormattedDate(Date date) {
@@ -49,7 +50,7 @@ public class GetDateTime {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
                     .parse(oldStringDate);
-            newDate = dateFormat.format(date);
+            newDate = dateFormat.format(Objects.requireNonNull(date));
         } catch (ParseException e) {
             e.printStackTrace();
             newDate = oldStringDate;
@@ -58,7 +59,7 @@ public class GetDateTime {
         return newDate;
     }
 
-    public static String getCountry() {
+    private static String getCountry() {
         Locale locale = Locale.getDefault();
         String country = locale.getCountry();
         return country.toLowerCase();

@@ -8,7 +8,7 @@ import com.users.quickhomeservices.models.Users;
 
 public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "my_shared_pref";
-    protected static SharedPrefManager instance;
+    private static SharedPrefManager instance;
     private Context context;
 
     private SharedPrefManager(Context context) {

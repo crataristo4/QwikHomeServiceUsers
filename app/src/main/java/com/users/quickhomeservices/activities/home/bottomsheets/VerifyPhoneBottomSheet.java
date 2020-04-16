@@ -207,7 +207,6 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
     }
 
 
-
     private void getHintPhoneNumber() {
         HintRequest hintRequest =
                 new HintRequest.Builder()
@@ -247,7 +246,6 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
                     } else {
                         DisplayViewUI.displayToast(getActivity(), "No internet");
                     }
-
 
 
                 }

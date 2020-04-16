@@ -19,12 +19,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.databinding.LayoutStylesListItemBinding;
 import com.users.quickhomeservices.models.StylesItemModel;
 import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 
 public class StylesAdapter extends FirebaseRecyclerAdapter<StylesItemModel, StylesAdapter.StylesViewHolder> {
@@ -99,9 +99,9 @@ public class StylesAdapter extends FirebaseRecyclerAdapter<StylesItemModel, Styl
 
     public static class StylesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public LayoutStylesListItemBinding layoutStylesListItemBinding;
+        LayoutStylesListItemBinding layoutStylesListItemBinding;
 
-        public StylesViewHolder(@NonNull LayoutStylesListItemBinding layoutStylesListItemBinding) {
+        StylesViewHolder(@NonNull LayoutStylesListItemBinding layoutStylesListItemBinding) {
             super(layoutStylesListItemBinding.getRoot());
             this.layoutStylesListItemBinding = layoutStylesListItemBinding;
             layoutStylesListItemBinding.getRoot().setOnClickListener(this);

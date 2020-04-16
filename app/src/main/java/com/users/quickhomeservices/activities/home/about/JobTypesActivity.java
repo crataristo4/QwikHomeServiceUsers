@@ -17,13 +17,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.MainActivity;
-import com.users.quickhomeservices.databinding.ActivityJobTypesBinding;
-import com.users.quickhomeservices.models.StylesItemModel;
-import com.users.quickhomeservices.utils.DisplayViewUI;
-import com.users.quickhomeservices.utils.GetDateTime;
-import com.users.quickhomeservices.utils.MyConstants;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +26,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.databinding.ActivityJobTypesBinding;
+import com.users.quickhomeservices.models.StylesItemModel;
+import com.users.quickhomeservices.utils.DisplayViewUI;
+import com.users.quickhomeservices.utils.GetDateTime;
+import com.users.quickhomeservices.utils.MyConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,14 +48,14 @@ import id.zelory.compressor.Compressor;
 
 public class JobTypesActivity extends AppCompatActivity {
 
+    private static final String TAG = "JobTypesActivity";
+    private String dateTime;
     private ActivityJobTypesBinding activityJobTypesBinding;
-    String dateTime;
     private CircleImageView styleItemPhoto;
     private TextInputLayout txtStyleName, txtPrice;
     private StorageReference mStorageReference;
     private Uri uri;
     private DatabaseReference serviceTypeDbRef, activityDbRef;
-    private static final String TAG = "JobTypesActivity";
     private int price;
     private String uid, style, getImageUploadUri, accountType, userImage, userName;
 
@@ -121,7 +121,7 @@ public class JobTypesActivity extends AppCompatActivity {
 
     private void validateInputs(View v) {
         style = Objects.requireNonNull(txtStyleName.getEditText()).getText().toString();
-        price = Objects.requireNonNull(Integer.parseInt(String.valueOf(txtPrice.getEditText().getText())));
+        price = Objects.requireNonNull(Integer.parseInt(String.valueOf(Objects.requireNonNull(txtPrice.getEditText()).getText())));
 
         if (style.trim().isEmpty()) {
             txtStyleName.setErrorEnabled(true);
@@ -183,7 +183,7 @@ public class JobTypesActivity extends AppCompatActivity {
             fileReference.putFile(uri).continueWithTask(task -> {
                 if (!task.isSuccessful()) {
                     progressDialog.dismiss();
-                    DisplayViewUI.displayToast(JobTypesActivity.this, task.getException().getMessage());
+                    DisplayViewUI.displayToast(JobTypesActivity.this, Objects.requireNonNull(task.getException()).getMessage());
 
                 }
                 return fileReference.getDownloadUrl();
@@ -233,7 +233,7 @@ public class JobTypesActivity extends AppCompatActivity {
 
                         } else {
                             progressDialog.dismiss();
-                            DisplayViewUI.displayToast(this, task1.getException().getMessage());
+                            DisplayViewUI.displayToast(this, Objects.requireNonNull(task1.getException()).getMessage());
 
                         }
 
@@ -241,7 +241,7 @@ public class JobTypesActivity extends AppCompatActivity {
 
                 } else {
                     progressDialog.dismiss();
-                    DisplayViewUI.displayToast(this, task.getException().getMessage());
+                    DisplayViewUI.displayToast(this, Objects.requireNonNull(task.getException()).getMessage());
 
                 }
 

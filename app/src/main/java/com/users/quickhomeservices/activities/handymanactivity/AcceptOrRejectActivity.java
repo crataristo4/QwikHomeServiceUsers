@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +30,14 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AcceptOrRejectActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView name;
+    private TextView dtate;
+    private TextView reason;
+    private ProgressDialog loading;
+    private CircleImageView mPhto;
     private Button btnAcpt, btnRejct;
     private String uid, response, getHandyManId, getLocation, getName, getDate, getReason, getPhoto, adapterPosition;
     private Intent intent;
-    TextView name, dtate, reason;
-    ProgressDialog loading;
-    CircleImageView mPhto;
     private String notApproved, accepted, rejected;
     private DatabaseReference requestDbref;
 
@@ -186,7 +188,7 @@ public class AcceptOrRejectActivity extends AppCompatActivity implements View.On
 
 
     //Displays a toast
-    void makeToast(String status) {
+    private void makeToast(String status) {
         Toast toast = Toast.makeText(AcceptOrRejectActivity.this, status,
                 Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);

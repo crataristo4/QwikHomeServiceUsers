@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.users.quickhomeservices.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GridBaseAdapter extends BaseAdapter {
 
@@ -47,7 +48,7 @@ public class GridBaseAdapter extends BaseAdapter {
         inflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.grid_item, parent, false);
+        View itemView = Objects.requireNonNull(inflater).inflate(R.layout.grid_item, parent, false);
 
         ivGallery = itemView.findViewById(R.id.ivGallery);
         textView = itemView.findViewById(R.id.tv);

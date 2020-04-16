@@ -13,7 +13,7 @@ import com.users.quickhomeservices.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment {
+class MapFragment extends Fragment {
 
 
     public MapFragment() {

@@ -14,10 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.databinding.FragmentProfilePhotoEditBinding;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public class ProfilePhotoEditFragment extends Fragment {
 
-    FragmentProfilePhotoEditBinding fragmentProfilePhotoEditBinding;
+    private FragmentProfilePhotoEditBinding fragmentProfilePhotoEditBinding;
     private OnFragmentInteractionListener mListener;
     private DatabaseReference serviceTypeDbRef;
 

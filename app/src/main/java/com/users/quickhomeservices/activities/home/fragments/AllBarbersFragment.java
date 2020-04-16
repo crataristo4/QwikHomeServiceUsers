@@ -14,23 +14,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.adapters.AllBarbersAdapter;
 import com.users.quickhomeservices.databinding.FragmentAllBarbersBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.MyConstants;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllBarbersFragment extends Fragment {
-    FragmentAllBarbersBinding fragmentAllBarbersBinding;
-    AllBarbersAdapter allBarbersAdapter;
-    RecyclerView rvAllBarbers;
+class AllBarbersFragment extends Fragment {
+    private FragmentAllBarbersBinding fragmentAllBarbersBinding;
+    private AllBarbersAdapter allBarbersAdapter;
+    private RecyclerView rvAllBarbers;
     private DatabaseReference allBarbersDbRef;
 
 

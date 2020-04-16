@@ -20,7 +20,7 @@ import com.users.quickhomeservices.utils.MyConstants;
 import java.util.Objects;
 
 public class ResetPasswordActivity extends AppCompatActivity {
-    ActivityResetPasswordBinding activityResetPasswordBinding;
+    private ActivityResetPasswordBinding activityResetPasswordBinding;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingbar;
 

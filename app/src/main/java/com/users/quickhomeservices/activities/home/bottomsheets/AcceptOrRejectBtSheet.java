@@ -13,9 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.databinding.LayoutAcceptOrRejectBottomSheetBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.databinding.LayoutAcceptOrRejectBottomSheetBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
         if (getData != null) {
 
             adapterPosition = getData.getString("position");
-            Log.i(TAG, adapterPosition);
+            Log.i(TAG, Objects.requireNonNull(adapterPosition));
             layoutAcceptOrRejectBottomSheetBinding.name.setText(getData.getString("name"));
             Glide.with(Objects.requireNonNull(getActivity())).load(getData.getString("image"))
                     .into(layoutAcceptOrRejectBottomSheetBinding.image);
@@ -82,7 +82,6 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
         retrieveRequestDetails();
         btnAccept.setOnClickListener(this::processRequest);
         btnReject.setOnClickListener(this::processRequest);
-
 
 
     }
@@ -148,6 +147,7 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
         //random key for leave accepted
         final String Id = requestDbref.push().getKey();
 
+        // loading.dismiss();
         requestDbref.updateChildren(approve).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
 
@@ -162,10 +162,7 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
 
             }
 
-        }).addOnFailureListener(e -> {
-            // loading.dismiss();
-            e.printStackTrace();
-        });
+        }).addOnFailureListener(Throwable::printStackTrace);
     }
 
     //method to reject
@@ -183,6 +180,7 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
         reject.put("timeStamp", ServerValue.TIMESTAMP);
         final String Id = requestDbref.push().getKey();
         //random key for leave accepted
+        // loading.dismiss();
         requestDbref.updateChildren(rejectxx).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 assert Id != null;
@@ -197,10 +195,7 @@ public class AcceptOrRejectBtSheet extends BottomSheetDialogFragment {
 
             }
 
-        }).addOnFailureListener(e -> {
-            // loading.dismiss();
-            e.printStackTrace();
-        });
+        }).addOnFailureListener(Throwable::printStackTrace);
 
     }
 

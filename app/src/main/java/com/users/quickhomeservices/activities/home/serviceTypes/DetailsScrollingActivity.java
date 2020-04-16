@@ -36,16 +36,15 @@ import java.util.Objects;
 
 public class DetailsScrollingActivity extends AppCompatActivity {
 
+    private static final String TAG = "DetailsActivity";
+    private int numberOfItems = 0;
     private ActivityDetailsScrollingBinding activityDetailsScrollingBinding;
     private DatabaseReference databaseReference;
     private StylesAdapter adapter;
     //FirebaseRecyclerPagingAdapter<StylesItemModel, StylesAdapter.StylesViewHolder> adapter;
     private String name, about, image, servicePersonId;
-    int numberOfItems = 0;
-    private static final String TAG = "DetailsActivity";
     //BottomSheetBehavior mBottomSheetBehavior;
     private long mLastClickTime = 0;
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)

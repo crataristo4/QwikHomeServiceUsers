@@ -14,20 +14,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
 import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.adapters.StylesAdapter;
 import com.users.quickhomeservices.databinding.FragmentAccountBinding;
 import com.users.quickhomeservices.models.StylesItemModel;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends Fragment {
+class AccountFragment extends Fragment {
    /* private static final String TAG = "AccountFragment";
     String uid, accountType, name, about, imageUrl;
     private FirebaseAuth mAuth;
@@ -38,12 +40,11 @@ public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding accountBinding;
     private DatabaseReference databaseReference;
+    private StylesAdapter adapter;
 
     public AccountFragment() {
         // Required empty public constructor
     }
-
-    private StylesAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -121,7 +122,7 @@ public class AccountFragment extends Fragment {
                         StylesItemModel.class)
                         .build();
 
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (Objects.requireNonNull(getActivity()).getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rv.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         } else if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
