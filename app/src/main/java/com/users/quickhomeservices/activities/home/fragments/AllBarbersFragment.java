@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.AllBarbersAdapter;
+import com.users.quickhomeservices.adapters.ServiceUsersAdapter;
 import com.users.quickhomeservices.databinding.FragmentAllBarbersBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.MyConstants;
@@ -29,7 +29,7 @@ import com.users.quickhomeservices.utils.MyConstants;
  */
 public class AllBarbersFragment extends Fragment {
     private FragmentAllBarbersBinding fragmentAllBarbersBinding;
-    private AllBarbersAdapter allBarbersAdapter;
+    private ServiceUsersAdapter serviceUsersAdapter;
     private RecyclerView rvAllBarbers;
     private DatabaseReference allBarbersDbRef;
 
@@ -74,9 +74,9 @@ public class AllBarbersFragment extends Fragment {
                         Users.class)
                         .build();
 
-        allBarbersAdapter = new AllBarbersAdapter(options, getContext());
+        serviceUsersAdapter = new ServiceUsersAdapter(options, getContext());
 
-        rvAllBarbers.setAdapter(allBarbersAdapter);
+        rvAllBarbers.setAdapter(serviceUsersAdapter);
 
 
     }
@@ -101,12 +101,12 @@ public class AllBarbersFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        allBarbersAdapter.startListening();
+        serviceUsersAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        allBarbersAdapter.stopListening();
+        serviceUsersAdapter.stopListening();
     }
 }

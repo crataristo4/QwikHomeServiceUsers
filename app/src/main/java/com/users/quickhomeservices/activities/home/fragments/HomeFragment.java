@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.serviceTypes.AllBarbersActivity;
+import com.users.quickhomeservices.activities.home.serviceTypes.AllServicesActivity;
 import com.users.quickhomeservices.databinding.FragmentHomeBinding;
 import com.users.quickhomeservices.utils.MyConstants;
 
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
 
         fragmentHomeBinding.mMaterialCard1.setOnClickListener(v -> {
 
-            intent = new Intent(getContext(), AllBarbersActivity.class);
+            intent = new Intent(getContext(), AllServicesActivity.class);
             intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.WOMEN_HAIR_STYLIST);
             startActivity(intent);
 
@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
 
         fragmentHomeBinding.mMaterialCard2.setOnClickListener(v -> {
 
-            intent = new Intent(getContext(), AllBarbersActivity.class);
+            intent = new Intent(getContext(), AllServicesActivity.class);
             intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.INTERIOR_DERCORATOR);
             startActivity(intent);
 
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
 
         fragmentHomeBinding.mMaterialCard3.setOnClickListener(v -> {
 
-            intent = new Intent(getContext(), AllBarbersActivity.class);
+            intent = new Intent(getContext(), AllServicesActivity.class);
             intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.BARBERS);
             startActivity(intent);
 

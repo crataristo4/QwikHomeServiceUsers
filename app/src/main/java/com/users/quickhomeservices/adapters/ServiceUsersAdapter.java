@@ -31,11 +31,11 @@ import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 
 //TODO change class name
-public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
-        AllBarbersAdapter.AllBarbersViewHolder> {
+public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
+        ServiceUsersAdapter.AllBarbersViewHolder> {
     private Context mContext;
 
-    public AllBarbersAdapter(@NonNull FirebaseRecyclerOptions<Users> options, Context context) {
+    public ServiceUsersAdapter(@NonNull FirebaseRecyclerOptions<Users> options, Context context) {
         super(options);
         mContext = context;
 

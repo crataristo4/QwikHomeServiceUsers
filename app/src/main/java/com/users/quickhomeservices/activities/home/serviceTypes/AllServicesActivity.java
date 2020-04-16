@@ -14,24 +14,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.adapters.AllBarbersAdapter;
-import com.users.quickhomeservices.databinding.ActivityAllBarbersBinding;
+import com.users.quickhomeservices.adapters.ServiceUsersAdapter;
+import com.users.quickhomeservices.databinding.ActivityAllServicesBinding;
 import com.users.quickhomeservices.models.Users;
 import com.users.quickhomeservices.utils.MyConstants;
 
 import java.util.Objects;
 
 //TODO change class name
-public class AllBarbersActivity extends AppCompatActivity {
-    private ActivityAllBarbersBinding activityAllBarbersBinding;
-    private AllBarbersAdapter adapter;
+public class AllServicesActivity extends AppCompatActivity {
+    private ActivityAllServicesBinding allServicesBinding;
+    private ServiceUsersAdapter adapter;
     private RecyclerView recyclerView;
     private String serviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityAllBarbersBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_barbers);
+        allServicesBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_services);
 
         initRecyclerView();
 
@@ -73,7 +73,8 @@ public class AllBarbersActivity extends AppCompatActivity {
                 .child(serviceType);
         allBarbersDbRef.keepSynced(true);
 
-        recyclerView = activityAllBarbersBinding.rvAllBarbers;
+        recyclerView = allServicesBinding.rvAllBarbers;
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         //querying the database BY NAME
@@ -94,7 +95,7 @@ public class AllBarbersActivity extends AppCompatActivity {
 
         }
 
-        adapter = new AllBarbersAdapter(options, AllBarbersActivity.this);
+        adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
         recyclerView.setAdapter(adapter);
 
     }

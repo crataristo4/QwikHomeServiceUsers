@@ -50,7 +50,7 @@
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.serviceTypes.AllBarbersActivity"
+            android:name="com.users.quickhomeservices.activities.home.serviceTypes.AllServicesActivity"
             android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
 
         <activity

@@ -89,7 +89,6 @@ public class ItemViewClickEvents {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.hasChildren() && dataSnapshot.exists()) {
 
-
                                             if (!dataSnapshot.hasChild(currentUserId)) {
                                                 loading.dismiss();
                                                 DisplayViewUI.displayToast(view.getContext(), "Sorry you can not log in.\nNo details associated with this account.");

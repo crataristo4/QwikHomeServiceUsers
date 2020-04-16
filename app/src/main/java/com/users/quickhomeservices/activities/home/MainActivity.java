@@ -260,7 +260,20 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-        checkUid();
+        try {
+
+            if (mAuth.getCurrentUser() == null) {
+                SendUserToLoginActivity();
+            } else if (mAuth.getCurrentUser() != null) {
+
+                checkUid();
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //initialize step 5
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -402,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendUserToLoginActivity() {
         Intent Login = new Intent(MainActivity.this, SplashScreenActivity.class);
-        Login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(Login);
         finish();
     }
@@ -481,7 +494,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     if (!dataSnapshot.hasChild(Objects.requireNonNull(mAuth.getUid()))) {
 
-                        Log.i(TAG, "id does not exist: ");
                         SendUserToLoginActivity();
                     }
                 } catch (Exception e) {
@@ -501,29 +513,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        try {
-           /* assert firebaseUser != null;
-            uid = firebaseUser.getUid();
-*/
-            if (mAuth.getCurrentUser() == null) {
-                SendUserToLoginActivity();
-            } else {
-                assert firebaseUser != null;
-                uid = firebaseUser.getUid();
-                usersAccountDbRef = FirebaseDatabase.getInstance()
-                        .getReference().child("Users")
-                        .child(uid);
-                usersAccountDbRef.keepSynced(true);
-                checkDisplayAlertDialog();
-                retrieveServiceType();
+        assert firebaseUser != null;
+        uid = firebaseUser.getUid();
+        usersAccountDbRef = FirebaseDatabase.getInstance()
+                .getReference().child("Users")
+                .child(uid);
+        usersAccountDbRef.keepSynced(true);
+        checkDisplayAlertDialog();
+        retrieveServiceType();
 
-
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 

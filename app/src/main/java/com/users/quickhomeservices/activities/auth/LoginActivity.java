@@ -18,7 +18,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout mLoginEmail, mLoginPassword;
-    private ItemViewClickEvents itemViewClickEvents, itemViewClickEvent;
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private ActivityLoginBinding activityLoginBinding;
@@ -32,99 +31,25 @@ public class LoginActivity extends AppCompatActivity {
             Objects.requireNonNull(activityLoginBinding.txtPasswordLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.PASS));
             Objects.requireNonNull(activityLoginBinding.txtEmailLayout.getEditText()).setText(savedInstanceState.getString(MyConstants.EMAIL));
         }
-        itemViewClickEvents = new ItemViewClickEvents(this);
+        ItemViewClickEvents itemViewClickEvents = new ItemViewClickEvents(this);
         activityLoginBinding.setOnItemClick(itemViewClickEvents);
 
-        itemViewClickEvent = new ItemViewClickEvents(activityLoginBinding.txtEmailLayout, activityLoginBinding.txtPasswordLayout);
+        ItemViewClickEvents itemViewClickEvent = new ItemViewClickEvents(activityLoginBinding.txtEmailLayout, activityLoginBinding.txtPasswordLayout);
         activityLoginBinding.setValidateInput(itemViewClickEvent);
 
-       /* mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
-
-
-        mLoginEmail = activityLoginBinding.txtEmailLayout;
-        mLoginPassword = activityLoginBinding.txtPasswordLayout;*/
-
-
     }
 
 
-
-/*
-    public void gotoMainPage(View view) {
-        validateLogin(view);
-    }
-*/
-
-/*
-    private void validateLogin(View view) {
-        String email = Objects.requireNonNull(mLoginEmail.getEditText()).getText().toString();
-        String password = Objects.requireNonNull(mLoginPassword.getEditText()).getText().toString();
-
-        if (password.trim().isEmpty()) {
-            mLoginPassword.setErrorEnabled(true);
-            mLoginPassword.setError("password required");
-        } else {
-            mLoginPassword.setErrorEnabled(false);
-        }
-        if (email.trim().isEmpty()) {
-            mLoginEmail.setErrorEnabled(true);
-            mLoginEmail.setError("email required");
-        } else {
-            mLoginEmail.setErrorEnabled(false);
-        }
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-           // loadingbar.setTitle("");
-            final ProgressDialog loading =   DisplayViewUI.displayProgress(view.getContext(),"Please wait...");
-            loading.show();
-
-
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            if (mAuth.getCurrentUser().isEmailVerified()) {
-                                assert firebaseUser != null;
-                                //currentUserId = firebaseUser.getUid();
-
-                                Intent gotoAbout = new Intent(LoginActivity.this, MainActivity.class);
-                                //gotoAbout.putExtra("userId", currentUserId);
-                                // gotoAbout.putExtra("accountType", passAccountTypeValue);
-
-                                startActivity(gotoAbout
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                                finish();
-                                loading.dismiss();
-                            } else {
-                                loading.dismiss();
-                                DisplayViewUI.displayAlertDialogMsg(view.getContext(), "Hello" + " " + email + " "
-                                        + " " + "\n" + "please check your email  " + "\n" +
-                                        "to verify and continue", "ok", (dialog, which) -> dialog.dismiss());
-
-                            }
-
-
-                        } else {
-                            loading.dismiss();
-                            String message = task.getException().getMessage();
-                            DisplayViewUI.displayToast(view.getContext(),message);
-                        }
-                    });
-
-        }
-    }
-*/
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        moveTaskToBack(true);
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(MyConstants.PASS, Objects.requireNonNull(activityLoginBinding.txtPasswordLayout.getEditText()).getText().toString());
         outState.putString(MyConstants.EMAIL, Objects.requireNonNull(activityLoginBinding.txtEmailLayout.getEditText()).getText().toString());
-
         super.onSaveInstanceState(outState);
     }
 
