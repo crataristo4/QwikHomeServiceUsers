@@ -60,6 +60,7 @@ import com.users.quickhomeservices.utils.MyConstants;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -257,10 +258,7 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-       /* if (mAuth.getCurrentUser() == null) {
-            SendUserToLoginActivity();
-            return;
-        }*/
+        checkUid();
 
         //initialize step 5
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -271,9 +269,6 @@ public class MainActivity extends AppCompatActivity {
 
         //load add
         // loadAdds();
-
-
-
 
     }
 
@@ -431,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_logout:
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, SplashScreenActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
 
                 break;
@@ -482,11 +477,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (!dataSnapshot.hasChild(firebaseUser.getUid())) {
+                try {
+                    if (!dataSnapshot.hasChild(Objects.requireNonNull(mAuth.getUid()))) {
 
-                    Log.i(TAG, "id does not exist: ");
-                    SendUserToLoginActivity();
+                        Log.i(TAG, "id does not exist: ");
+                        SendUserToLoginActivity();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -500,13 +500,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         try {
-            assert firebaseUser != null;
+           /* assert firebaseUser != null;
             uid = firebaseUser.getUid();
-
-
-            checkUid();
-
-            if (!firebaseUser.isEmailVerified()) {
+*/
+            if (mAuth.getCurrentUser() == null) {
                 SendUserToLoginActivity();
             } else {
                 assert firebaseUser != null;
@@ -519,12 +516,9 @@ public class MainActivity extends AppCompatActivity {
                 checkDisplayAlertDialog();
                 retrieveServiceType();
 
-            }
-
-            if (!compareUid.equals(uid)) {
-                SendUserToLoginActivity();
 
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();

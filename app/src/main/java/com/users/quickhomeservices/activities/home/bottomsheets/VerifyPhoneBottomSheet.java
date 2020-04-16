@@ -26,19 +26,14 @@ import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.hbb20.CountryCodePicker;
 import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.activities.home.MainActivity;
 import com.users.quickhomeservices.databinding.LayoutAddPhoneBinding;
 import com.users.quickhomeservices.utils.DisplayViewUI;
 
@@ -208,31 +203,9 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
 
     private void verifyCode(String code) {
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationCode, code);
-        signInWithPhoneAuthCredentials(phoneAuthCredential);
 
     }
 
-    private void signInWithPhoneAuthCredentials(PhoneAuthCredential phoneAuthCredential) {
-
-        MainActivity.mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()) {
-                    DisplayViewUI.displayToast(getActivity(), "Successfull");
-                    // TODO: 15-Apr-20 update number to firebase
-                } else {
-                    if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                        DisplayViewUI.displayToast(getActivity(), task.getException().getMessage());
-
-                    } else {
-                        DisplayViewUI.displayToast(getActivity(), "try again");
-
-                    }
-                }
-            }
-        });
-    }
 
 
     private void getHintPhoneNumber() {

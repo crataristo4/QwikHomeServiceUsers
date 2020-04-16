@@ -7,8 +7,8 @@ import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
-import com.users.quickhomeservices.utils.AppSignatureHelper;
 import com.google.firebase.database.FirebaseDatabase;
+import com.users.quickhomeservices.utils.AppSignatureHelper;
 
 public class HandyManApp extends Application {
 
@@ -26,6 +26,7 @@ public class HandyManApp extends Application {
         FirebaseDatabase.getInstance().getReference().keepSynced(true);
 
 
+
     }
 
     @Override
@@ -34,4 +35,6 @@ public class HandyManApp extends Application {
         MultiDex.install(this);
 
     }
+
+
 }

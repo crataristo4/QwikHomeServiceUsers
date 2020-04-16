@@ -100,7 +100,7 @@ public class RequestFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
             recyclerView.setAdapter(requestAdapter);
 
-        }, 5000);
+        }, 000);
 
 
     }
