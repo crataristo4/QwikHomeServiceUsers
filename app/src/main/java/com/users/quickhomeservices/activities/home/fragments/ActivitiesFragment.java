@@ -25,7 +25,7 @@ import com.users.quickhomeservices.models.StylesItemModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-class ActivitiesFragment extends Fragment {
+public class ActivitiesFragment extends Fragment {
 
     private static final String TAG = "ActivityFragment";
     private FragmentActivitiesBinding fragmentActivitiesBinding;

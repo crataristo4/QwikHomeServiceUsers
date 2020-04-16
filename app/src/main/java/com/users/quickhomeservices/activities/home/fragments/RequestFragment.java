@@ -25,7 +25,7 @@ import com.users.quickhomeservices.databinding.FragmentRequestBinding;
 import com.users.quickhomeservices.models.RequestModel;
 
 
-class RequestFragment extends Fragment {
+public class RequestFragment extends Fragment {
     private FragmentRequestBinding fragmentRequestBinding;
     private RequestAdapter requestAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;

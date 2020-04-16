@@ -14,12 +14,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.users.quickhomeservices.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Users extends BaseObservable {
 
-    public boolean online;
     private float rating;
     private String userId;
     private String name;
@@ -63,23 +63,28 @@ public class Users extends BaseObservable {
     @BindingAdapter("imageUrl")
     public static void loadImages(CircleImageView imageView, String imageUrl) {
         Context context = imageView.getContext();
-        Glide.with(context)
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
-                        return false;
-                    }
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            Glide.with(context)
+                    .load(context.getResources().getDrawable(R.drawable.photoe))
+                    .into(imageView);
+        } else {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+                        @Override
+                        public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+                            return false;
+                        }
+                    })
+                    .into(imageView);
+        }
 
-
-                        return false;
-                    }
-                })
-                .into(imageView);
     }
 
     public String getUserId() {
@@ -280,11 +285,5 @@ public class Users extends BaseObservable {
         this.dateRequested = dateRequested;
     }
 
-    public boolean isOnline() {
-        return online;
-    }
 
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
 }

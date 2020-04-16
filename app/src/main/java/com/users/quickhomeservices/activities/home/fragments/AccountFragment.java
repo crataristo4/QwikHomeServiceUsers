@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
-class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment {
    /* private static final String TAG = "AccountFragment";
     String uid, accountType, name, about, imageUrl;
     private FirebaseAuth mAuth;

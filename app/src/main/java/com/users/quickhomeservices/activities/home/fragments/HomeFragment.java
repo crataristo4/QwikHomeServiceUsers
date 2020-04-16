@@ -20,7 +20,7 @@ import com.users.quickhomeservices.utils.MyConstants;
 /**
  * A simple {@link Fragment} subclass.
  */
-class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment {
     private FragmentHomeBinding fragmentHomeBinding;
     private Intent intent;
 

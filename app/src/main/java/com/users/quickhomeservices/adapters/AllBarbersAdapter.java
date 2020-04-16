@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,7 +47,7 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
 
         allBarbersViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allBarbersViewHolder.listItemsServicesBinding.setServiceType(singlePerson);
-        allBarbersViewHolder.showPresence(singlePerson.isOnline());
+        //allBarbersViewHolder.showPresence(singlePerson.isOnline());
 
         if (singlePerson.getImage().isEmpty()) {
             Glide.with(allBarbersViewHolder.itemView.getContext())
@@ -121,16 +120,16 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
 
         LayoutListItemsBinding listItemsServicesBinding;
         CardView cardView;
-        ImageView isOnline;
 
         AllBarbersViewHolder(@NonNull LayoutListItemsBinding listItemsServicesBinding) {
             super(listItemsServicesBinding.getRoot());
 
             this.listItemsServicesBinding = listItemsServicesBinding;
             cardView = listItemsServicesBinding.mMaterialCard;
-            isOnline = listItemsServicesBinding.imgPresence;
+
         }
 
+/*
         void showPresence(boolean online) {
             if (online) {
                 isOnline.setVisibility(View.VISIBLE);
@@ -143,6 +142,7 @@ public class AllBarbersAdapter extends FirebaseRecyclerAdapter<Users,
             }
 
         }
+*/
     }
 
 

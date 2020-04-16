@@ -514,7 +514,6 @@ public class MainActivity extends AppCompatActivity {
                         .getReference().child("Users")
                         .child(uid);
                 usersAccountDbRef.keepSynced(true);
-                usersAccountDbRef.child("online").setValue(true);
                 checkDisplayAlertDialog();
                 retrieveServiceType();
 
@@ -527,11 +526,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (firebaseUser != null)
-            usersAccountDbRef.child("online").setValue(true);
 
-    }
 }

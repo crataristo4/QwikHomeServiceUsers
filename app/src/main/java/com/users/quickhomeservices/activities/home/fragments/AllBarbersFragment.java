@@ -27,7 +27,7 @@ import com.users.quickhomeservices.utils.MyConstants;
 /**
  * A simple {@link Fragment} subclass.
  */
-class AllBarbersFragment extends Fragment {
+public class AllBarbersFragment extends Fragment {
     private FragmentAllBarbersBinding fragmentAllBarbersBinding;
     private AllBarbersAdapter allBarbersAdapter;
     private RecyclerView rvAllBarbers;
