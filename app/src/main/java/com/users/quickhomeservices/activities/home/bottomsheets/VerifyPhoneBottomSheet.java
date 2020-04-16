@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,27 +14,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
-import com.users.quickhomeservices.R;
-import com.users.quickhomeservices.databinding.LayoutAddPhoneBinding;
-import com.users.quickhomeservices.utils.DisplayViewUI;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.hbb20.CountryCodePicker;
+import com.users.quickhomeservices.R;
+import com.users.quickhomeservices.activities.home.MainActivity;
+import com.users.quickhomeservices.databinding.LayoutAddPhoneBinding;
+import com.users.quickhomeservices.utils.DisplayViewUI;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -59,9 +67,9 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
             //this method automatically handles the code sent
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
-                verifyCode(code);
-                Log.i("VerificationCode: ", code);
                 Objects.requireNonNull(txtVerifyCode.getEditText()).setText(code);
+
+                verifyCode(code);
             }
 
 
@@ -76,6 +84,7 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
     private DatabaseReference userDbRef;
     private GoogleApiClient mGoogleApiClient;
     private CountryCodePicker countryCodePicker;
+    private ProgressBar loading;
 
     private void cancelBottomSheetDialog(View view) {
 
@@ -110,6 +119,7 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
         txtPhoneNumber = layoutAddPhoneBinding.textInputLayoutPhone;
         txtVerifyCode = layoutAddPhoneBinding.textInputLayoutConfirmCode;
         countryCodePicker = layoutAddPhoneBinding.ccp;
+        loading = layoutAddPhoneBinding.progressBarVerify;
 
         countryCodePicker.registerCarrierNumberEditText(txtPhoneNumber.getEditText());
         countryCodePicker.setNumberAutoFormattingEnabled(true);
@@ -121,19 +131,19 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
                 .addApi(Auth.CREDENTIALS_API)
                 .build();
 
-        getmVerificationCode = Objects.requireNonNull(Objects.requireNonNull(txtVerifyCode.getEditText()).getText().toString());
-
-        Log.i("inputFromCode: ", getmVerificationCode);
-
         //todo complete process
         layoutAddPhoneBinding.btnVerify.setOnClickListener(v -> {
-            if (mVerificationCode.equals(String.valueOf(getmVerificationCode))) {
-                //update user account with phone number
-                DisplayViewUI.displayToast(getActivity(), "true");
+            getmVerificationCode = Objects.requireNonNull(Objects.requireNonNull(txtVerifyCode.getEditText()).getText().toString());
 
-            } else {
-                DisplayViewUI.displayToast(getActivity(), "false");
+            if (getmVerificationCode.trim().isEmpty() || getmVerificationCode.length() < 6) {
+                txtVerifyCode.setErrorEnabled(true);
+                txtVerifyCode.setError("Verification code invalid");
             }
+            if (!getmVerificationCode.trim().isEmpty() && getmVerificationCode.length() == 6) {
+
+                verifyCode(getmVerificationCode);
+            }
+
         });
 
         layoutAddPhoneBinding.btnRegisterPhoneNumber.setOnClickListener(v -> {
@@ -198,13 +208,30 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
 
     private void verifyCode(String code) {
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationCode, code);
+        signInWithPhoneAuthCredentials(phoneAuthCredential);
 
-        Log.i("Phone Auth: ", Objects.requireNonNull(phoneAuthCredential.getSmsCode()));
-        code = getmVerificationCode;
-        Log.i("CodeFromInput: ", code);
-        String finalCode = code;
+    }
 
+    private void signInWithPhoneAuthCredentials(PhoneAuthCredential phoneAuthCredential) {
 
+        MainActivity.mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()) {
+                    DisplayViewUI.displayToast(getActivity(), "Successfull");
+                    // TODO: 15-Apr-20 update number to firebase
+                } else {
+                    if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                        DisplayViewUI.displayToast(getActivity(), task.getException().getMessage());
+
+                    } else {
+                        DisplayViewUI.displayToast(getActivity(), "try again");
+
+                    }
+                }
+            }
+        });
     }
 
 
@@ -222,9 +249,9 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
     }
 
     private void showHideLayout() {
-        layoutAddPhoneBinding.progressBarVerify.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.VISIBLE);
         new Handler().postDelayed(() -> {
-            layoutAddPhoneBinding.progressBarVerify.setVisibility(View.GONE);
+            loading.setVisibility(View.GONE);
             layoutAddPhoneBinding.constrainLayoutConfrimNumber.setVisibility(View.GONE);
             layoutAddPhoneBinding.constrainLayoutVerifyPhone.setVisibility(View.VISIBLE);
         }, 5000);
@@ -241,12 +268,13 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
                     Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
                     String getProvider = Objects.requireNonNull(credential).getId();
 
-                    Log.i("onActivityResult: ", getProvider);
-                    sendVerificationCode(getProvider);
+                    if (isNetworkConnected()) {
+                        sendVerificationCode(getProvider);
+                        showHideLayout();
+                    } else {
+                        DisplayViewUI.displayToast(getActivity(), "No internet");
+                    }
 
-                    showHideLayout();
-                    // credential.getId();  <-- will need to process phone number string
-                    // Objects.requireNonNull(txtPhoneNumber.getEditText()).setText(Objects.requireNonNull(credential).getId());
 
 
                 }
@@ -254,4 +282,14 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
             }
         }
     }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
+        assert networkInfo != null;
+        return networkInfo.isConnectedOrConnecting();
+
+    }
 }
+

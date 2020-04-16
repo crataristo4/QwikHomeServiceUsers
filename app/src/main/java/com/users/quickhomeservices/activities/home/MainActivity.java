@@ -65,13 +65,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private static final String TAG = "MainActivity";
     public static String serviceType, name, imageUrl, email, uid, compareUid;
     private static FirebaseUser firebaseUser;
     private ActivityMainBinding activityMainBinding;
     public static DatabaseReference serviceTypeDbRef, usersAccountDbRef;
-    private static FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     private static Object mContext;
     //adds
     private InterstitialAd interstitialAd;
@@ -406,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendUserToLoginActivity() {
         Intent Login = new Intent(MainActivity.this, SplashScreenActivity.class);
+        Login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(Login);
         finish();
     }
