@@ -26,9 +26,15 @@ import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
@@ -204,7 +210,39 @@ public class VerifyPhoneBottomSheet extends BottomSheetDialogFragment implements
     private void verifyCode(String code) {
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationCode, code);
 
+        signInWithCredentials(phoneAuthCredential);
+
     }
+
+    private void signInWithCredentials(PhoneAuthCredential phoneAuthCredential) {
+
+        loading.setVisibility(View.VISIBLE);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uid = Objects.requireNonNull(user).getUid();
+        String number = user.getPhoneNumber();
+
+        firebaseAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    loading.setVisibility(View.GONE);
+
+                    DisplayViewUI.displayToast(getActivity(), "Success");
+                    dismiss();
+
+
+                } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                    loading.setVisibility(View.GONE);
+                    dismiss();
+                    DisplayViewUI.displayToast(getActivity(), task.getException().getMessage());
+                }
+
+            }
+        });
+
+    }
+
 
 
     private void getHintPhoneNumber() {
