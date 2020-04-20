@@ -21,9 +21,7 @@ import com.users.qwikhomeservices.databinding.FragmentProfilePhotoEditBinding;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ProfilePhotoEditFragment extends Fragment {
 
     private FragmentProfilePhotoEditBinding fragmentProfilePhotoEditBinding;

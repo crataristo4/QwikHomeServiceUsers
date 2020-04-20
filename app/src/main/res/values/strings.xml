@@ -297,5 +297,6 @@
         ]]>
     </string>
     <string name="presence_state">Presence State</string>
-
+    <string name="agree_and_continue">Agree and continue</string>
+    <string name="searchForServices">Search for service</string>
 </resources>
