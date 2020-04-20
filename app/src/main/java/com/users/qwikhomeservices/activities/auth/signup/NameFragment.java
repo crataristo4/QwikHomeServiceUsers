@@ -1,29 +1,43 @@
 package com.users.qwikhomeservices.activities.auth.signup;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.databinding.FragmentNameBinding;
-import com.users.qwikhomeservices.utils.MyConstants;
+import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class NameFragment extends Fragment {
     private FragmentNameBinding fragmentNameBinding;
-    private String mGetAccountType;
+    private DatabaseReference usersDbRef;
+    private StorageReference mStorageReference;
+    private String getImageUri, uid, mGetFirstName, mGetLatName, mGetFullName;
+    private Uri uri;
+    private CircleImageView profileImage;
 
     public NameFragment() {
         // Required empty public constructor
@@ -43,43 +57,43 @@ public class NameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Spinner spinnerAccountType = fragmentNameBinding.spinnerAccountType;
-        spinnerAccountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    fragmentNameBinding.btnNext.setEnabled(false);
-                } else {
-                    fragmentNameBinding.btnNext.setEnabled(true);
-                    mGetAccountType = parent.getItemAtPosition(position).toString();
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                if (parent.getSelectedItemPosition() == 0) {
-                    fragmentNameBinding.btnNext.setEnabled(false);
-
-                }
-
-            }
-        });
+        fragmentNameBinding.btnFinish.setOnClickListener(this::validateInput);
+        profileImage = fragmentNameBinding.imgUploadPhoto;
+        //service type database
+        usersDbRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Users")
+                .child(uid);
+        mStorageReference = FirebaseStorage.getInstance().getReference("photos");
+        fragmentNameBinding.btnFinish.setOnClickListener(this::validateInput);
+        fragmentNameBinding.fabUploadPhoto.setOnClickListener(v -> openGallery());
+        profileImage.setOnClickListener(v -> openGallery());
 
 
-        if (fragmentNameBinding.btnNext.isEnabled()) {
-            fragmentNameBinding.btnNext.setOnClickListener(this::validateInput);
-
-        }
 
 
     }
 
+    private void openGallery() {
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(16, 16)
+                .start(Objects.requireNonNull(getContext()), this);
+    }
+
     private void validateInput(View view) {
+
+        if (uri == null) {
+            DisplayViewUI.displayToast(getActivity(), "Please select a photo to upload");
+
+        }
+
         TextInputLayout txtFirstName = fragmentNameBinding.txtFirstName;
         TextInputLayout txtLastName = fragmentNameBinding.txtLastName;
 
-        String mGetFirstName = Objects.requireNonNull(txtFirstName.getEditText()).getText().toString();
-        String mGetLatName = Objects.requireNonNull(txtLastName.getEditText()).getText().toString();
+        mGetFirstName = Objects.requireNonNull(txtFirstName.getEditText()).getText().toString();
+        mGetLatName = Objects.requireNonNull(txtLastName.getEditText()).getText().toString();
         String fullName = mGetFirstName.concat(" ").concat(mGetLatName);
 
 
@@ -98,20 +112,32 @@ public class NameFragment extends Fragment {
 
         }
 
-        if (!mGetFirstName.trim().isEmpty() && !mGetLatName.trim().isEmpty()) {
-            AboutFragment aboutFragment = new AboutFragment();
-            Bundle args = new Bundle();
-            args.putString(MyConstants.FIRST_NAME, mGetFirstName);
-            args.putString(MyConstants.LAST_NAME, mGetLatName);
-            args.putString(MyConstants.ACCOUNT_TYPE, mGetAccountType);
-            args.putString(MyConstants.FULL_NAME, fullName);
-            aboutFragment.setArguments(args);
-            FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-            fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right,
-                    R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                    .replace(R.id.containerFragment, aboutFragment)
-                    .addToBackStack("nameFragment")
-                    .commit();
+        if (!mGetFirstName.trim().isEmpty() && !mGetLatName.trim().isEmpty() && uri != null) {
+
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                assert result != null;
+                uri = result.getUri();
+                Glide.with(Objects.requireNonNull(getActivity()))
+                        .load(uri)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(profileImage);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                // progressDialog.dismiss();
+                assert result != null;
+                String error = result.getError().getMessage();
+                DisplayViewUI.displayToast(getActivity(), error);
+            }
+        }
+
+    }
+
 }

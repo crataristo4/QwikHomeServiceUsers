@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,29 +14,41 @@
             android:layout_gravity="center"
             tools:context=".activities.auth.signup.NameFragment">
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgUploadPhoto"
+                android:layout_width="@dimen/TwoHundredDp"
+                android:layout_height="@dimen/TwoHundredDp"
                 android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:gravity="center_horizontal"
-                android:includeFontPadding="true"
-                android:padding="@dimen/eightDp"
-                android:text="@string/gettingStarted"
-                android:textAlignment="center"
-                android:textColor="@color/purple"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@string/user_profile"
+                android:src="@drawable/defaultavatar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabUploadPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/purple"
+                app:layout_constraintBottom_toBottomOf="@+id/imgUploadPhoto"
+                app:layout_constraintEnd_toEndOf="@+id/imgUploadPhoto"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imgUploadPhoto"
+                app:layout_constraintTop_toTopOf="@+id/imgUploadPhoto"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_camera" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:clipToPadding="false"
                 android:dividerPadding="@dimen/eightDp"
@@ -49,7 +62,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6">
+                app:layout_constraintTop_toBottomOf="@+id/imgUploadPhoto">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -109,21 +122,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/spinnerAccountType"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:entries="@array/userTypes"
-                android:padding="@dimen/eightDp"
-                android:spinnerMode="dialog"
-                app:layout_constraintEnd_toEndOf="@+id/txtLastName"
-                app:layout_constraintStart_toStartOf="@+id/txtLastName"
-                app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
-
             <Button
-                android:id="@+id/btnNext"
-                android:layout_width="130dp"
+                android:id="@+id/btnFinish"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eightyDp"
                 android:layout_marginTop="16dp"
@@ -131,12 +132,10 @@
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 android:background="@drawable/curvebotton"
-                android:drawableEnd="@drawable/ic_right"
-                android:drawableRight="@drawable/ic_right"
                 android:includeFontPadding="false"
                 android:onClick="gotoNext"
                 android:padding="@dimen/eightDp"
-                android:text="@string/next"
+                android:text="@string/finish"
                 android:textAlignment="inherit"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -144,7 +143,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerAccountType" />
+                app:layout_constraintTop_toBottomOf="@id/txtLastName" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

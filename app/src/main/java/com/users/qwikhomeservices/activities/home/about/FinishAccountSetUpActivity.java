@@ -5,17 +5,14 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.activities.auth.signup.NameFragment;
-
-import java.util.Objects;
+import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 
 public class FinishAccountSetUpActivity extends AppCompatActivity {
 
-    private static int INTERVAL = 2000;
+    private static int INTERVAL = 3000;
     private long mBackPressed;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -24,23 +21,16 @@ public class FinishAccountSetUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_account_set_up);
 
-        NameFragment nameFragment = new NameFragment();
-        FragmentManager fragmentManager = Objects.requireNonNull(this).getSupportFragmentManager();
-        fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right,
-                R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
-                .add(R.id.containerFragment, nameFragment)
-                .addToBackStack("nameFragment")
-                .commit();
+
     }
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
 
-        }
+        if (mBackPressed + INTERVAL > System.currentTimeMillis())
+            super.onBackPressed();
+        else DisplayViewUI.displayToast(this, "Please complete your profile");
+        mBackPressed = System.currentTimeMillis();
         // todo fix back pressed
 
     }
