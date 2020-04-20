@@ -258,7 +258,15 @@
     <string name="addPhoneNumber">Add phone number</string>
     <string name="welcome_to_qwik_home_services">Welcome to Qwik Home Services</string>
     <string name="complete_profile">Complete profile</string>
+    <string name="termAndConditions">
+        <![CDATA[
 
+        Agree to our <b><font color = #3AE212>terms and conditions</font></b> and our <font color = #3AE212>policies</font>
+        to continue.
+
+
+        ]]>
+    </string>
     <string name="welcomeNote">
         <![CDATA[
 

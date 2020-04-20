@@ -1,28 +1,25 @@
 package com.users.qwikhomeservices.activities.welcome;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.text.Html;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.viewpager.widget.ViewPager;
 
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.ItemViewClickEvents;
 import com.users.qwikhomeservices.adapters.SlidePagerAdapter;
 import com.users.qwikhomeservices.databinding.ActivityWelcomeBinding;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class WelcomeActivity extends AppCompatActivity {
 
-    private ActivityWelcomeBinding activityWelcomeBinding;
-    private ItemViewClickEvents itemViewClickEvents;
-    private Timer timer = new Timer();
-    private Runnable runnable;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private static int MAX_LAYOUT = 3;
+    ActivityWelcomeBinding activityWelcomeBinding;
+    ItemViewClickEvents itemViewClickEvents;
+    private int counterPage;
+    private boolean isLastPageSwiped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,36 +35,36 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
     private void initViews() {
-
-
         SlidePagerAdapter slidePagerAdapter = new SlidePagerAdapter(this);
-
         activityWelcomeBinding.Viewpager.setAdapter(slidePagerAdapter);
-        activityWelcomeBinding.slideDots.setViewPager(activityWelcomeBinding.Viewpager);
-        activityWelcomeBinding.slideDots.setBackgroundColor(Color.BLACK);
-
-
-        runnable = () -> {
-
-            int count = activityWelcomeBinding.Viewpager.getCurrentItem();
-            if (count == slidePagerAdapter.slideDescriptions.length - 1) {
-                count = 0;
-                activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
-            } else {
-                count++;
-                activityWelcomeBinding.Viewpager.setCurrentItem(count, true);
-
-            }
-
-        };
-
-
-        timer.schedule(new TimerTask() {
+        activityWelcomeBinding.Viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void run() {
-                handler.post(runnable);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == MAX_LAYOUT - 1 && !isLastPageSwiped) {
+                    if (counterPage != 0) {
+                        isLastPageSwiped = true;
+                        activityWelcomeBinding.showTerms.setVisibility(View.VISIBLE);
+                    }
+                    counterPage++;
+                } else {
+                    counterPage = 0;
+
+                }
             }
-        }, 2000, 2000);
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        activityWelcomeBinding.slideDots.setViewPager(activityWelcomeBinding.Viewpager);
+        activityWelcomeBinding.slideDots.setBackgroundColor(getResources().getColor(R.color.purple));
+        activityWelcomeBinding.termsAndConditions.setText(Html.fromHtml(getResources().getString(R.string.termAndConditions)));
 
 
     }
