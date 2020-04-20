@@ -44,14 +44,12 @@ import id.zelory.compressor.Compressor;
 
 
 public class FinishAccountSetUpActivity extends AppCompatActivity {
-
-    private static int INTERVAL = 3000;
     private long mBackPressed;
     private static final String TAG = "FinishAccountSetUp";
     private DatabaseReference usersDbRef;
     private StorageReference mStorageReference;
     private ActivityFinishAccountSetUpBinding activityFinishAccountSetUpBinding;
-    private String about, getImageUri, uid, mGetFirstName, mGetLatName, mGetFullName;
+    private String getImageUri, uid, mGetFirstName, mGetLatName, mGetFullName;
     private Uri uri;
     private CircleImageView profileImage;
 
@@ -158,7 +156,7 @@ public class FinishAccountSetUpActivity extends AppCompatActivity {
                     getImageUri = downLoadUri.toString();
 
                     String mobileNumber = MainActivity.firebaseUser.getPhoneNumber();
-                    String uid = MainActivity.uid;
+                    uid = MainActivity.uid;
 
                     @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:MM a");
                     String dateJoined = dateFormat.format(Calendar.getInstance().getTime());
@@ -234,6 +232,7 @@ public class FinishAccountSetUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        int INTERVAL = 3000;
         if (mBackPressed + INTERVAL > System.currentTimeMillis()) {
             return;
         }
