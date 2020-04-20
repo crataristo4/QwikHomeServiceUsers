@@ -3,25 +3,33 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.google.firebase.database.Exclude;
+
 public class StylesItemModel extends BaseObservable {
 
+    public int price;
+    public String styleItem;
     public String itemImage;
-    private int price;
-    private String styleItem;
-    private double rating;
-    private String userPhoto;
-    private String userName;
-    private String timeStamp;
-    private String accountType;
+    public double rating;
+    public String userPhoto;
+    public String userName;
+    public Object timeStamp;
+    public String accountType;
 
 
     public StylesItemModel() {
     }
 
-    public StylesItemModel(int price, String styleItem, String itemImage) {
+    public StylesItemModel(int price, String styleItem, String itemImage, String userImage, String userName,
+                           Object timestamp, String accountType) {
         this.price = price;
         this.styleItem = styleItem;
         this.itemImage = itemImage;
+        this.userPhoto = userImage;
+        this.userName = userName;
+        this.accountType = accountType;
+        this.timeStamp = timestamp;
+
     }
 
     public StylesItemModel(int price, String styleItem, String itemImage, double rating) {
@@ -31,7 +39,8 @@ public class StylesItemModel extends BaseObservable {
         this.rating = rating;
     }
 
-    public StylesItemModel(int price, String styleItem, String itemImage, String userPhoto, String userName, String timeStamp) {
+    public StylesItemModel(int price, String styleItem, String itemImage,
+                           String userPhoto, String userName, Object timeStamp) {
         this.price = price;
         this.styleItem = styleItem;
         this.itemImage = itemImage;
@@ -40,15 +49,6 @@ public class StylesItemModel extends BaseObservable {
         this.timeStamp = timeStamp;
     }
 
-    public StylesItemModel(int price, String styleItem, String itemImage, String userPhoto, String userName, String timeStamp, String accountType) {
-        this.price = price;
-        this.styleItem = styleItem;
-        this.itemImage = itemImage;
-        this.userPhoto = userPhoto;
-        this.userName = userName;
-        this.timeStamp = timeStamp;
-        this.accountType = accountType;
-    }
 
     @Bindable
     public String getAccountType() {
@@ -113,12 +113,12 @@ public class StylesItemModel extends BaseObservable {
         this.userName = userName;
     }
 
-    @Bindable
-    public String getTimeStamp() {
-        return timeStamp;
+    @Exclude
+    public long getTimeStamp() {
+        return (long) timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(Object timeStamp) {
         this.timeStamp = timeStamp;
     }
 }

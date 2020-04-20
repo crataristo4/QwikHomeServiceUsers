@@ -24,6 +24,7 @@ import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.databinding.LayoutActivityItemsBinding;
 import com.users.qwikhomeservices.models.StylesItemModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
+import com.users.qwikhomeservices.utils.GetTimeAgo;
 
 public class ActivityItemAdapter extends FirebaseRecyclerAdapter<StylesItemModel, ActivityItemAdapter.ActivityItemAdapterViewHolder> {
 
@@ -37,8 +38,7 @@ public class ActivityItemAdapter extends FirebaseRecyclerAdapter<StylesItemModel
                                     int i, @NonNull StylesItemModel itemModel) {
 
         activityItemAdapterViewHolder.activityItemsBinding.setItems(itemModel);
-        // activityItemAdapterViewHolder.activityItemsBinding.txtTime.setText(GetDateTime.DateToTimeFormat(itemModel.timeStamp));
-        // activityItemAdapterViewHolder.activityItemsBinding.txtPubDate.setText(GetDateTime.DateToTimeFormat(itemModel.timeStamp));
+        activityItemAdapterViewHolder.activityItemsBinding.txtTime.setText(GetTimeAgo.getTimeAgo(itemModel.getTimeStamp()));
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());

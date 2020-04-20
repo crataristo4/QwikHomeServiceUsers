@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                 SendUserToLoginActivity();
             } else if (mAuth.getCurrentUser() != null) {
 
-                checkUid();
+                //  checkUid();
 
             }
 
@@ -521,6 +521,8 @@ public class MainActivity extends AppCompatActivity {
         usersAccountDbRef.keepSynced(true);
         checkDisplayAlertDialog();
         retrieveServiceType();
+
+        //todo check null db
 
     }
 

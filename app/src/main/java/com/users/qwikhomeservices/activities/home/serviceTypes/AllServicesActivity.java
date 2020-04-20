@@ -26,7 +26,7 @@ public class AllServicesActivity extends AppCompatActivity {
     private ActivityAllServicesBinding allServicesBinding;
     private ServiceUsersAdapter adapter;
     private RecyclerView recyclerView;
-    private String serviceType;
+    private String accountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +41,28 @@ public class AllServicesActivity extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
-        //88getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         if (getIntent != null) {
 
             switch (Objects.requireNonNull(getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE))) {
                 case MyConstants.BARBERS:
-                    serviceType = MyConstants.BARBERS;
-                    setTitle(serviceType);
+                    accountType = MyConstants.BARBERS;
+                    setTitle(accountType);
 
                     break;
                 case MyConstants.WOMEN_HAIR_STYLIST:
-                    serviceType = MyConstants.WOMEN_HAIR_STYLIST;
-                    setTitle(serviceType);
+                    accountType = MyConstants.WOMEN_HAIR_STYLIST;
+                    setTitle(accountType);
 
                     break;
                 case MyConstants.INTERIOR_DERCORATOR:
-                    serviceType = MyConstants.INTERIOR_DERCORATOR;
-                    setTitle(serviceType);
+                    accountType = MyConstants.INTERIOR_DERCORATOR;
+                    setTitle(accountType);
+
+                    break;
+
+                case MyConstants.CARPENTERS:
+                    accountType = MyConstants.CARPENTERS;
+                    setTitle(accountType);
 
                     break;
                 default:
@@ -67,18 +71,18 @@ public class AllServicesActivity extends AppCompatActivity {
 
         }
 
-        DatabaseReference allBarbersDbRef = FirebaseDatabase.getInstance()
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(MyConstants.SERVICES)
-                .child(serviceType);
-        allBarbersDbRef.keepSynced(true);
+                .child(accountType);
+        databaseReference.keepSynced(true);
 
         recyclerView = allServicesBinding.rvAllBarbers;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         //querying the database BY NAME
-        Query query = allBarbersDbRef.orderByChild("name");
+        Query query = databaseReference.orderByChild("accountType").equalTo(accountType);
         FirebaseRecyclerOptions<Users> options =
                 new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
                         Users.class)

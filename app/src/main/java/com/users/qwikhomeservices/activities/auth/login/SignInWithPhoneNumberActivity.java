@@ -56,7 +56,11 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
             if (code != null) {
                 Objects.requireNonNull(txtVerifyCode.getEditText()).setText(code);
 
+                activitySignInWithPhoneNumberBinding.btnVerify.setText(R.string.plsWait);
+
                 verifyCode(code);
+            } else {
+                activitySignInWithPhoneNumberBinding.btnVerify.setText(R.string.verify);
             }
 
 

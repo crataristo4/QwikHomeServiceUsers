@@ -70,7 +70,6 @@
         <activity
             android:name="com.users.qwikhomeservices.activities.home.MainActivity"
             android:configChanges="keyboardHidden"
-            android:launchMode="standard"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -124,7 +123,7 @@
         <activity android:name="com.users.qwikhomeservices.activities.home.bottomsheets.AddPhoneNumberActivity" />
         <activity
             android:name="com.users.qwikhomeservices.activities.auth.login.SignInWithPhoneNumberActivity"
-
+            android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.home.about.FinishAccountSetUpActivity" />
     </application>
