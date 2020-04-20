@@ -84,7 +84,56 @@ public class HomeFragment extends Fragment {
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.CARPENTERS);
                     startActivity(intent);
                     break;
-                // TODO: 19-Apr-20 do same for rest of artisans
+                case 4:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.MECHANICS);
+                    startActivity(intent);
+                    break;
+                case 5:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PEST_CONTROLS);
+                    startActivity(intent);
+                    break;
+                case 6:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PLUMBERS);
+                    startActivity(intent);
+                    break;
+                case 7:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.TV_INSTALLERS);
+                    startActivity(intent);
+                    break;
+                case 8:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.TILERS);
+                    startActivity(intent);
+                    break;
+                case 9:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.WELDERS);
+                    startActivity(intent);
+                    break;
+                case 10:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.ROLLERS);
+                    startActivity(intent);
+                    break;
+                case 11:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.GARDENERS);
+                    startActivity(intent);
+                    break;
+                case 12:
+                    intent = new Intent(getContext(), AllServicesActivity.class);
+                    intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PAINTERS);
+                    startActivity(intent);
+                    break;
+
+                default:
+                    throw new IllegalStateException("Unexpected value: " + MyConstants.SERVICES);
+
+
 
 
             }

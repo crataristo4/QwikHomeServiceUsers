@@ -108,29 +108,6 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
         }
 
-       /* //SEND REQUEST from imeOptions
-        Objects.requireNonNull(txtReasonInputText.getEditText()).setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE){
-
-                DisplayViewUI.displayAlertDialog(getActivity(), "Send Request", "Are you sure you want to send request",
-                        "Yes", "No", (dialog, which) -> {
-                            if (which == -1){
-                                //user wants to send request
-                                dialog.dismiss();
-                                assert inputMethodManager != null;
-                                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
-                                sendItemRequest();
-                            }else if (which == -2){
-                                //user does not want to send request
-                                dialog.dismiss();
-                            }
-                        });
-
-                return  true;
-            }
-            return false;
-        });
-*/
         //SEND REQUEST from send text
         layoutSendRequestBinding.btnSendRequest.setOnClickListener(v -> sendItemRequest());
 
@@ -202,24 +179,6 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
                     getReason, itemPrice, itemName,
                     notApproved, itemImage, userPhotoUrl,
                     userName, servicePersonName, dateRequested);
-
-/*
-            Map<String, Object> requestSent = new HashMap<>();
-            requestSent.put("dateRequested", dateRequested);
-            requestSent.put("senderName", userName);
-            requestSent.put("senderPhoto", userPhotoUrl);
-            requestSent.put("senderId", uid);
-            requestSent.put("servicePersonId",servicePersonId);
-
-            requestSent.put("servicePersonName", servicePersonName);
-            requestSent.put("itemName", itemName);
-            requestSent.put("itemImage", itemImage);
-            requestSent.put("itemPrice", itemPrice);
-
-            requestSent.put("reason", getReason);
-            requestSent.put("response", notApproved);
-            requestSent.put("rating", 0);
-*/
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;
