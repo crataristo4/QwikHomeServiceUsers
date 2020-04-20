@@ -2,6 +2,8 @@ package com.users.qwikhomeservices.activities.home.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +24,19 @@ import com.users.qwikhomeservices.adapters.ActivityItemAdapter;
 import com.users.qwikhomeservices.databinding.FragmentActivitiesBinding;
 import com.users.qwikhomeservices.models.StylesItemModel;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ActivitiesFragment extends Fragment {
 
+    private static final String KEY = "key";
+    private Bundle mBundleState;
     private static final String TAG = "ActivityFragment";
     private FragmentActivitiesBinding fragmentActivitiesBinding;
     private RecyclerView rvBarbers, rvHairStylist, rvInteriorDeco, rvItems;
     // private AllServicesAdapter allServicesAdapter, allServicesAdapter1, allServicesAdapter2;
     private DatabaseReference dbRef;
     private ActivityItemAdapter activityItemAdapter;
-
+    private LinearLayoutManager layoutManager;
+    private Parcelable mState;
     public ActivitiesFragment() {
         // Required empty public constructor
     }
@@ -53,22 +56,6 @@ public class ActivitiesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*rvBarbers = fragmentActivitiesBinding.rvBarbers;
-        rvHairStylist = fragmentActivitiesBinding.rvHairStylist;
-        rvInteriorDeco = fragmentActivitiesBinding.rvInteriorDeco;
-
-        rvBarbers.setHasFixedSize(true);
-        rvBarbers.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        rvHairStylist.setHasFixedSize(true);
-        rvHairStylist.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        rvInteriorDeco.setHasFixedSize(true);
-        rvInteriorDeco.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        loadData();
-        loadData1();
-        loadData2();*/
 
         loadActivityData();
 
@@ -77,11 +64,9 @@ public class ActivitiesFragment extends Fragment {
     private void loadActivityData() {
         rvItems = fragmentActivitiesBinding.rvItems;
         rvItems.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-
         rvItems.setLayoutManager(layoutManager);
 
         dbRef = FirebaseDatabase.getInstance().getReference()
@@ -90,7 +75,6 @@ public class ActivitiesFragment extends Fragment {
 
         //querying the database base of the time posted
         Query query = dbRef.orderByValue();
-
         FirebaseRecyclerOptions<StylesItemModel> options =
                 new FirebaseRecyclerOptions.Builder<StylesItemModel>().setQuery(query,
                         StylesItemModel.class)
@@ -101,70 +85,11 @@ public class ActivitiesFragment extends Fragment {
     }
 
 
-  /*  private void loadData1() {
-        dbBarbersRef = FirebaseDatabase.getInstance().getReference()
-                .child(MyConstants.SERVICES)
-                .child(MyConstants.WOMEN_HAIR_STYLIST);
-        dbBarbersRef.keepSynced(true);
-
-        //querying the database base of the time posted
-        Query query = dbBarbersRef.orderByChild("name");
-
-        FirebaseRecyclerOptions<Users> options =
-                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
-                        Users.class)
-                        .build();
-
-        allServicesAdapter1 = new AllServicesAdapter(options);
-        rvHairStylist.setAdapter(allServicesAdapter1);
-    }
-
-    private void loadData2() {
-        dbBarbersRef = FirebaseDatabase.getInstance().getReference()
-                .child(MyConstants.SERVICES)
-                .child(MyConstants.INTERIOR_DERCORATOR);
-        dbBarbersRef.keepSynced(true);
-
-        //querying the database base of the time posted
-        Query query = dbBarbersRef.orderByChild("name");
-
-        FirebaseRecyclerOptions<Users> options =
-                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
-                        Users.class)
-                        .build();
-
-        allServicesAdapter2 = new AllServicesAdapter(options);
-        rvInteriorDeco.setAdapter(allServicesAdapter2);
-    }
-
-    private void loadData() {
-
-        dbBarbersRef = FirebaseDatabase.getInstance().getReference()
-                .child(MyConstants.SERVICES)
-                .child(MyConstants.BARBERS);
-        dbBarbersRef.keepSynced(true);
-
-        //querying the database base of the time posted
-        Query query = dbBarbersRef.orderByChild("name");
-
-        FirebaseRecyclerOptions<Users> options =
-                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
-                        Users.class)
-                        .build();
-
-        allServicesAdapter = new AllServicesAdapter(options);
-        rvBarbers.setAdapter(allServicesAdapter);
-    }
-*/
 
     @Override
     public void onStart() {
         super.onStart();
         activityItemAdapter.startListening();
-        /*allServicesAdapter.startListening();
-        allServicesAdapter1.startListening();
-        allServicesAdapter2.startListening();
-*/
 
     }
 
@@ -173,9 +98,32 @@ public class ActivitiesFragment extends Fragment {
     public void onStop() {
         super.onStop();
         activityItemAdapter.stopListening();
-       /* allServicesAdapter.stopListening();
-        allServicesAdapter1.stopListening();
-        allServicesAdapter2.stopListening();*/
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBundleState = new Bundle();
+        mState = layoutManager.onSaveInstanceState();
+        mBundleState.putParcelable(KEY, mState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBundleState != null) {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    mState = mBundleState.getParcelable(KEY);
+                    layoutManager.onRestoreInstanceState(mState);
+                }
+            }, 50);
+        }
+
+        rvItems.setLayoutManager(layoutManager);
     }
 
 
