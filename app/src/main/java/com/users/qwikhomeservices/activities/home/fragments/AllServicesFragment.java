@@ -27,14 +27,14 @@ import com.users.qwikhomeservices.utils.MyConstants;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllBarbersFragment extends Fragment {
+public class AllServicesFragment extends Fragment {
     private FragmentAllBarbersBinding fragmentAllBarbersBinding;
     private ServiceUsersAdapter serviceUsersAdapter;
     private RecyclerView rvAllBarbers;
     private DatabaseReference allBarbersDbRef;
 
 
-    public AllBarbersFragment() {
+    public AllServicesFragment() {
         // Required empty public constructor
     }
 

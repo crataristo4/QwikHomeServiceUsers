@@ -62,7 +62,6 @@ public class FinishAccountSetUpActivity extends AppCompatActivity {
         activityFinishAccountSetUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_finish_account_set_up);
 
         profileImage = activityFinishAccountSetUpBinding.imgUploadPhoto;
-        //service type database
         usersDbRef = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Users")

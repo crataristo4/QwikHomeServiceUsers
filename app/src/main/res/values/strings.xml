@@ -72,6 +72,22 @@
         <item>Painter</item>
     </string-array>
 
+    <string-array name="services">
+        <item>Women Hairstylists</item>
+        <item>Interior Decorators</item>
+        <item>Barbers</item>
+        <item>Carpenters</item>
+        <item>Mechanics</item>
+        <item>Pest Controls</item>
+        <item>Plumbers</item>
+        <item>Tv Installers</item>
+        <item>Tilers</item>
+        <item>Welders</item>
+        <item>Rollers</item>
+        <item>Gardeners</item>
+        <item>Painters</item>
+    </string-array>
+
     <string-array name="userTypes">
         <item>Barbers</item>
         <item>Women Hairstylists</item>
