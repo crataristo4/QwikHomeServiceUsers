@@ -7,7 +7,7 @@
 
         <variable
             name="requestItems"
-            type="com.users.quickhomeservices.models.RequestModel" />
+            type="com.users.qwikhomeservices.models.RequestModel" />
     </data>
 
     <FrameLayout

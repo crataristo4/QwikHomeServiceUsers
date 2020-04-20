@@ -121,7 +121,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:682951871653:android:daf34c6d4e79852d7bd14c",
         "android_client_info": {
-          "package_name": "com.users.quickhomeservices"
+          "package_name": "com.users.qwikhomeservices"
         }
       },
       "oauth_client": [
@@ -129,7 +129,7 @@
           "client_id": "682951871653-kskr4iu9q9kdojnd1g8mi2dccvj990b9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.users.quickhomeservices",
+            "package_name": "com.users.qwikhomeservices",
             "certificate_hash": "121eaab94eddbfa943e99be4569dcefbe1f75093"
           }
         },

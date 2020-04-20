@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/eightDp"
-            tools:context="com.users.quickhomeservices.activities.home.fragments.HomeFragment">
+            tools:context="com.users.qwikhomeservices.activities.home.fragments.HomeFragment">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mMaterialCard1"

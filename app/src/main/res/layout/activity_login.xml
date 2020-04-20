@@ -5,11 +5,11 @@
 
         <variable
             name="onItemClick"
-            type="com.users.quickhomeservices.activities.ItemViewClickEvents" />
+            type="com.users.qwikhomeservices.activities.ItemViewClickEvents" />
 
         <variable
             name="validateInput"
-            type="com.users.quickhomeservices.activities.ItemViewClickEvents" />
+            type="com.users.qwikhomeservices.activities.ItemViewClickEvents" />
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="com.users.quickhomeservices.activities.auth.LoginActivity">
+            tools:context="com.users.qwikhomeservices.com.users.qwikhomeservices.activities.auth.login.LoginActivity">
 
 
             <com.google.android.material.textfield.TextInputLayout

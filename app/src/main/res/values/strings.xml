@@ -2,6 +2,12 @@
     <string name="app_name">QwikHome Users</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+    <string name="phoneNumber">Enter your phone number</string>
+    <string name="cont">Continue</string>
+    <string name="final_step_verify_your_phone_number">Final step,verify your phone number</string>
+    <string name="tellUs">Tell us who you are.Be professional , users may interest you when you are real about what you can do.</string>
+    <string name="noInternet">No internet.Internet connection is needed to continue.\nCheck your internet connection.If problem still exist contact your service provider</string>
+    <string name="resend_code">Resend code</string>
     <string name="title_activity_main2">QwikHome Services</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

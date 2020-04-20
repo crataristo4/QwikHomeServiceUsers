@@ -12,7 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="com.users.quickhomeservices.activities.auth.signup.SignupCompleteActivity">
+            tools:context="com.users.qwikhomeservices.activities.auth.signup.SignupCompleteActivity">
 
 
             <TextView

@@ -4,7 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.users.quickhomeservices"
+        applicationId "com.users.qwikhomeservices"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1

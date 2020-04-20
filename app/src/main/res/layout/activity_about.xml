@@ -10,7 +10,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context="com.users.quickhomeservices.activities.home.about.AboutActivity">
+            tools:context="com.users.qwikhomeservices.activities.home.about.AboutActivity">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBarProfile"

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.users.quickhomeservices.activities.home.fragments.ProfileFragment">
+        tools:context="com.users.qwikhomeservices.activities.home.fragments.ProfileFragment">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.users.quickhomeservices">
+    package="com.users.qwikhomeservices">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- TARGET ANDROID O -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -27,54 +27,54 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.home.serviceTypes.TestPaginatioinActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestPaginatioinActivity" />
         <activity
-            android:name="com.users.quickhomeservices.activities.home.serviceTypes.DetailsScrollingActivity"
+            android:name="com.users.qwikhomeservices.activities.home.serviceTypes.DetailsScrollingActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:label="@string/title_activity_details_scrolling"
-            android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity"
+            android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.about.ProfileActivity"
+            android:name="com.users.qwikhomeservices.activities.home.about.ProfileActivity"
             android:configChanges="screenSize|orientation"
             android:parentActivityName=".activities.home.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.about.SettingsActivity"
+            android:name="com.users.qwikhomeservices.activities.home.about.SettingsActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
+            android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.serviceTypes.AllServicesActivity"
-            android:parentActivityName="com.users.quickhomeservices.activities.home.MainActivity" />
+            android:name="com.users.qwikhomeservices.activities.home.serviceTypes.AllServicesActivity"
+            android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.auth.signup.SignUpServicePersonelActivity"
+            android:name="com.users.qwikhomeservices.activities.auth.signup.SignUpServicePersonelActivity"
             android:alwaysRetainTaskState="true"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.about.JobTypesActivity"
+            android:name="com.users.qwikhomeservices.activities.home.about.JobTypesActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:parentActivityName="com.users.quickhomeservices.activities.home.about.AboutActivity"
+            android:parentActivityName="com.users.qwikhomeservices.activities.home.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.about.AboutActivity"
+            android:name="com.users.qwikhomeservices.activities.home.about.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.home.MainActivity"
+            android:name="com.users.qwikhomeservices.activities.home.MainActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="standard"
             android:label="@string/app_name">
@@ -91,35 +91,35 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.auth.resetpass.ResetPasswordActivity"
+            android:name="com.users.qwikhomeservices.activities.auth.resetpass.ResetPasswordActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.auth.signup.SignupCompleteActivity"
+            android:name="com.users.qwikhomeservices.activities.auth.signup.SignupCompleteActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.auth.signup.SignupActivity"
+            android:name="com.users.qwikhomeservices.activities.auth.signup.SignupActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.users.quickhomeservices.activities.auth.LoginActivity"
+            android:name="com.users.qwikhomeservices.activities.auth.login.LoginActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.activities.welcome.OnboardingScreenActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.customeractivity.ShowRouteActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.welcome.OnboardingScreenActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.customeractivity.ShowRouteActivity" />
         <activity
-            android:name="com.users.quickhomeservices.activities.customeractivity.RatingActivity"
+            android:name="com.users.qwikhomeservices.activities.customeractivity.RatingActivity"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.users.quickhomeservices.activities.customeractivity.ChatActivity"
+            android:name="com.users.qwikhomeservices.activities.customeractivity.ChatActivity"
             android:configChanges="screenSize|orientation"
-            android:parentActivityName="com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity"
+            android:parentActivityName="com.users.qwikhomeservices.activities.handymanactivity.RequestHandyManActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -133,21 +133,26 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.users.quickhomeservices.activities.welcome.SplashScreenActivity"
+            android:name="com.users.qwikhomeservices.activities.welcome.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.users.quickhomeservices.activities.handymanactivity.AcceptOrRejectActivity"
+            android:name="com.users.qwikhomeservices.activities.handymanactivity.AcceptOrRejectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.users.quickhomeservices.EditProfile" />
+        <activity android:name="com.users.qwikhomeservices.EditProfile" />
         <activity
-            android:name="com.users.quickhomeservices.activities.welcome.WelcomeActivity"
+            android:name="com.users.qwikhomeservices.activities.welcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
-        <activity android:name="com.users.quickhomeservices.activities.handymanactivity.RequestHandyManActivity" />
-        <activity android:name="com.users.quickhomeservices.activities.home.bottomsheets.AddPhoneNumberActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.handymanactivity.RequestHandyManActivity" />
+        <activity android:name="com.users.qwikhomeservices.activities.home.bottomsheets.AddPhoneNumberActivity" />
+        <activity
+            android:name="com.users.qwikhomeservices.activities.auth.login.SignInWithPhoneNumberActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.home.about.FinishAccountSetUpActivity" />
     </application>
 
 </manifest>
