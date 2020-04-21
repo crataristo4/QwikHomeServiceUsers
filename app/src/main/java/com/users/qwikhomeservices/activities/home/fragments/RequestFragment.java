@@ -29,7 +29,7 @@ public class RequestFragment extends Fragment {
     private FragmentRequestBinding fragmentRequestBinding;
     private RequestAdapter requestAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private DatabaseReference requestDbRef;
+    public static DatabaseReference requestDbRef;
     private RecyclerView recyclerView;
 
     public RequestFragment() {

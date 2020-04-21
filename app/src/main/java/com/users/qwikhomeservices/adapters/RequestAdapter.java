@@ -1,6 +1,5 @@
 package com.users.qwikhomeservices.adapters;
 
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.qwikhomeservices.R;
+import com.users.qwikhomeservices.activities.home.fragments.RequestFragment;
 import com.users.qwikhomeservices.databinding.LayoutUserRequestSentBinding;
 import com.users.qwikhomeservices.models.RequestModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, RequestAdapter.RequestViewHolder> {
 
@@ -35,6 +39,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         requestViewHolder.layoutUserRequestSentBinding.setRequestItems(requestModel);
         requestViewHolder.showResponse(requestModel.getResponse());
         requestViewHolder.showRating(requestModel.getRating());
+        requestViewHolder.showWorkDoneStatus(requestModel.isWorkDone());
 
         //confirm work done status and rate user
         requestViewHolder.btnRateServicePerson.setOnClickListener(new View.OnClickListener() {
@@ -45,15 +50,23 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                         "Confirm work ...",
                         "Please confirm that your job requested has been done",
                         "Job is done",
-                        "Not done", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == -1) {
+                        "Not done", (dialog, which) -> {
+                            if (which == -1) {
+                                //positive button ,user selects work done
+                                Map<String, Boolean> jobDone = new HashMap<>();
+                                jobDone.put("isWorkDone", true);
+                                String adapterPosition = getRef(i).getKey();
+                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition)).setValue(jobDone);
 
-                                } else if (which == -2) {
-                                    dialog.dismiss();
+                                dialog.dismiss();
 
-                                }
+                                //display rating dialog
+
+
+                            } else if (which == -2) {
+                                //negative button
+                                dialog.dismiss();
+
                             }
                         });
             }
@@ -98,7 +111,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         LayoutUserRequestSentBinding layoutUserRequestSentBinding;
         RatingBar ratingBar;
         private ImageButton btnView, btnChat, btnRateServicePerson;
-        private TextView txtResponse, txtPaymentStatus;
+        private TextView txtResponse, txtPaymentStatus, txtWorkDone;
         private LinearLayoutCompat linearLayoutCompat;
         private Button btnConfirmPayment;
 
@@ -113,6 +126,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             txtPaymentStatus = layoutUserRequestSentBinding.txtPaymentStatus;
             linearLayoutCompat = layoutUserRequestSentBinding.linearLayout;
             btnConfirmPayment = layoutUserRequestSentBinding.btnConfirmPayment;
+            txtWorkDone = layoutUserRequestSentBinding.txtWorkDone;
         }
 
         //display the rating
@@ -137,19 +151,34 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                 btnChat.setVisibility(View.VISIBLE);
                 // btnShowRoute.setVisibility(View.VISIBLE);
                 txtResponse.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorGreen));
-                linearLayoutCompat.setVisibility(View.VISIBLE);
 
 
             } else if (response.equals("Request Rejected")) {
                 btnChat.setVisibility(View.GONE);
                 btnRateServicePerson.setVisibility(View.GONE);
-                linearLayoutCompat.setVisibility(View.GONE);
                 //btnShowRoute.setVisibility(View.INVISIBLE);
                 txtResponse.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
             }
 
 
             txtResponse.setText(response);
+        }
+
+        void showWorkDoneStatus(boolean isWorkDone) {
+            if (isWorkDone) {
+
+                txtWorkDone.setText(R.string.wkDone);
+                linearLayoutCompat.setVisibility(View.VISIBLE);
+                btnRateServicePerson.setEnabled(false);
+
+            } else {
+                txtWorkDone.setText(R.string.wkNtDone);
+                linearLayoutCompat.setVisibility(View.GONE);
+                btnRateServicePerson.setEnabled(true);
+
+
+            }
+
         }
     }
 }
