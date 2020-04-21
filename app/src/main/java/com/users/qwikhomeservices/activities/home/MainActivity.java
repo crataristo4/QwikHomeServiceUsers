@@ -67,11 +67,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    public static String serviceType;
-    public static String name;
-    public static String imageUrl;
-    public static String uid;
-    public static DatabaseReference serviceTypeDbRef, usersAccountDbRef;
+    public static String name, uid, imageUrl, dateJoined, firstName, lastName;
+    public static DatabaseReference usersAccountDbRef;
     public static String compareUid;
     public static FirebaseAuth mAuth;
     public static FirebaseUser firebaseUser;
@@ -109,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                email = (String) dataSnapshot.child("email").getValue();
-                name = (String) dataSnapshot.child("name").getValue();
+                name = (String) dataSnapshot.child("fullName").getValue();
+                firstName = (String) dataSnapshot.child("firstName").getValue();
+                lastName = (String) dataSnapshot.child("lastName").getValue();
+                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
                 compareUid = (String) dataSnapshot.child("userId").getValue();
 
@@ -135,8 +134,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                name = (String) dataSnapshot.child("name").getValue();
-                email = (String) dataSnapshot.child("email").getValue();
+                name = (String) dataSnapshot.child("fullName").getValue();
+                firstName = (String) dataSnapshot.child("firstName").getValue();
+                lastName = (String) dataSnapshot.child("lastName").getValue();
+                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
@@ -207,8 +208,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                name = (String) dataSnapshot.child("name").getValue();
-                email = (String) dataSnapshot.child("email").getValue();
+                name = (String) dataSnapshot.child("fullName").getValue();
+                firstName = (String) dataSnapshot.child("firstName").getValue();
+                lastName = (String) dataSnapshot.child("lastName").getValue();
+                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
@@ -236,8 +239,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                name = (String) dataSnapshot.child("name").getValue();
-                email = (String) dataSnapshot.child("email").getValue();
+                name = (String) dataSnapshot.child("fullName").getValue();
+                firstName = (String) dataSnapshot.child("firstName").getValue();
+                lastName = (String) dataSnapshot.child("lastName").getValue();
+                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
 
@@ -520,7 +525,7 @@ public class MainActivity extends AppCompatActivity {
                 .child(uid);
         usersAccountDbRef.keepSynced(true);
         checkDisplayAlertDialog();
-        retrieveServiceType();
+        retrieveSingleUserDetails();
 
         //todo check null db
 

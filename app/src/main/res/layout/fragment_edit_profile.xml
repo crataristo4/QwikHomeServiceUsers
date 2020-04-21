@@ -75,14 +75,14 @@
                         android:layout_marginRight="16dp"
                         android:drawableEnd="@drawable/ic_edit_purple"
                         android:drawableRight="@drawable/ic_edit_purple"
-                        android:text="@string/name"
+                        android:text="@string/firstname"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/txtUserName"
+                        android:id="@+id/txtFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -117,7 +117,7 @@
                         android:contentDescription="@string/app_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_info" />
+                        app:srcCompat="@drawable/ic_person_ash" />
 
                     <TextView
                         android:id="@+id/txtt"
@@ -127,14 +127,16 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
-                        android:text="@string/email"
+                        android:text="@string/last_name"
                         android:textSize="12sp"
+                        app:drawableEndCompat="@drawable/ic_edit_purple"
+                        app:drawableRightCompat="@drawable/ic_edit_purple"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imgInfo"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/txtEmail"
+                        android:id="@+id/txtLastName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
