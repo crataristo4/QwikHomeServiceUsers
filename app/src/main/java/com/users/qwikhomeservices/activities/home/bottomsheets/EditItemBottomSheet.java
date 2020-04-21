@@ -52,12 +52,19 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
         txtInputItem = layoutEditItemBottomSheetBinding.textInputLayout;
         bundle = getArguments();
         if (bundle != null) {
-            if (Objects.equals(bundle.getString(MyConstants.NAME), MainActivity.name)) {
+            if (Objects.equals(bundle.getString(MyConstants.FIRST_NAME), MainActivity.firstName)) {
 
-                layoutEditItemBottomSheetBinding.textInputLayout.setHint("Edit name");
+                layoutEditItemBottomSheetBinding.textInputLayout.setHint("Edit first name");
                 Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).setSingleLine(true);
                 Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout
-                        .getEditText()).setText(bundle.getString(MyConstants.NAME));
+                        .getEditText()).setText(bundle.getString(MyConstants.FIRST_NAME));
+
+            } else if (Objects.equals(bundle.getString(MyConstants.LAST_NAME), MainActivity.lastName)) {
+
+                layoutEditItemBottomSheetBinding.textInputLayout.setHint("Edit last name");
+                Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).setSingleLine(true);
+                Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout
+                        .getEditText()).setText(bundle.getString(MyConstants.LAST_NAME));
 
             }
 
@@ -75,24 +82,47 @@ public class EditItemBottomSheet extends BottomSheetDialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void onOkClicked(View view) {
-        if (Objects.equals(bundle.getString(MyConstants.NAME), MainActivity.name)) {
-            updateUserName();
+        if (Objects.equals(bundle.getString(MyConstants.FIRST_NAME), MainActivity.firstName)) {
+            updateFirstName();
+        } else if (Objects.equals(bundle.getString(MyConstants.LAST_NAME), MainActivity.lastName)) {
+
+            updateLastName();
         }
 
     }
 
-    private void updateUserName() {
+    private void updateFirstName() {
         String name = Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).getText().toString();
         if (name.trim().isEmpty()) {
             txtInputItem.setErrorEnabled(true);
-            txtInputItem.setError("name field required");
+            txtInputItem.setError("first name field required");
         } else {
             txtInputItem.setErrorEnabled(false);
         }
 
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (!name.trim().isEmpty()) {
-                updateItem.put("name", name);
+                updateItem.put("firstName", name);
+                MainActivity.usersAccountDbRef.updateChildren(updateItem);
+                dismiss();
+            }
+
+        });
+
+    }
+
+    private void updateLastName() {
+        String name = Objects.requireNonNull(layoutEditItemBottomSheetBinding.textInputLayout.getEditText()).getText().toString();
+        if (name.trim().isEmpty()) {
+            txtInputItem.setErrorEnabled(true);
+            txtInputItem.setError("last name field required");
+        } else {
+            txtInputItem.setErrorEnabled(false);
+        }
+
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            if (!name.trim().isEmpty()) {
+                updateItem.put("lastName", name);
                 MainActivity.usersAccountDbRef.updateChildren(updateItem);
                 dismiss();
             }

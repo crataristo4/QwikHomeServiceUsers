@@ -29,6 +29,8 @@ import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -38,6 +40,7 @@ public class EditProfileFragment extends Fragment {
     private ProfilePhotoEditFragment profilePhotoEditFragment = new ProfilePhotoEditFragment();
     private Uri uri;
     private long mLastClickTime = 0;
+    private CircleImageView profilePhoto;
     private OnFragmentInteractionListener mListener;
 
 
@@ -61,10 +64,10 @@ public class EditProfileFragment extends Fragment {
 
         fragmentEditProfileBinding
                 .fabUploadPhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fadein));
-        fragmentEditProfileBinding
-                .imgUploadPhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_transition_animation));
+        profilePhoto = fragmentEditProfileBinding.imgUploadPhoto;
+        profilePhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_transition_animation));
 
-        fragmentEditProfileBinding.imgUploadPhoto.setOnClickListener(v -> {
+        profilePhoto.setOnClickListener(v -> {
             FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.fadein, R.anim.scale_out)
@@ -77,10 +80,9 @@ public class EditProfileFragment extends Fragment {
 
         fragmentEditProfileBinding.fabUploadPhoto.setOnClickListener(v -> openGallery());
 
-        MainActivity.retrieveSingleUserDetails(fragmentEditProfileBinding.txtUserName,
-                fragmentEditProfileBinding.txtEmail, fragmentEditProfileBinding.imgUploadPhoto);
-
-        //  fragmentEditProfileBinding.nameLayout.setEnabled(true);
+        fragmentEditProfileBinding.txtFirstName.setText(MainActivity.firstName);
+        fragmentEditProfileBinding.txtLastName.setText(MainActivity.lastName);
+        fragmentEditProfileBinding.txtPhoneNumber.setText(MainActivity.mobileNumber);
         fragmentEditProfileBinding.nameLayout.setOnClickListener(//open bottom sheet to edit name
                 this::onClick);
 
@@ -113,18 +115,19 @@ public class EditProfileFragment extends Fragment {
 
         if (v.getId() == R.id.nameLayout) {
             if (fragmentEditProfileBinding.nameLayout.isEnabled()) {
-                String getName = String.valueOf(fragmentEditProfileBinding.txtUserName.getText());
-                bundle.putString(MyConstants.NAME, getName);
+                String getFirstName = String.valueOf(fragmentEditProfileBinding.txtFirstName.getText());
+                bundle.putString(MyConstants.FIRST_NAME, getFirstName);
                 editItemBottomSheet.setArguments(bundle);
                 editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.NAME);
 
             }
 
 
-        } else if (v.getId() == R.id.editPhoneLayout) {
-
-            verifyPhoneBottomSheet.setCancelable(false);
-            verifyPhoneBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.PHONE_NUMBER);
+        } else if (v.getId() == R.id.aboutLayout) {
+            String getLastName = String.valueOf(fragmentEditProfileBinding.txtLastName.getText());
+            bundle.putString(MyConstants.LAST_NAME, getLastName);
+            editItemBottomSheet.setArguments(bundle);
+            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.NAME);
         }
     }
 

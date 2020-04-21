@@ -67,12 +67,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    public static String name, uid, imageUrl, dateJoined, firstName, lastName;
+    public static String name, uid, imageUrl, dateJoined, firstName, lastName, mobileNumber;
     public static DatabaseReference usersAccountDbRef;
     public static String compareUid;
     public static FirebaseAuth mAuth;
     public static FirebaseUser firebaseUser;
-    private static String email;
     private static Object mContext;
     private ActivityMainBinding activityMainBinding;
     //adds
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 compareUid = (String) dataSnapshot.child("userId").getValue();
 
 
-                Log.i(TAG, "onDataChange: " + email + " " + name + " " + imageUrl + "" + compareUid);
+
 
 
             }
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
-                txtEmail.setText(email);
+
                 if (imageUrl != null && !imageUrl.isEmpty()) {
 
                     Glide.with(getAppContext())
@@ -215,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
                 txtName.setText(name);
-                txtEmail.setText(email);
                 Glide.with(getAppContext())
                         .load(MainActivity.imageUrl)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -243,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 firstName = (String) dataSnapshot.child("firstName").getValue();
                 lastName = (String) dataSnapshot.child("lastName").getValue();
                 dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
+                mobileNumber = (String) dataSnapshot.child("mobileNumber").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
 
 
@@ -441,15 +440,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent gotoSettingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(gotoSettingsIntent);
 
-                return true;
+                break;
 
-            case R.id.action_logout:
+        /*    case R.id.action_logout:
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, SplashScreenActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
 
-                break;
+                break;*/
 
 
             default:
