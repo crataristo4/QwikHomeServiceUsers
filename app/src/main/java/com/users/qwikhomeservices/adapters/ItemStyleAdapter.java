@@ -131,30 +131,6 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
         return stylesItemModelList == null ? 0 : stylesItemModelList.size();
     }
 
-    public void clear() {
-        stylesItemModelList.clear();
-    }
-
-    public void addAll(List<StylesItemModel> stylesItemModels) {
-        int initialSize = stylesItemModelList.size();
-        stylesItemModelList.addAll(stylesItemModels);
-        notifyItemRangeChanged(initialSize, stylesItemModels.size());
-    }
-
-    public String getLastItemId() {
-
-        return stylesItemModelList.get(stylesItemModelList.size() - 1).getTimeStamp();
-    }
-
-    public void removeLastItemId() {
-        stylesItemModelList.remove(stylesItemModelList.size() - 1);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
     interface onItemClickListener {
         void onClick(View view, int position);
     }

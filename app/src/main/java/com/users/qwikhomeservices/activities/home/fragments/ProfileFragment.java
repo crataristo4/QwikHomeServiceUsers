@@ -14,11 +14,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.databinding.FragmentProfileBinding;
 
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
@@ -27,6 +30,7 @@ public class ProfileFragment extends Fragment {
     private EditProfileFragment editProfileFragment = new EditProfileFragment();
 
     private OnFragmentInteractionListener mListener;
+    private CircleImageView profilePhoto;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -46,9 +50,15 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        MainActivity.retrieveSingleUserDetails(fragmentProfileBinding.txtName,
-                fragmentProfileBinding.txtAbout, fragmentProfileBinding.imgPhoto);
-        fragmentProfileBinding.imgPhoto.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fadein));
+        fragmentProfileBinding.txtName.setText(MainActivity.name);
+        profilePhoto = fragmentProfileBinding.imgPhoto;
+        String imageUrl = MainActivity.imageUrl;
+        if (imageUrl == null) {
+            Glide.with(Objects.requireNonNull(getActivity())).load(getActivity().getResources().getDrawable(R.drawable.photoe)).into(profilePhoto);
+        } else {
+            Glide.with(Objects.requireNonNull(getActivity())).load(imageUrl).into(profilePhoto);
+        }
+        profilePhoto.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fadein));
 
         fragmentProfileBinding.mConstrainProfile.setOnClickListener(this::onClick);
 

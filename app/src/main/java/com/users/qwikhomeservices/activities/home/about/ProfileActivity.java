@@ -1,12 +1,12 @@
 package com.users.qwikhomeservices.activities.home.about;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
@@ -16,24 +16,27 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
-import com.users.qwikhomeservices.activities.home.bottomsheets.EditItemBottomSheet;
-import com.users.qwikhomeservices.activities.home.bottomsheets.VerifyPhoneBottomSheet;
 import com.users.qwikhomeservices.databinding.ActivityProfileBinding;
+import com.users.qwikhomeservices.models.Users;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
-import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -41,10 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int DELAY = 2000;
     private static long backPressed;
     private Uri uri;
+    private DatabaseReference usersDbRef;
     private ActivityProfileBinding activityProfileBinding;
-    private long mLastClickTime = 0;
     private StorageReference mStorageReference;
-    private String uid, about, getImageUri;
+    private String getImageUri, uid, mGetFirstName, mGetLatName, mGetFullName, mMobileNumber;
+    private CircleImageView profileImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +61,15 @@ public class ProfileActivity extends AppCompatActivity {
         MainActivity.retrieveSingleUserDetails(activityProfileBinding.txtUserName, activityProfileBinding.txtEmail, activityProfileBinding.imgUploadPhoto);
         mStorageReference = FirebaseStorage.getInstance().getReference("photos");
 
+        usersDbRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Users");
 
-        activityProfileBinding.nameLayout.setOnClickListener(this::onClick);
-        activityProfileBinding.aboutLayout.setOnClickListener(this::onClick);
-        activityProfileBinding.editPhoneLayout.setOnClickListener(this::onClick);
+        profileImage = activityProfileBinding.imgUploadPhoto;
+
 
         activityProfileBinding.fabUploadPhoto.setOnClickListener(this::openGallery);
-        activityProfileBinding.imgUploadPhoto.setOnClickListener(this::openGallery);
+        profileImage.setOnClickListener(this::openGallery);
 
 
     }
@@ -74,34 +81,44 @@ public class ProfileActivity extends AppCompatActivity {
                 .start(Objects.requireNonNull(ProfileActivity.this));
     }
 
-    private void onClick(View v) {
-        Bundle bundle = new Bundle();
-        EditItemBottomSheet editItemBottomSheet = new EditItemBottomSheet();
-        VerifyPhoneBottomSheet verifyPhoneBottomSheet = new VerifyPhoneBottomSheet();
+    private void validateInput(View view) {
 
-        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-            return;
+        if (uri == null) {
+            DisplayViewUI.displayToast(this, "Please select a photo to upload");
+
         }
 
-        mLastClickTime = SystemClock.elapsedRealtime();
+        TextInputLayout txtFirstName = activityProfileBinding.txtFirstName;
+        TextInputLayout txtLastName = activityProfileBinding.txtLastName;
 
-        if (v.getId() == R.id.nameLayout) {
-
-            String getName = String.valueOf(activityProfileBinding.txtUserName.getText());
-            bundle.putString(MyConstants.NAME, getName);
-            editItemBottomSheet.setArguments(bundle);
-            editItemBottomSheet.show(Objects.requireNonNull(ProfileActivity.this).getSupportFragmentManager(), MyConstants.NAME);
+        mGetFirstName = Objects.requireNonNull(txtFirstName.getEditText()).getText().toString();
+        mGetLatName = Objects.requireNonNull(txtLastName.getEditText()).getText().toString();
+        String fullName = mGetFirstName.concat(" ").concat(mGetLatName);
 
 
-        } else if (v.getId() == R.id.editPhoneLayout) {
+        if (mGetFirstName.trim().isEmpty() || mGetFirstName.length() < 3) {
+            txtFirstName.setErrorEnabled(true);
+            txtFirstName.setError("first name required");
+        } else {
+            txtFirstName.setErrorEnabled(false);
 
-            verifyPhoneBottomSheet.setCancelable(false);
-            verifyPhoneBottomSheet.show(Objects.requireNonNull(ProfileActivity.this).getSupportFragmentManager(), MyConstants.PHONE_NUMBER);
+        }
+        if (mGetLatName.trim().isEmpty() || mGetLatName.length() < 3) {
+            txtLastName.setErrorEnabled(true);
+            txtLastName.setError("last name required");
+        } else {
+            txtLastName.setErrorEnabled(false);
+
+        }
+
+        if (!mGetFirstName.trim().isEmpty() && !mGetLatName.trim().isEmpty() && uri != null) {
+
+            upDateAccount();
         }
     }
 
 
-    private void uploadFile() {
+    private void upDateAccount() {
         if (uri != null) {
             ProgressDialog progressDialog = DisplayViewUI.displayProgress(this, "please wait...");
             progressDialog.show();
@@ -141,14 +158,21 @@ public class ProfileActivity extends AppCompatActivity {
                     assert downLoadUri != null;
                     getImageUri = downLoadUri.toString();
 
-                    Map<String, Object> uploadPhoto = new HashMap<>();
-                    uploadPhoto.put("image", getImageUri);
+                    @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:MM a");
+                    String dateJoined = dateFormat.format(Calendar.getInstance().getTime());
+
+                    uid = MainActivity.uid;
+                    mGetFullName = mGetFirstName.concat(" ").concat(mGetLatName);
+                    mMobileNumber = MainActivity.firebaseUser.getPhoneNumber();
 
 
-                    MainActivity.usersAccountDbRef.updateChildren(uploadPhoto).addOnCompleteListener(task1 -> {
+                    Users users = new Users(uid, getImageUri, mGetFirstName, mGetLatName, mGetFullName, mMobileNumber, dateJoined);
+
+
+                    usersDbRef.child(uid).setValue(users).addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful()) {
                             progressDialog.dismiss();
-                            DisplayViewUI.displayToast(this, "Photo uploaded");
+                            DisplayViewUI.displayToast(this, "Profile updated");
 
                             onBackPressed();
 
@@ -171,23 +195,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-
             if (resultCode == Activity.RESULT_OK) {
                 assert result != null;
                 uri = result.getUri();
-
-                Glide.with(ProfileActivity.this)
+                Glide.with(Objects.requireNonNull(ProfileActivity.this))
                         .load(uri)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(activityProfileBinding.imgUploadPhoto);
-
-                uploadFile();
+                        .into(profileImage);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 // progressDialog.dismiss();

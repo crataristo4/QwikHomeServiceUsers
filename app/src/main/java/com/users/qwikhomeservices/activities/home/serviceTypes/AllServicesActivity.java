@@ -65,8 +65,10 @@ public class AllServicesActivity extends AppCompatActivity {
                     setTitle(accountType);
 
                     break;
-                default:
+               /* default:
                     throw new IllegalStateException("Unexpected value: " + getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE));
+                    */
+
             }
 
         }

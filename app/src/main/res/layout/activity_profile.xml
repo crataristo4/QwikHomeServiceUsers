@@ -3,247 +3,149 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ScrollView
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBarProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ToolBarTheme"
-            app:title="Profile" />
+            android:layout_gravity="center"
+            tools:context="com.users.qwikhomeservices.activities.home.about.ProfileActivity">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgUploadPhoto"
+                android:layout_width="@dimen/TwoHundredDp"
+                android:layout_height="@dimen/TwoHundredDp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@string/user_profile"
+                android:src="@drawable/defaultavatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabUploadPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/purple"
+                app:layout_constraintBottom_toBottomOf="@+id/imgUploadPhoto"
+                app:layout_constraintEnd_toEndOf="@+id/imgUploadPhoto"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imgUploadPhoto"
+                app:layout_constraintTop_toTopOf="@+id/imgUploadPhoto"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_camera" />
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context="com.users.qwikhomeservices.activities.home.about.ProfileActivity">
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:clipToPadding="false"
+                android:dividerPadding="@dimen/eightDp"
+                android:textColorHint="#7B1FA2"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/twentyFourDp"
+                app:boxCornerRadiusBottomStart="@dimen/twentyFourDp"
+                app:boxCornerRadiusTopEnd="@dimen/twentyFourDp"
+                app:boxCornerRadiusTopStart="@dimen/twentyFourDp"
+                app:boxStrokeColor="#7B1FA2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgUploadPhoto">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgUploadPhoto"
-                    android:layout_width="@dimen/TwoHundredDp"
-                    android:layout_height="@dimen/TwoHundredDp"
-                    android:layout_marginTop="16dp"
-                    android:contentDescription="@string/user_profile"
-                    android:src="@drawable/defaultavatar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabUploadPhoto"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:backgroundTint="@color/purple"
-                    app:layout_constraintBottom_toBottomOf="@+id/imgUploadPhoto"
-                    app:layout_constraintEnd_toEndOf="@+id/imgUploadPhoto"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/imgUploadPhoto"
-                    app:layout_constraintTop_toTopOf="@+id/imgUploadPhoto"
-                    app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/ic_camera" />
+                    android:drawableStart="@drawable/ic_person_ash"
+                    android:drawableLeft="@drawable/ic_person_ash"
+                    android:drawablePadding="@dimen/eightDp"
+                    android:hint="@string/firstname"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="yes"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/eightDp"
+                    android:paddingEnd="@dimen/eightDp"
+                    android:singleLine="true"
+                    android:textColor="@color/purple"
+                    android:textColorHint="@color/purple"
+                    tools:targetApi="o" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/nameLayout"
-                    android:layout_width="0dp"
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:clipToPadding="false"
+                android:dividerPadding="@dimen/eightDp"
+                android:textColorHint="#7B1FA2"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/twentyFourDp"
+                app:boxCornerRadiusBottomStart="@dimen/twentyFourDp"
+                app:boxCornerRadiusTopEnd="@dimen/twentyFourDp"
+                app:boxCornerRadiusTopStart="@dimen/twentyFourDp"
+                app:boxStrokeColor="#7B1FA2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtFirstName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgUploadPhoto">
+                    android:drawableStart="@drawable/ic_person_ash"
+                    android:drawableLeft="@drawable/ic_person_ash"
+                    android:drawablePadding="@dimen/eightDp"
+                    android:hint="@string/last_name"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="yes"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/eightDp"
+                    android:paddingEnd="@dimen/eightDp"
+                    android:singleLine="true"
+                    android:textColor="@color/purple"
+                    tools:targetApi="o" />
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:contentDescription="@string/name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_person_ash" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:drawableEnd="@drawable/ic_edit_purple"
-                        android:drawableRight="@drawable/ic_edit_purple"
-                        android:text="@string/name"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:singleLine="true"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/textView8"
-                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/aboutLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider3">
-
-                    <ImageView
-                        android:id="@+id/imgInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:contentDescription="@string/app_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_email_" />
-
-                    <TextView
-                        android:id="@+id/txtt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:includeFontPadding="true"
-                        android:padding="@dimen/eightDp"
-                        android:text="@string/email"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imgInfo"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txtEmail"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:ellipsize="marquee"
-                        android:singleLine="true"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/txtt"
-                        app:layout_constraintTop_toBottomOf="@+id/txtt" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/divider3"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nameLayout" />
-
-                <View
-                    android:id="@+id/divider4"
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/aboutLayout" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/editPhoneLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider4">
-
-                    <ImageView
-                        android:id="@+id/imgPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:contentDescription="@string/app_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_call" />
-
-                    <TextView
-                        android:id="@+id/txttt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:padding="@dimen/eightDp"
-                        android:text="@string/phone"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toEndOf="@+id/imgPhone"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/txtPhoneNumber"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:ellipsize="middle"
-                        android:singleLine="true"
-                        android:text="@string/addPhoneNumber"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/txttt"
-                        app:layout_constraintTop_toBottomOf="@+id/txttt" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <Button
+                android:id="@+id/btnFinish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eightyDp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/eightyDp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/curvebotton"
+                android:includeFontPadding="false"
+                android:onClick="gotoNext"
+                android:padding="@dimen/eightDp"
+                android:text="@string/finish"
+                android:textAlignment="inherit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtLastName" />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
