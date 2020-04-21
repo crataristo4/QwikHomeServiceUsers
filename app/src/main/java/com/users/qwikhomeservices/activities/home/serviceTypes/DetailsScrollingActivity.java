@@ -42,7 +42,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StylesAdapter adapter;
     //FirebaseRecyclerPagingAdapter<StylesItemModel, StylesAdapter.StylesViewHolder> adapter;
-    private String name, about, image, servicePersonId;
+    private String name, about, image, servicePersonId, mobileNumber;
     //BottomSheetBehavior mBottomSheetBehavior;
     private long mLastClickTime = 0;
 
@@ -63,10 +63,11 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         if (intent != null) {
             String position = intent.getStringExtra("position");
             assert position != null;
-            name = intent.getStringExtra("name");
+            name = intent.getStringExtra("fullName");
             about = intent.getStringExtra("about");
             image = intent.getStringExtra("image");
             servicePersonId = intent.getStringExtra("servicePersonId");
+            mobileNumber = intent.getStringExtra("mobileNumber");
         }
 
         //todo get phone and call

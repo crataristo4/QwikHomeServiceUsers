@@ -73,7 +73,7 @@ public class AllServicesActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
-                .child(MyConstants.SERVICES);
+                .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
         databaseReference.keepSynced(true);
 
         RecyclerView recyclerView = allServicesBinding.rvAllBarbers;

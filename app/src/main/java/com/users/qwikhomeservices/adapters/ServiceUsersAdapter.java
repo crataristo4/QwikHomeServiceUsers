@@ -94,10 +94,11 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             Intent gotoDetailsIntent = new Intent(allBarbersViewHolder.itemView.getContext(),
                     DetailsScrollingActivity.class);
             gotoDetailsIntent.putExtra("position", position);
-            gotoDetailsIntent.putExtra("name", servicePerson.getFullName());
+            gotoDetailsIntent.putExtra("fullName", servicePerson.getFullName());
             gotoDetailsIntent.putExtra("about", servicePerson.getAbout());
             gotoDetailsIntent.putExtra("image", servicePerson.getImage());
             gotoDetailsIntent.putExtra("servicePersonId", servicePerson.getServicePersonId());
+            gotoDetailsIntent.putExtra("mobileNumber", servicePerson.getMobileNumber());
 
             allBarbersViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
 

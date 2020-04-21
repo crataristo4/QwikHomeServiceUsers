@@ -50,6 +50,13 @@ public class Users extends BaseObservable {
     private String dateRequested;
 
 
+    public Users() {
+
+    }
+
+
+
+
     public Users(String userId, String image, String firstName, String lastName, String fullName, String mobileNumber, String joinedDate) {
         this.userId = userId;
         this.image = image;

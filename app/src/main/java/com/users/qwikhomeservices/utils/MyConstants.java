@@ -7,6 +7,7 @@ public final class MyConstants {
     public static final String IS_DIALOG_SHOWN = "dialogShown";
     public static final String PROFILE_FRAGMENT_TAG = "profileFrag";
     public static final String SERVICES = "Services";
+    public static final String SERVICE_TYPE = "ServiceType";
     public static final String BARBERS = "Barbers";
     public static final String WOMEN_HAIR_STYLIST = "Women Hairstylists";
     public static final String INTERIOR_DERCORATOR = "Interior Decorators";
