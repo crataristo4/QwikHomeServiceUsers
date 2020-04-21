@@ -158,6 +158,7 @@ public class Users extends BaseObservable {
         this.occupation = occupation;
     }
 
+    @Bindable
     public String getResponse() {
         return response;
     }
@@ -220,6 +221,7 @@ public class Users extends BaseObservable {
         this.accountType = accountType;
     }
 
+    @Bindable
     public String getDistanceBetween() {
         return distanceBetween;
     }
@@ -227,6 +229,7 @@ public class Users extends BaseObservable {
     public void setDistanceBetween(String distanceBetween) {
         this.distanceBetween = distanceBetween;
     }
+
 
     public String getSenderPhoto() {
         return senderPhoto;
@@ -236,7 +239,7 @@ public class Users extends BaseObservable {
         this.senderPhoto = senderPhoto;
     }
 
-    @Bindable
+
     public String getImage() {
         return image;
     }
@@ -289,6 +292,7 @@ public class Users extends BaseObservable {
         this.styleItem = styleItem;
     }
 
+    @Bindable
     public String getDateRequested() {
         return dateRequested;
     }
@@ -297,6 +301,7 @@ public class Users extends BaseObservable {
         this.dateRequested = dateRequested;
     }
 
+    @Bindable
     public String getServicePersonId() {
         return servicePersonId;
     }
@@ -305,6 +310,7 @@ public class Users extends BaseObservable {
         this.servicePersonId = servicePersonId;
     }
 
+    @Bindable
     public String getFirstName() {
         return firstName;
     }
@@ -313,6 +319,7 @@ public class Users extends BaseObservable {
         this.firstName = firstName;
     }
 
+    @Bindable
     public String getLastName() {
         return lastName;
     }
@@ -321,6 +328,7 @@ public class Users extends BaseObservable {
         this.lastName = lastName;
     }
 
+    @Bindable
     public String getFullName() {
         return fullName;
     }
@@ -329,6 +337,7 @@ public class Users extends BaseObservable {
         this.fullName = fullName;
     }
 
+    @Bindable
     public String getMobileNumber() {
         return mobileNumber;
     }
@@ -345,6 +354,7 @@ public class Users extends BaseObservable {
         this.timeStamp = timeStamp;
     }
 
+    @Bindable
     public String getJoinedDate() {
         return joinedDate;
     }

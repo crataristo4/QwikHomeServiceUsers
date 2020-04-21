@@ -43,17 +43,17 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
 
     @Override
     protected void onBindViewHolder(@NonNull AllBarbersViewHolder allBarbersViewHolder,
-                                    int i, @NonNull Users singlePerson) {
+                                    int i, @NonNull Users servicePerson) {
 
         allBarbersViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
-        allBarbersViewHolder.listItemsServicesBinding.setServiceType(singlePerson);
+        allBarbersViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
         //allBarbersViewHolder.showPresence(singlePerson.isOnline());
 
-        if (singlePerson.getImage().isEmpty()) {
+        if (servicePerson.getImage().isEmpty()) {
             Glide.with(allBarbersViewHolder.itemView.getContext())
                     .load(mContext.getResources().getDrawable(R.drawable.photoe))
                     .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
-        } else if (!singlePerson.getImage().isEmpty()) {
+        } else if (!servicePerson.getImage().isEmpty()) {
 
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
@@ -62,7 +62,7 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
 
 
             Glide.with(allBarbersViewHolder.itemView.getContext())
-                    .load(singlePerson.image)
+                    .load(servicePerson.image)
                     .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -94,10 +94,10 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             Intent gotoDetailsIntent = new Intent(allBarbersViewHolder.itemView.getContext(),
                     DetailsScrollingActivity.class);
             gotoDetailsIntent.putExtra("position", position);
-            gotoDetailsIntent.putExtra("name", singlePerson.getName());
-            gotoDetailsIntent.putExtra("about", singlePerson.getAbout());
-            gotoDetailsIntent.putExtra("image", singlePerson.getImage());
-            gotoDetailsIntent.putExtra("servicePersonId", singlePerson.getUserId());
+            gotoDetailsIntent.putExtra("name", servicePerson.getFullName());
+            gotoDetailsIntent.putExtra("about", servicePerson.getAbout());
+            gotoDetailsIntent.putExtra("image", servicePerson.getImage());
+            gotoDetailsIntent.putExtra("servicePersonId", servicePerson.getServicePersonId());
 
             allBarbersViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
 
