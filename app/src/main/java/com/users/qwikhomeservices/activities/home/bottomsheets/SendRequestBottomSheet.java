@@ -1,5 +1,6 @@
 package com.users.qwikhomeservices.activities.home.bottomsheets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,11 +30,10 @@ import com.users.qwikhomeservices.models.RequestModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
 import com.users.qwikhomeservices.utils.MyConstants;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class SendRequestBottomSheet extends BottomSheetDialogFragment {
@@ -90,7 +90,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             itemImage = bundle.getString(MyConstants.IMAGE_URL);
             servicePersonName = bundle.getString(MyConstants.SERVICE_PERSON_NAME);
             servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
-            userName = bundle.getString(MyConstants.NAME);
+            userName = bundle.getString(MyConstants.FULL_NAME);
             uid = bundle.getString(MyConstants.UID);
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
 
@@ -117,18 +117,9 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
     //send request method
     private void sendItemRequest() {
-        SimpleDateFormat sfd = new SimpleDateFormat("EEE dd-MM-yyyy '@' hh:mm aa",
-                Locale.US);
 
-        try {
-            Calendar calendar = Calendar.getInstance();
-            Date today = calendar.getTime();
-            dateRequested = sfd.format(new Date(today.toString()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:MM a");
+        dateRequested = dateFormat.format(Calendar.getInstance().getTime());
         getReason = Objects.requireNonNull(layoutSendRequestBinding.reasonInputLayout.getEditText()).getText().toString();
 
         if (getReason.trim().isEmpty()) {
