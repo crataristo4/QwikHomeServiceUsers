@@ -24,10 +24,7 @@ public class RequestModel extends BaseObservable {
     private String reason;
     private String price;
     private String itemName;
-    private double latitude;
-    private double longitude;
     private String response;
-    private String location;
     private String mobileNumber;
     private String itemImage;
     private String distanceBetween;
@@ -38,6 +35,7 @@ public class RequestModel extends BaseObservable {
     private String dateRequested;
     private String paymentStatus;
     private String paymentAmount;
+    private boolean isWorkDone;
 
     public RequestModel() {
     }
@@ -80,6 +78,14 @@ public class RequestModel extends BaseObservable {
                     }
                 })
                 .into(imageView);
+    }
+
+    public boolean isWorkDone() {
+        return isWorkDone;
+    }
+
+    public void setWorkDone(boolean workDone) {
+        isWorkDone = workDone;
     }
 
     @Bindable
@@ -143,22 +149,6 @@ public class RequestModel extends BaseObservable {
         this.itemName = itemName;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     @Bindable
     public String getResponse() {
         return response;
@@ -168,13 +158,6 @@ public class RequestModel extends BaseObservable {
         this.response = response;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     @Bindable
     public String getMobileNumber() {

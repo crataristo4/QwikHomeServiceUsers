@@ -1,5 +1,6 @@
 package com.users.qwikhomeservices.adapters;
 
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.databinding.LayoutUserRequestSentBinding;
 import com.users.qwikhomeservices.models.RequestModel;
+import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, RequestAdapter.RequestViewHolder> {
 
@@ -33,6 +35,29 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         requestViewHolder.layoutUserRequestSentBinding.setRequestItems(requestModel);
         requestViewHolder.showResponse(requestModel.getResponse());
         requestViewHolder.showRating(requestModel.getRating());
+
+        //confirm work done status and rate user
+        requestViewHolder.btnRateServicePerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                        "Confirm work ...",
+                        "Please confirm that your job requested has been done",
+                        "Job is done",
+                        "Not done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == -1) {
+
+                                } else if (which == -2) {
+                                    dialog.dismiss();
+
+                                }
+                            }
+                        });
+            }
+        });
 
         requestViewHolder.btnView.setOnClickListener(v -> {
             if (requestModel.getRating() == 0.0) {
@@ -54,6 +79,8 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             }
 
         });
+
+
     }
 
     @NonNull
