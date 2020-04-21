@@ -25,7 +25,6 @@ import java.util.Objects;
 public class AllServicesActivity extends AppCompatActivity {
     private ActivityAllServicesBinding allServicesBinding;
     private ServiceUsersAdapter adapter;
-    private RecyclerView recyclerView;
     private String accountType;
 
     @Override
@@ -65,9 +64,9 @@ public class AllServicesActivity extends AppCompatActivity {
                     setTitle(accountType);
 
                     break;
-               /* default:
+                default:
                     throw new IllegalStateException("Unexpected value: " + getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE));
-                    */
+
 
             }
 
@@ -75,11 +74,10 @@ public class AllServicesActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
-                .child(MyConstants.SERVICES)
-                .child(accountType);
+                .child(MyConstants.SERVICES);
         databaseReference.keepSynced(true);
 
-        recyclerView = allServicesBinding.rvAllBarbers;
+        RecyclerView recyclerView = allServicesBinding.rvAllBarbers;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
