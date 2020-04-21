@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
@@ -83,6 +84,12 @@ public class EditProfileFragment extends Fragment {
         fragmentEditProfileBinding.txtFirstName.setText(MainActivity.firstName);
         fragmentEditProfileBinding.txtLastName.setText(MainActivity.lastName);
         fragmentEditProfileBinding.txtPhoneNumber.setText(MainActivity.mobileNumber);
+        String imageUrl = MainActivity.imageUrl;
+        if (imageUrl == null) {
+            Glide.with(Objects.requireNonNull(getActivity())).load(getActivity().getResources().getDrawable(R.drawable.photoe)).into(profilePhoto);
+        } else {
+            Glide.with(Objects.requireNonNull(getActivity())).load(imageUrl).into(profilePhoto);
+        }
         fragmentEditProfileBinding.nameLayout.setOnClickListener(//open bottom sheet to edit name
                 this::onClick);
 

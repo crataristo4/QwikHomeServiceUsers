@@ -27,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.databinding.ActivityAboutBinding;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
 import com.users.qwikhomeservices.utils.MyConstants;
@@ -72,7 +71,7 @@ public class AboutActivity extends AppCompatActivity {
         }
         uid = mFirebaseUser.getUid();
 
-        accountType = MainActivity.serviceType;
+        // accountType = MainActivity.serviceType;
         //service type database
         serviceTypeDbRef = FirebaseDatabase.getInstance()
                 .getReference()

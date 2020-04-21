@@ -307,7 +307,7 @@ public class JobTypesActivity extends AppCompatActivity {
         super.onStart();
 
         //get user details
-        accountType = MainActivity.serviceType;
+        //  accountType = MainActivity.serviceType;
         userName = MainActivity.name;
         userImage = MainActivity.imageUrl;
 

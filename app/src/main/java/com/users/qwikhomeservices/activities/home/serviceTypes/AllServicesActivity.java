@@ -21,7 +21,6 @@ import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.Objects;
 
-//TODO change class name
 public class AllServicesActivity extends AppCompatActivity {
     private ActivityAllServicesBinding allServicesBinding;
     private ServiceUsersAdapter adapter;
