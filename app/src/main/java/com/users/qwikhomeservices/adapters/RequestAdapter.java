@@ -1,5 +1,6 @@
 package com.users.qwikhomeservices.adapters;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.fragments.RequestFragment;
 import com.users.qwikhomeservices.databinding.LayoutUserRequestSentBinding;
@@ -53,14 +56,28 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                         "Not done", (dialog, which) -> {
                             if (which == -1) {
                                 //positive button ,user selects work done
-                                Map<String, Boolean> jobDone = new HashMap<>();
+                                Map<String, Object> jobDone = new HashMap<>();
                                 jobDone.put("isWorkDone", true);
                                 String adapterPosition = getRef(i).getKey();
-                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition)).setValue(jobDone);
+                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition))
+                                        .updateChildren(jobDone)
+                                        .addOnCompleteListener((Activity) requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                                new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                dialog.dismiss();
+                                                        if (task.isSuccessful()) {
+                                                            dialog.dismiss();
+                                                            //display rating dialog
 
-                                //display rating dialog
+                                                        } else {
+                                                            DisplayViewUI.displayToast(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                                                    Objects.requireNonNull(task.getException()).getMessage());
+                                                        }
+                                                    }
+                                                });
+
+
 
 
                             } else if (which == -2) {
@@ -168,11 +185,13 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             if (isWorkDone) {
 
                 txtWorkDone.setText(R.string.wkDone);
+                txtWorkDone.setVisibility(View.VISIBLE);
                 linearLayoutCompat.setVisibility(View.VISIBLE);
                 btnRateServicePerson.setEnabled(false);
 
             } else {
                 txtWorkDone.setText(R.string.wkNtDone);
+                txtWorkDone.setVisibility(View.VISIBLE);
                 linearLayoutCompat.setVisibility(View.GONE);
                 btnRateServicePerson.setEnabled(true);
 

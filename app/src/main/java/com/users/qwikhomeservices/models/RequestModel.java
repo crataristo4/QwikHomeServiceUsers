@@ -43,7 +43,7 @@ public class RequestModel extends BaseObservable {
     public RequestModel(float rating, String senderId, String receiverId,
                         String reason, String price, String itemName,
                         String response, String itemImage, String senderPhoto, String senderName,
-                        String servicePersonName, String dateRequested) {
+                        String servicePersonName, String dateRequested, boolean isWorkDone) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -56,6 +56,7 @@ public class RequestModel extends BaseObservable {
         this.senderName = senderName;
         this.servicePersonName = servicePersonName;
         this.dateRequested = dateRequested;
+        this.isWorkDone = isWorkDone;
     }
 
     @BindingAdapter("imageItemUrl")
