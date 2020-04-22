@@ -54,12 +54,6 @@
             android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity" />
 
         <activity
-            android:name="com.users.qwikhomeservices.activities.home.about.AboutActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
             android:name="com.users.qwikhomeservices.activities.home.MainActivity"
             android:configChanges="keyboardHidden"
             android:label="@string/app_name">

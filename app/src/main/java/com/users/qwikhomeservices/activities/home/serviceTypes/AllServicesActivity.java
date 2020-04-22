@@ -63,6 +63,51 @@ public class AllServicesActivity extends AppCompatActivity {
                     setTitle(accountType);
 
                     break;
+                case MyConstants.MECHANICS:
+                    accountType = MyConstants.MECHANICS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.PEST_CONTROLS:
+                    accountType = MyConstants.PEST_CONTROLS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.PLUMBERS:
+                    accountType = MyConstants.PLUMBERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.TILERS:
+                    accountType = MyConstants.TILERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.TV_INSTALLERS:
+                    accountType = MyConstants.TV_INSTALLERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.WELDERS:
+                    accountType = MyConstants.WELDERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.ROLLERS:
+                    accountType = MyConstants.ROLLERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.GARDENERS:
+                    accountType = MyConstants.GARDENERS;
+                    setTitle(accountType);
+
+                    break;
+                case MyConstants.PAINTERS:
+                    accountType = MyConstants.PAINTERS;
+                    setTitle(accountType);
+
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + getIntent.getStringExtra(MyConstants.ACCOUNT_TYPE));
 
