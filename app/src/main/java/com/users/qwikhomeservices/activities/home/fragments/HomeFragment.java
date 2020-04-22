@@ -63,73 +63,74 @@ public class HomeFragment extends Fragment {
 
         //on item click
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            switch (position) {
-                case 0:
+            String itemName = parent.getItemAtPosition(position).toString();
+
+            switch (itemName) {
+                case MyConstants.WOMEN_HAIR_STYLIST:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.WOMEN_HAIR_STYLIST);
                     startActivity(intent);
                     break;
-                case 1:
+                case MyConstants.INTERIOR_DERCORATOR:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.INTERIOR_DERCORATOR);
                     startActivity(intent);
                     break;
-                case 2:
+                case MyConstants.BARBERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.BARBERS);
                     startActivity(intent);
                     break;
-                case 3:
+                case MyConstants.CARPENTERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.CARPENTERS);
                     startActivity(intent);
                     break;
-                case 4:
+                case MyConstants.MECHANICS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.MECHANICS);
                     startActivity(intent);
                     break;
-                case 5:
+                case MyConstants.PEST_CONTROLS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PEST_CONTROLS);
                     startActivity(intent);
                     break;
-                case 6:
+                case MyConstants.PLUMBERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PLUMBERS);
                     startActivity(intent);
                     break;
-                case 7:
+                case MyConstants.TV_INSTALLERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.TV_INSTALLERS);
                     startActivity(intent);
                     break;
-                case 8:
+                case MyConstants.TILERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.TILERS);
                     startActivity(intent);
                     break;
-                case 9:
+                case MyConstants.WELDERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.WELDERS);
                     startActivity(intent);
                     break;
-                case 10:
+                case MyConstants.ROLLERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.ROLLERS);
                     startActivity(intent);
                     break;
-                case 11:
+                case MyConstants.GARDENERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.GARDENERS);
                     startActivity(intent);
                     break;
-                case 12:
+                case MyConstants.PAINTERS:
                     intent = new Intent(getContext(), AllServicesActivity.class);
                     intent.putExtra(MyConstants.ACCOUNT_TYPE, MyConstants.PAINTERS);
                     startActivity(intent);
                     break;
-
                 default:
                     throw new IllegalStateException("Unexpected value: " + MyConstants.SERVICES);
 
