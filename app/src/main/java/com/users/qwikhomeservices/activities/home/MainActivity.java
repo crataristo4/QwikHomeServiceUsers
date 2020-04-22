@@ -126,11 +126,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
-        if (firebaseUser == null) {
-            SendUserToLoginActivity();
-        }
-
-
         //initialize step 5
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -368,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (firebaseUser == null) {
+        if (mAuth.getCurrentUser() == null) {
             SendUserToLoginActivity();
         } else {
 

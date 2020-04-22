@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.databinding.ActivityProfileBinding;
@@ -55,10 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-
-        // MainActivity.retrieveSingleUserDetails(activityProfileBinding.txtUserName, activityProfileBinding.txtEmail, activityProfileBinding.imgUploadPhoto);
         mStorageReference = FirebaseStorage.getInstance().getReference("photos");
 
         usersDbRef = FirebaseDatabase.getInstance()
@@ -71,12 +68,15 @@ public class ProfileActivity extends AppCompatActivity {
         activityProfileBinding.fabUploadPhoto.setOnClickListener(this::openGallery);
         profileImage.setOnClickListener(this::openGallery);
 
+        activityProfileBinding.btnFinish.setOnClickListener(this::validateInput);
+
 
     }
 
 
     private void openGallery(View view) {
         CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(16, 16)
                 .start(Objects.requireNonNull(ProfileActivity.this));
     }
@@ -93,7 +93,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         mGetFirstName = Objects.requireNonNull(txtFirstName.getEditText()).getText().toString();
         mGetLatName = Objects.requireNonNull(txtLastName.getEditText()).getText().toString();
-        String fullName = mGetFirstName.concat(" ").concat(mGetLatName);
 
 
         if (mGetFirstName.trim().isEmpty() || mGetFirstName.length() < 3) {
@@ -139,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //                file path for the itemImage
+            //file path for the itemImage
             final StorageReference fileReference = mStorageReference.child(uid + "." + uri.getLastPathSegment());
 
             fileReference.putFile(uri).continueWithTask(task -> {

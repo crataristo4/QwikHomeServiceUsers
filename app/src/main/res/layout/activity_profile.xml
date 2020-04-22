@@ -133,7 +133,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/curvebotton"
                 android:includeFontPadding="false"
-                android:onClick="gotoNext"
                 android:padding="@dimen/eightDp"
                 android:text="@string/finish"
                 android:textAlignment="inherit"
