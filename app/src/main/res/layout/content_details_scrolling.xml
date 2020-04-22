@@ -81,6 +81,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtStyleLabel">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:id="@+id/rvStylesItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
