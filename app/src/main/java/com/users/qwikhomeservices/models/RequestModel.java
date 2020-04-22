@@ -81,12 +81,12 @@ public class RequestModel extends BaseObservable {
                 .into(imageView);
     }
 
-    public String isWorkDone() {
+    public String getIsWorkDone() {
         return isWorkDone;
     }
 
-    public void setWorkDone(String workDone) {
-        isWorkDone = workDone;
+    public void setIsWorkDone(String isWorkDone) {
+        this.isWorkDone = isWorkDone;
     }
 
     @Bindable

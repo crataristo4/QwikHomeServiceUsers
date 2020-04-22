@@ -94,13 +94,8 @@ public class RequestFragment extends Fragment {
                 setQuery(query, RequestModel.class).build();
         requestAdapter = new RequestAdapter(options);
         requestAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(requestAdapter);
 
-        swipeRefreshLayout.setRefreshing(true);
-        new Handler().postDelayed(() -> {
-            swipeRefreshLayout.setRefreshing(false);
-            recyclerView.setAdapter(requestAdapter);
-
-        }, 3000);
 
 
     }

@@ -42,7 +42,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         requestViewHolder.layoutUserRequestSentBinding.setRequestItems(requestModel);
         requestViewHolder.showResponse(requestModel.getResponse());
         requestViewHolder.showRating(requestModel.getRating());
-        requestViewHolder.showWorkDoneStatus(requestModel.isWorkDone());
+        requestViewHolder.showWorkDoneStatus(requestModel.getIsWorkDone());
 
         //confirm work done status and rate user
         requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
@@ -177,7 +177,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         }
 
         void showWorkDoneStatus(String isWorkDone) {
-            if (isWorkDone.equalsIgnoreCase("YES")) {
+            if (isWorkDone.equals("YES")) {
 
                 txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorGreen));
                 txtWorkDone.setText(R.string.wkDone);
@@ -185,7 +185,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                 linearLayoutCompat.setVisibility(View.VISIBLE);
                 btnRateServicePerson.setEnabled(false);
 
-            } else if (isWorkDone.equalsIgnoreCase("NO")) {
+            } else if (isWorkDone.equals("NO")) {
                 txtWorkDone.setText(R.string.wkNtDone);
                 txtWorkDone.setVisibility(View.VISIBLE);
                 txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
