@@ -3,8 +3,6 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.google.firebase.database.Exclude;
-
 public class StylesItemModel extends BaseObservable {
 
     public String price;
@@ -113,12 +111,11 @@ public class StylesItemModel extends BaseObservable {
         this.userName = userName;
     }
 
-    @Exclude
     public long getTimeStamp() {
         return (long) timeStamp;
     }
 
-    public void setTimeStamp(Object timeStamp) {
+    public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
 }

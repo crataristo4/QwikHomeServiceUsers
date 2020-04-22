@@ -41,9 +41,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     private ActivityDetailsScrollingBinding activityDetailsScrollingBinding;
     private DatabaseReference databaseReference;
     private StylesAdapter adapter;
-    //FirebaseRecyclerPagingAdapter<StylesItemModel, StylesAdapter.StylesViewHolder> adapter;
     private String name, about, image, servicePersonId, mobileNumber;
-    //BottomSheetBehavior mBottomSheetBehavior;
     private long mLastClickTime = 0;
 
 
@@ -56,8 +54,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         activityDetailsScrollingBinding = DataBindingUtil.setContentView(this, R.layout.activity_details_scrolling);
         setSupportActionBar(activityDetailsScrollingBinding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-        // mBottomSheetBehavior = BottomSheetBehavior.from(activityDetailsScrollingBinding.nestedScroll);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -133,32 +129,8 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = activityDetailsScrollingBinding.contentDetails.rvStylesItem;
         recyclerView.setHasFixedSize(true);
-
-        //querying the database BY NAME
-        Query query = databaseReference.orderByChild("price").limitToFirst(3);
-
-
+        Query query = databaseReference.orderByChild("price");
         // TODO: 09-Apr-20 load more items on refresh and on recycler view scrolled to bottom
-
-
-  /*      PagedList.Config config = new PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPrefetchDistance(1)
-                .setPageSize(3)
-                .build();
-
-        DatabasePagingOptions<StylesItemModel> databasePagingOptions = new DatabasePagingOptions.Builder<StylesItemModel>()
-                .setLifecycleOwner(this)
-                .setQuery(databaseReference, config, StylesItemModel.class)
-                .build();
-*/
-
-
-        FirebaseRecyclerOptions<StylesItemModel> options =
-                new FirebaseRecyclerOptions.Builder<StylesItemModel>().setQuery(query,
-                        StylesItemModel.class)
-                        .build();
-        adapter = new StylesAdapter(options);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
@@ -168,6 +140,12 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         }
+
+        FirebaseRecyclerOptions<StylesItemModel> options =
+                new FirebaseRecyclerOptions.Builder<StylesItemModel>().setQuery(query,
+                        StylesItemModel.class)
+                        .build();
+        adapter = new StylesAdapter(options);
 
         //on item click
         adapter.setOnItemClickListener((view, position) -> {

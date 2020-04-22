@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.database.DatabaseReference;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
@@ -48,14 +50,11 @@ public class ProfilePhotoEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fragmentProfilePhotoEditBinding.imgEditPhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.scale_in));
+        Glide.with(Objects.requireNonNull(getActivity())).load(MainActivity.imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(fragmentProfilePhotoEditBinding.imgEditPhoto);
 
-        MainActivity.retrieveSingleUserDetails(fragmentProfilePhotoEditBinding.imgEditPhoto);
 
-        /*serviceTypeDbRef = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Services")
-                .child("ServiceType")
-                .child(uid);*/
 
         //TODO : UPDATE SERVICE TYPE USER PHOTO ON PICTURE CHANGE
 

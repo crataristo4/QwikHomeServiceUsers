@@ -32,7 +32,7 @@ import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 //TODO change class name
 public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
-        ServiceUsersAdapter.AllBarbersViewHolder> {
+        ServiceUsersAdapter.AllServicesViewHolder> {
     private Context mContext;
 
     public ServiceUsersAdapter(@NonNull FirebaseRecyclerOptions<Users> options, Context context) {
@@ -42,17 +42,16 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AllBarbersViewHolder allBarbersViewHolder,
+    protected void onBindViewHolder(@NonNull AllServicesViewHolder allServicesViewHolder,
                                     int i, @NonNull Users servicePerson) {
 
-        allBarbersViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
-        allBarbersViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
-        //allBarbersViewHolder.showPresence(singlePerson.isOnline());
+        allServicesViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
+        allServicesViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
 
         if (servicePerson.getImage().isEmpty()) {
-            Glide.with(allBarbersViewHolder.itemView.getContext())
+            Glide.with(allServicesViewHolder.itemView.getContext())
                     .load(mContext.getResources().getDrawable(R.drawable.photoe))
-                    .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
+                    .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
         } else if (!servicePerson.getImage().isEmpty()) {
 
             RequestOptions requestOptions = new RequestOptions();
@@ -61,7 +60,7 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             requestOptions.centerCrop();
 
 
-            Glide.with(allBarbersViewHolder.itemView.getContext())
+            Glide.with(allServicesViewHolder.itemView.getContext())
                     .load(servicePerson.image)
                     .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
@@ -69,29 +68,30 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 
                             if (isFirstResource) {
-                                allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+                                allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
 
                             }
-                            allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
+                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
                             return false;
                         }
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            allBarbersViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+                            if (isFirstResource)
+                                allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
                             return false;
                         }
                     }).transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(allBarbersViewHolder.listItemsServicesBinding.imgUserPhoto);
+                    .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
 
         }
 
         //on item click listener
-        allBarbersViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {
+        allServicesViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {
 
             String position = getRef(i).getKey();
-            Intent gotoDetailsIntent = new Intent(allBarbersViewHolder.itemView.getContext(),
+            Intent gotoDetailsIntent = new Intent(mContext,
                     DetailsScrollingActivity.class);
             gotoDetailsIntent.putExtra("position", position);
             gotoDetailsIntent.putExtra("fullName", servicePerson.getFullName());
@@ -100,7 +100,8 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             gotoDetailsIntent.putExtra("servicePersonId", servicePerson.getServicePersonId());
             gotoDetailsIntent.putExtra("mobileNumber", servicePerson.getMobileNumber());
 
-            allBarbersViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
+            DisplayViewUI.displayToast(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext(), " servicePersonId:: " + servicePerson.getServicePersonId());
+            allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
 
         });
 
@@ -109,20 +110,20 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
 
     @NonNull
     @Override
-    public AllBarbersViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public AllServicesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutListItemsBinding listItemsServicesBinding = DataBindingUtil.inflate
                 (LayoutInflater.from(viewGroup.getContext()),
                         R.layout.layout_list_items, viewGroup, false);
 
-        return new AllBarbersViewHolder(listItemsServicesBinding);
+        return new AllServicesViewHolder(listItemsServicesBinding);
     }
 
-    static class AllBarbersViewHolder extends RecyclerView.ViewHolder {
+    static class AllServicesViewHolder extends RecyclerView.ViewHolder {
 
         LayoutListItemsBinding listItemsServicesBinding;
         CardView cardView;
 
-        AllBarbersViewHolder(@NonNull LayoutListItemsBinding listItemsServicesBinding) {
+        AllServicesViewHolder(@NonNull LayoutListItemsBinding listItemsServicesBinding) {
             super(listItemsServicesBinding.getRoot());
 
             this.listItemsServicesBinding = listItemsServicesBinding;

@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
-        MainActivity.retrieveSingleUserDetails(activityProfileBinding.txtUserName, activityProfileBinding.txtEmail, activityProfileBinding.imgUploadPhoto);
+        // MainActivity.retrieveSingleUserDetails(activityProfileBinding.txtUserName, activityProfileBinding.txtEmail, activityProfileBinding.imgUploadPhoto);
         mStorageReference = FirebaseStorage.getInstance().getReference("photos");
 
         usersDbRef = FirebaseDatabase.getInstance()

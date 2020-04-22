@@ -19,12 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
@@ -32,8 +29,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -61,8 +56,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -99,138 +92,6 @@ public class MainActivity extends AppCompatActivity {
         return (Context) mContext;
     }
 
-    private static void retrieveServiceType() {
-
-        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                name = (String) dataSnapshot.child("fullName").getValue();
-                firstName = (String) dataSnapshot.child("firstName").getValue();
-                lastName = (String) dataSnapshot.child("lastName").getValue();
-                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
-                imageUrl = (String) dataSnapshot.child("image").getValue();
-                compareUid = (String) dataSnapshot.child("userId").getValue();
-
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // DisplayViewUI.displayToast(MainActivity.this, databaseError.getMessage());
-            }
-        });
-
-
-    }
-
-    public static void retrieveSingleUserDetails(TextView txtName, TextView txtEmail, CircleImageView photo) {
-
-        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                name = (String) dataSnapshot.child("fullName").getValue();
-                firstName = (String) dataSnapshot.child("firstName").getValue();
-                lastName = (String) dataSnapshot.child("lastName").getValue();
-                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
-                imageUrl = (String) dataSnapshot.child("image").getValue();
-
-                txtName.setText(name);
-
-                if (imageUrl != null && !imageUrl.isEmpty()) {
-
-                    Glide.with(getAppContext())
-                            .load(MainActivity.imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(photo);
-                } else {
-                    Glide.with(getAppContext())
-                            .load(R.drawable.photoe)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(photo);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    public static void retrieveSingleUserDetails(AppCompatImageView photo) {
-        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                imageUrl = (String) dataSnapshot.child("image").getValue();
-
-                if (imageUrl != null && !imageUrl.isEmpty()) {
-
-                    Glide.with(getAppContext())
-                            .load(MainActivity.imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(photo);
-                } else {
-                    Glide.with(getAppContext())
-                            .load(R.drawable.photoe)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(photo);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    public static void retrieveSingleUserDetails(String position, TextView txtName, TextView txtEmail, ImageView photo) {
-
-        usersAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Users")
-                .child(position);
-        usersAccountDbRef.keepSynced(true);
-
-        usersAccountDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                name = (String) dataSnapshot.child("fullName").getValue();
-                firstName = (String) dataSnapshot.child("firstName").getValue();
-                lastName = (String) dataSnapshot.child("lastName").getValue();
-                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
-                imageUrl = (String) dataSnapshot.child("image").getValue();
-
-                txtName.setText(name);
-                Glide.with(getAppContext())
-                        .load(MainActivity.imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(photo);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
     public static void retrieveSingleUserDetails() {
 
         usersAccountDbRef.addValueEventListener(new ValueEventListener() {
@@ -264,20 +125,11 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
-        try {
 
-            if (mAuth.getCurrentUser() == null) {
-                SendUserToLoginActivity();
-            } else if (mAuth.getCurrentUser() != null) {
-
-                //  checkUid();
-
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (firebaseUser == null) {
+            SendUserToLoginActivity();
         }
+
 
         //initialize step 5
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -409,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 welcomeNoticeBottomSheet.setCancelable(false);
                 welcomeNoticeBottomSheet.show(getSupportFragmentManager(), "welcome");
 
-            }, 2000);
+            }, 3000);
 
             SharedPreferences.Editor edit = pref.edit();
             edit.putBoolean(MyConstants.IS_DIALOG_SHOWN, true);
@@ -516,16 +368,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (firebaseUser == null) {
+            SendUserToLoginActivity();
+        } else {
 
-        assert firebaseUser != null;
-        uid = firebaseUser.getUid();
-        usersAccountDbRef = FirebaseDatabase.getInstance()
-                .getReference().child("Users")
-                .child(uid);
-        usersAccountDbRef.keepSynced(true);
-        checkDisplayAlertDialog();
-        retrieveSingleUserDetails();
 
+            uid = firebaseUser.getUid();
+            usersAccountDbRef = FirebaseDatabase.getInstance()
+                    .getReference().child("Users")
+                    .child(uid);
+            usersAccountDbRef.keepSynced(true);
+            checkDisplayAlertDialog();
+            retrieveSingleUserDetails();
+        }
         //todo check null db
 
     }

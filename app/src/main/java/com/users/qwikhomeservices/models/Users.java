@@ -24,14 +24,12 @@ public class Users extends BaseObservable {
     public String servicePersonId;
     public String firstName, lastName, fullName;
     public String mobileNumber;
-    public long timeStamp;
     public String joinedDate;
     private float rating;
     private String userId;
     private String name;
     private String email;
     private String reason;
-    private int price;
     private String styleItem;
     private double latitude;
     private double longitude;
@@ -54,9 +52,6 @@ public class Users extends BaseObservable {
 
     }
 
-
-
-
     public Users(String userId, String image, String firstName, String lastName, String fullName, String mobileNumber, String joinedDate) {
         this.userId = userId;
         this.image = image;
@@ -67,17 +62,6 @@ public class Users extends BaseObservable {
         this.joinedDate = joinedDate;
     }
 
-    public Users(String userId, String name, String email) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-    }
-
-    public Users(int price, String styleItem, String image) {
-        this.price = price;
-        this.styleItem = styleItem;
-        this.image = image;
-    }
 
     @BindingAdapter("imageUrl")
     public static void loadImages(CircleImageView imageView, String imageUrl) {
@@ -282,15 +266,6 @@ public class Users extends BaseObservable {
     }
 
     @Bindable
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    @Bindable
     public String getStyleItem() {
         return styleItem;
     }
@@ -353,13 +328,6 @@ public class Users extends BaseObservable {
         this.mobileNumber = mobileNumber;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
 
     @Bindable
     public String getJoinedDate() {
