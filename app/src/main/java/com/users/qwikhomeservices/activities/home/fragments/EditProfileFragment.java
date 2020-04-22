@@ -51,7 +51,7 @@ public class EditProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private StorageReference mStorageReference;
     private DatabaseReference usersDbAccountDbRef;
-    private String uid, getImageUri;
+    private String uid, getImageUri, name;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -138,20 +138,19 @@ public class EditProfileFragment extends Fragment {
 
 
         if (v.getId() == R.id.nameLayout) {
-            if (fragmentEditProfileBinding.nameLayout.isEnabled()) {
-                String getFirstName = String.valueOf(fragmentEditProfileBinding.txtFirstName.getText());
-                bundle.putString(MyConstants.FIRST_NAME, getFirstName);
-                editItemBottomSheet.setArguments(bundle);
-                editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.NAME);
 
-            }
+            name = String.valueOf(fragmentEditProfileBinding.txtFirstName.getText());
+            bundle.putString(MyConstants.FIRST_NAME, name);
+                editItemBottomSheet.setArguments(bundle);
+            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.FIRST_NAME);
+
 
 
         } else if (v.getId() == R.id.lastNameLayout) {
-            String getLastName = String.valueOf(fragmentEditProfileBinding.txtLastName.getText());
-            bundle.putString(MyConstants.LAST_NAME, getLastName);
+            name = String.valueOf(fragmentEditProfileBinding.txtLastName.getText());
+            bundle.putString(MyConstants.LAST_NAME, name);
             editItemBottomSheet.setArguments(bundle);
-            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.NAME);
+            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.LAST_NAME);
         }
     }
 

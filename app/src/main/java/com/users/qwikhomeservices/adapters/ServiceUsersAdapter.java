@@ -100,7 +100,6 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             gotoDetailsIntent.putExtra("servicePersonId", servicePerson.getServicePersonId());
             gotoDetailsIntent.putExtra("mobileNumber", servicePerson.getMobileNumber());
 
-            DisplayViewUI.displayToast(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext(), " servicePersonId:: " + servicePerson.getServicePersonId());
             allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().startActivity(gotoDetailsIntent);
 
         });

@@ -91,6 +91,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:noHistory="true"
             android:name="com.users.qwikhomeservices.activities.welcome.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -110,7 +111,7 @@
         <activity
             android:name="com.users.qwikhomeservices.activities.auth.login.SignInWithPhoneNumberActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.home.about.FinishAccountSetUpActivity" />
     </application>
