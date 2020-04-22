@@ -300,6 +300,7 @@
     <string name="presence_state">Presence State</string>
     <string name="agree_and_continue">Agree and continue</string>
     <string name="searchForServices">Search for service</string>
-    <string name="wkDone">Work is done</string>
-    <string name="wkNtDone">Work is not done</string>
+    <string name="wkDone">Work IS DONE</string>
+    <string name="wkNtDone">Work IS NOT DONE</string>
+    <string name="wkDeclined">Work DECLINED</string>
 </resources>

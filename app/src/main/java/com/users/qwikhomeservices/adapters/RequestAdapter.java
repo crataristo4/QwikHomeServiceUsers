@@ -45,49 +45,41 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         requestViewHolder.showWorkDoneStatus(requestModel.isWorkDone());
 
         //confirm work done status and rate user
-        requestViewHolder.btnRateServicePerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                "Confirm work ...",
+                "Please confirm that your job requested has been done",
+                "Job is done",
+                "Not done", (dialog, which) -> {
+                    if (which == -1) {
+                        //positive button ,user selects work done
+                        Map<String, Object> jobDone = new HashMap<>();
+                        jobDone.put("isWorkDone", "YES");
+                        String adapterPosition = getRef(i).getKey();
+                        RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition))
+                                .updateChildren(jobDone)
+                                .addOnCompleteListener((Activity) requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                        new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
 
-                DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                        "Confirm work ...",
-                        "Please confirm that your job requested has been done",
-                        "Job is done",
-                        "Not done", (dialog, which) -> {
-                            if (which == -1) {
-                                //positive button ,user selects work done
-                                Map<String, Object> jobDone = new HashMap<>();
-                                jobDone.put("isWorkDone", true);
-                                String adapterPosition = getRef(i).getKey();
-                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition))
-                                        .updateChildren(jobDone)
-                                        .addOnCompleteListener((Activity) requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                                                new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    dialog.dismiss();
+                                                    //display rating dialog
 
-                                                        if (task.isSuccessful()) {
-                                                            dialog.dismiss();
-                                                            //display rating dialog
-
-                                                        } else {
-                                                            DisplayViewUI.displayToast(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                                                                    Objects.requireNonNull(task.getException()).getMessage());
-                                                        }
-                                                    }
-                                                });
+                                                } else {
+                                                    DisplayViewUI.displayToast(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                                            Objects.requireNonNull(task.getException()).getMessage());
+                                                }
+                                            }
+                                        });
 
 
+                    } else if (which == -2) {
+                        //negative button
+                        dialog.dismiss();
 
-
-                            } else if (which == -2) {
-                                //negative button
-                                dialog.dismiss();
-
-                            }
-                        });
-            }
-        });
+                    }
+                }));
 
         requestViewHolder.btnView.setOnClickListener(v -> {
             if (requestModel.getRating() == 0.0) {
@@ -173,7 +165,10 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             } else if (response.equals("Request Rejected")) {
                 btnChat.setVisibility(View.GONE);
                 btnRateServicePerson.setVisibility(View.GONE);
-                //btnShowRoute.setVisibility(View.INVISIBLE);
+                txtWorkDone.setText(R.string.wkDeclined);
+                txtWorkDone.setVisibility(View.VISIBLE);
+                txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
+
                 txtResponse.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
             }
 
@@ -181,17 +176,20 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             txtResponse.setText(response);
         }
 
-        void showWorkDoneStatus(boolean isWorkDone) {
-            if (isWorkDone) {
+        void showWorkDoneStatus(String isWorkDone) {
+            if (isWorkDone.equalsIgnoreCase("YES")) {
 
+                txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorGreen));
                 txtWorkDone.setText(R.string.wkDone);
                 txtWorkDone.setVisibility(View.VISIBLE);
                 linearLayoutCompat.setVisibility(View.VISIBLE);
                 btnRateServicePerson.setEnabled(false);
 
-            } else {
+            } else if (isWorkDone.equalsIgnoreCase("NO")) {
                 txtWorkDone.setText(R.string.wkNtDone);
                 txtWorkDone.setVisibility(View.VISIBLE);
+                txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
+
                 linearLayoutCompat.setVisibility(View.GONE);
                 btnRateServicePerson.setEnabled(true);
 

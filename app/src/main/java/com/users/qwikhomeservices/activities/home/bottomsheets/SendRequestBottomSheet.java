@@ -169,7 +169,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
                     0, uid, servicePersonId,
                     getReason, itemPrice, itemName,
                     notApproved, itemImage, userPhotoUrl,
-                    userName, servicePersonName, dateRequested, false);
+                    userName, servicePersonName, dateRequested, "NO");
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

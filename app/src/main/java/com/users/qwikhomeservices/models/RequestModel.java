@@ -35,7 +35,7 @@ public class RequestModel extends BaseObservable {
     private String dateRequested;
     private String paymentStatus;
     private String paymentAmount;
-    private boolean isWorkDone;
+    private String isWorkDone;
 
     public RequestModel() {
     }
@@ -43,7 +43,7 @@ public class RequestModel extends BaseObservable {
     public RequestModel(float rating, String senderId, String receiverId,
                         String reason, String price, String itemName,
                         String response, String itemImage, String senderPhoto, String senderName,
-                        String servicePersonName, String dateRequested, boolean isWorkDone) {
+                        String servicePersonName, String dateRequested, String isWorkDone) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -81,11 +81,11 @@ public class RequestModel extends BaseObservable {
                 .into(imageView);
     }
 
-    public boolean isWorkDone() {
+    public String isWorkDone() {
         return isWorkDone;
     }
 
-    public void setWorkDone(boolean workDone) {
+    public void setWorkDone(String workDone) {
         isWorkDone = workDone;
     }
 
