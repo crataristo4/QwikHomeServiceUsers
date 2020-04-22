@@ -99,7 +99,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/aboutLayout"
+                    android:id="@+id/lastNameLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -179,7 +179,7 @@
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/aboutLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/lastNameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/editPhoneLayout"
