@@ -303,4 +303,7 @@
     <string name="wkDone">work IS DONE</string>
     <string name="wkNtDone">work IS NOT DONE</string>
     <string name="wkDeclined">work DECLINED</string>
+    <string name="rateNow">Rate now</string>
+    <string name="later">Later</string>
+
 </resources>
