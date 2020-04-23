@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +14,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.hbb20.CountryCodePicker;
 import com.users.qwikhomeservices.R;
+import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.databinding.ActivitySignInWithPhoneNumberBinding;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
 
@@ -41,6 +42,9 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private String uid;
+    String phoneNumber = "+16505554568";
+    String smsCode = "123456";
+
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
@@ -72,14 +76,67 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
             activitySignInWithPhoneNumberBinding.txtResendCode.setVisibility(View.VISIBLE);
         }
     };
-    private TextView txtResend;
-    private String number;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activitySignInWithPhoneNumberBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in_with_phone_number);
         firebaseAuth = FirebaseAuth.getInstance();
+
+
+        //todo remove white listed phone
+        FirebaseAuthSettings firebaseAuthSettings = firebaseAuth.getFirebaseAuthSettings();
+
+// Configure faking the auto-retrieval with the whitelisted numbers.
+        firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(phoneNumber, smsCode);
+
+        PhoneAuthProvider phoneAuthProvider = PhoneAuthProvider.getInstance();
+        phoneAuthProvider.verifyPhoneNumber(
+                phoneNumber,
+                60L,
+                TimeUnit.SECONDS,
+                this, /* activity */
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
+                        // Instant verification is applied and a credential is directly returned.
+                        // ...
+                        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                loading.setVisibility(View.GONE);
+
+                                user = firebaseAuth.getCurrentUser();
+                                uid = firebaseAuth.getUid();
+
+                                Intent intent = new Intent(SignInWithPhoneNumberActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+
+
+                            } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                loading.setVisibility(View.GONE);
+                                activitySignInWithPhoneNumberBinding.txtResendCode.setVisibility(View.VISIBLE);
+                                DisplayViewUI.displayToast(SignInWithPhoneNumberActivity.this, task.getException().getMessage());
+                            }
+
+                        });
+
+                    }
+
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e) {
+
+                    }
+
+                    // ...
+                });
+
+
+
+
+
 
         countryCodePicker = activitySignInWithPhoneNumberBinding.ccp;
         loading = activitySignInWithPhoneNumberBinding.progressBarVerify;
@@ -97,7 +154,8 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
 
                 if (DisplayViewUI.isNetworkConnected(SignInWithPhoneNumberActivity.this)) {
                     getPhone = countryCodePicker.getFormattedFullNumber();
-                    sendVerificationCode(getPhone);
+                    //sendVerificationCode(getPhone);
+                    //todo uncomment
                     showHideLayout();
                 } else {
                     DisplayViewUI.displayAlertDialogMsg(SignInWithPhoneNumberActivity.this, getResources().getString(R.string.noInternet), "ok",
@@ -115,7 +173,8 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
         activitySignInWithPhoneNumberBinding.btnVerify.setOnClickListener(v -> {
             String getCodeFromUser = Objects.requireNonNull(txtVerifyCode.getEditText()).getText().toString();
             if (!getCodeFromUser.trim().isEmpty() && getCodeFromUser.length() == 6) {
-                verifyCode(getCodeFromUser);
+                //   verifyCode(getCodeFromUser);
+                //todo uncomment
 
             }
 
