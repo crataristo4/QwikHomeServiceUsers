@@ -24,6 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:focusable="true"
+            android:theme="@style/CustomRatingBar"
             android:clickable="true"
             android:isIndicator="false"
             android:numStars="5"
