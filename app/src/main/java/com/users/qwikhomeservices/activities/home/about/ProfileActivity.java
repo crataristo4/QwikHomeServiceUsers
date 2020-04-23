@@ -173,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             DisplayViewUI.displayToast(this, "Profile updated");
 
-                            onBackPressed();
+                            finish();
 
                         } else {
                             progressDialog.dismiss();
@@ -219,9 +219,9 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backPressed + DELAY > System.currentTimeMillis()) {
-            super.onBackPressed();
+
         } else {
-            DisplayViewUI.displayToast(this, "Press back again to exit");
+            DisplayViewUI.displayToast(this, "please complete the registration process");
         }
         backPressed = System.currentTimeMillis();
     }

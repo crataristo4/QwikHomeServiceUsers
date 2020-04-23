@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +21,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,11 +58,18 @@ public class EditProfileFragment extends Fragment {
     private StorageReference mStorageReference;
     private DatabaseReference usersDbAccountDbRef;
     private String uid, getImageUri, name;
+    private ProgressBar progressBar;
 
     public EditProfileFragment() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -82,8 +95,9 @@ public class EditProfileFragment extends Fragment {
         fragmentEditProfileBinding
                 .fabUploadPhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fadein));
         profilePhoto = fragmentEditProfileBinding.imgUploadPhoto;
-        profilePhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fade_transition_animation));
+        profilePhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fadein));
 
+        progressBar = fragmentEditProfileBinding.pbImageLoading;
         profilePhoto.setOnClickListener(v -> {
             FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -104,7 +118,34 @@ public class EditProfileFragment extends Fragment {
         if (imageUrl == null) {
             Glide.with(Objects.requireNonNull(getActivity())).load(getActivity().getResources().getDrawable(R.drawable.photoe)).into(profilePhoto);
         } else {
-            Glide.with(Objects.requireNonNull(getActivity())).load(imageUrl).into(profilePhoto);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
+            requestOptions.error(DisplayViewUI.getRandomDrawableColor());
+            requestOptions.centerCrop();
+            Glide.with(Objects.requireNonNull(getActivity()))
+                    .applyDefaultRequestOptions(requestOptions)
+                    .addDefaultRequestListener(new RequestListener<Object>() {
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Object> target, boolean isFirstResource) {
+                            if (isFirstResource) {
+                                progressBar.setVisibility(View.INVISIBLE);
+
+                            }
+                            progressBar.setVisibility(View.VISIBLE);
+
+                            return false;
+
+
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Object resource, Object model, Target<Object> target, DataSource dataSource, boolean isFirstResource) {
+                            progressBar.setVisibility(View.INVISIBLE);
+
+                            return false;
+                        }
+                    }).load(imageUrl).into(profilePhoto);
         }
         fragmentEditProfileBinding.nameLayout.setOnClickListener(//open bottom sheet to edit name
                 this::onClick);

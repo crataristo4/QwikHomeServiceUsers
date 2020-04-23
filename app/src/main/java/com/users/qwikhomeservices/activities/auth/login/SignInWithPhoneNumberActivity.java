@@ -42,7 +42,7 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private String uid;
-    String phoneNumber = "+16505554568";
+    String phoneNumber = "+16505554569";
     String smsCode = "123456";
 
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -257,7 +257,7 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mBackPressed + INTERVAL > System.currentTimeMillis()) {
 
-            finish();
+            super.onBackPressed();
         } else {
 
             DisplayViewUI.displayToast(this, "Press back again to exit");

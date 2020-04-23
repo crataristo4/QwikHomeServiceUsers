@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 welcomeNoticeBottomSheet.setCancelable(false);
                 welcomeNoticeBottomSheet.show(getSupportFragmentManager(), "welcome");
 
-            }, 3000);
+            }, 2000);
 
             SharedPreferences.Editor edit = pref.edit();
             edit.putBoolean(MyConstants.IS_DIALOG_SHOWN, true);

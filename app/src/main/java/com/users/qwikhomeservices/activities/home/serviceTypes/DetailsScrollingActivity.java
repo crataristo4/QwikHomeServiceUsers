@@ -71,7 +71,8 @@ public class DetailsScrollingActivity extends AppCompatActivity {
                 Snackbar.LENGTH_LONG)
                 .setActionTextColor(Color.WHITE)
                 .setTextColor(Color.WHITE)
-                .setDuration(5000)
+                .setBackgroundTint(getColor(R.color.purple))
+                .setDuration(8000)
                 .setAction("CALL NOW", v -> {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
                     callIntent.setData(Uri.fromParts("tel", mobileNumber, null));

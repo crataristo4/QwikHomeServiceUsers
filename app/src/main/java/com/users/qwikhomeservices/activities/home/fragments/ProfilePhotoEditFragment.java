@@ -35,6 +35,11 @@ public class ProfilePhotoEditFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -50,7 +55,10 @@ public class ProfilePhotoEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fragmentProfilePhotoEditBinding.imgEditPhoto.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.scale_in));
-        Glide.with(Objects.requireNonNull(getActivity())).load(MainActivity.imageUrl)
+
+
+        Glide.with(Objects.requireNonNull(getActivity()))
+                .load(MainActivity.imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(fragmentProfilePhotoEditBinding.imgEditPhoto);
 
