@@ -88,8 +88,9 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                                                             } else {
                                                                 float getRating = ratingBinding.ratingBar.getRating();
                                                                 //update database
-                                                                jobDone.put("rating", getRating);
-                                                                RequestFragment.requestDbRef.updateChildren(jobDone).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                Map<String, Object> jobRating = new HashMap<>();
+                                                                jobRating.put("rating", getRating);
+                                                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition)).updateChildren(jobRating).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         if (task.isSuccessful()) {
