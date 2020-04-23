@@ -37,8 +37,6 @@ import com.users.qwikhomeservices.utils.MyConstants;
 import java.util.Objects;
 
 public class DetailsScrollingActivity extends AppCompatActivity {
-
-    private static final String TAG = "DetailsActivity";
     private int numberOfItems = 0;
     private ActivityDetailsScrollingBinding activityDetailsScrollingBinding;
     private DatabaseReference databaseReference;
@@ -68,7 +66,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             mobileNumber = intent.getStringExtra("mobileNumber");
         }
 
-        //todo get phone and call
         activityDetailsScrollingBinding.fabCall.setOnClickListener(view -> Snackbar.make(view,
                 "Call ".concat(name),
                 Snackbar.LENGTH_LONG)
@@ -121,7 +118,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
         activityDetailsScrollingBinding.collapsingToolBar.setTitle(name);
         activityDetailsScrollingBinding.contentDetails.txtAbout.setText(about);
-        //activityDetailsScrollingBinding.userImage.startAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_in));
 
         Glide.with(this)
                 .load(image)
