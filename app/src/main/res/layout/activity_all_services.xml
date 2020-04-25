@@ -8,6 +8,12 @@
         android:orientation="vertical"
         tools:context="com.users.qwikhomeservices.activities.home.serviceTypes.AllServicesActivity">
 
+        <TextView
+            android:id="@+id/noItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"

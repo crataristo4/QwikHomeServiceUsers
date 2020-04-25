@@ -131,6 +131,8 @@ public class AllServicesActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
                         Users.class)
                         .build();
+        adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
+
 
         //DISPLAY different layout for screen orientation
         if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
@@ -143,8 +145,10 @@ public class AllServicesActivity extends AppCompatActivity {
 
         }
 
-        adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
+
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
 
     }
 

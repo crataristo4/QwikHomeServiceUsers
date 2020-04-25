@@ -1,5 +1,6 @@
 package com.users.qwikhomeservices.activities.home.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.flutterwave.raveandroid.RaveConstants;
+import com.flutterwave.raveandroid.RavePayActivity;
+import com.flutterwave.raveandroid.RavePayManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -23,6 +27,7 @@ import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.adapters.RequestAdapter;
 import com.users.qwikhomeservices.databinding.FragmentRequestBinding;
 import com.users.qwikhomeservices.models.RequestModel;
+import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 
 public class RequestFragment extends Fragment {
@@ -55,6 +60,8 @@ public class RequestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         intViews();
+
+
     }
 
     private void intViews() {
@@ -82,6 +89,46 @@ public class RequestFragment extends Fragment {
         loadData();
 
 
+        requestAdapter.setOnItemClickListener((view, position) -> {
+
+            double amountToPay = Double.parseDouble(requestAdapter.getItem(position).getPrice());
+            String customerFirstName = requestAdapter.getItem(position).getFirstName();
+            String customerLastName = requestAdapter.getItem(position).getLastName();
+            String customerNumber = requestAdapter.getItem(position).getMobileNumber();
+            //todo make request database include first and last name
+
+            proceedToPayment(amountToPay, customerFirstName, customerLastName, customerNumber);
+
+        });
+
+
+    }
+
+    private void proceedToPayment(double amountToPay, String customerFirstName, String customerLastName, String mobileNumber) {
+
+
+        new RavePayManager(this).setAmount(amountToPay)
+                .setCountry("GH")
+                .setCurrency("GHS")
+                .setEmail("crataristo4@gmail.com")
+                .setfName(customerFirstName)
+                .setlName(customerLastName)
+                .setPhoneNumber(mobileNumber)
+                .setPublicKey("FLWPUBK-3e4c6a6dc349370f1655d4f5ac4fad4c-X")
+                .setEncryptionKey("f76fecbd701e759a310eab1a")
+                .setTxRef("logTrail")
+                .acceptAccountPayments(true)
+                .acceptCardPayments(false)
+                .acceptMpesaPayments(false)
+                .acceptAchPayments(false)
+                .acceptGHMobileMoneyPayments(true)
+                .acceptUgMobileMoneyPayments(false)
+                .onStagingEnv(false)
+                .allowSaveCardFeature(false)
+                .isPreAuth(true)
+                .initialize();
+
+
     }
 
     private void loadData() {
@@ -93,8 +140,13 @@ public class RequestFragment extends Fragment {
         FirebaseRecyclerOptions<RequestModel> options = new FirebaseRecyclerOptions.Builder<RequestModel>().
                 setQuery(query, RequestModel.class).build();
         requestAdapter = new RequestAdapter(options);
-        requestAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(requestAdapter);
+
+        requireActivity().runOnUiThread(() -> {
+            fragmentRequestBinding.noItems.setVisibility(View.GONE);
+            recyclerView.setAdapter(requestAdapter);
+            requestAdapter.notifyDataSetChanged();
+
+        });
 
 
 
@@ -113,4 +165,25 @@ public class RequestFragment extends Fragment {
         super.onStop();
         requestAdapter.stopListening();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RaveConstants.RAVE_REQUEST_CODE && data != null) {
+            String message = data.getStringExtra("response");
+            if (resultCode == RavePayActivity.RESULT_SUCCESS) {
+
+                //get data from json object and change database
+
+
+            } else if (resultCode == RavePayActivity.RESULT_ERROR) {
+                DisplayViewUI.displayToast(requireActivity(), "Pleas try again");
+            } else if (resultCode == RavePayActivity.RESULT_CANCELLED) {
+
+                DisplayViewUI.displayToast(requireActivity(), "Payment cancelled");
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 }

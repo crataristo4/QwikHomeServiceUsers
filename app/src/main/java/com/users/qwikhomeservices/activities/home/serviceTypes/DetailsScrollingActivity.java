@@ -179,12 +179,18 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
             //pass users name , user photo , user id to bundle
             String fullName = MainActivity.name;
+            String firstName = MainActivity.firstName;
+            String lastName = MainActivity.lastName;
+            String userMobileNumber = MainActivity.mobileNumber;
             String userId = MainActivity.uid;
             String userPhoto = MainActivity.imageUrl;
 
             bundle.putString(MyConstants.FULL_NAME, fullName);
             bundle.putString(MyConstants.UID, userId);
             bundle.putString(MyConstants.USER_IMAGE_URL, userPhoto);
+            bundle.putString(MyConstants.FIRST_NAME, firstName);
+            bundle.putString(MyConstants.LAST_NAME, lastName);
+            bundle.putString(MyConstants.PHONE_NUMBER, userMobileNumber);
 
             SendRequestBottomSheet sendRequestBottomSheet = new SendRequestBottomSheet();
             sendRequestBottomSheet.setCancelable(false);

@@ -39,7 +39,7 @@ import java.util.Objects;
 public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
     private LayoutSendRequestBinding layoutSendRequestBinding;
-    private String servicePersonName, userName, userPhotoUrl, uid, servicePersonId;
+    private String servicePersonName, userName, userPhotoUrl, uid, servicePersonId, firstName, lastName, mobileNumber;
     private String notApproved = "Not yet Approved";
     private String itemName, itemPrice, itemImage;
     private String dateRequested, getReason;
@@ -78,7 +78,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
         progressBar = layoutSendRequestBinding.pbLoading;
         txtReasonInputText = layoutSendRequestBinding.reasonInputLayout;
-        inputMethodManager = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
 
         //get data from bundle
@@ -91,6 +91,9 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             servicePersonName = bundle.getString(MyConstants.SERVICE_PERSON_NAME);
             servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
             userName = bundle.getString(MyConstants.FULL_NAME);
+            firstName = bundle.getString(MyConstants.FIRST_NAME);
+            lastName = bundle.getString(MyConstants.LAST_NAME);
+            mobileNumber = bundle.getString(MyConstants.PHONE_NUMBER);
             uid = bundle.getString(MyConstants.UID);
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
 
@@ -99,7 +102,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             layoutSendRequestBinding.toolBarRequestTo.setTitleTextColor(Color.WHITE);
             layoutSendRequestBinding.txtStyleName.setText(itemName);
             layoutSendRequestBinding.txtPrice.setText(MessageFormat.format("GH {0}", itemPrice));
-            Glide.with(Objects.requireNonNull(getActivity()))
+            Glide.with(requireActivity())
                     .load(itemImage)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -144,7 +147,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
                             //user wants to send request
                             dialog.dismiss();
                             assert inputMethodManager != null;
-                            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+                            inputMethodManager.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
                             validateRequest();
                         } else if (which == -2) {
                             //user does not want to send request
@@ -162,14 +165,15 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
         //send request to service person
         DatabaseReference requestDbRef = FirebaseDatabase.getInstance().getReference("Requests");
 
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
 
             progressBar.setVisibility(View.VISIBLE);
             RequestModel requestSent = new RequestModel(
                     0, uid, servicePersonId,
                     getReason, itemPrice, itemName,
                     notApproved, itemImage, userPhotoUrl,
-                    userName, servicePersonName, dateRequested, "NO");
+                    userName, servicePersonName, dateRequested,
+                    "NO", firstName, lastName, mobileNumber);
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

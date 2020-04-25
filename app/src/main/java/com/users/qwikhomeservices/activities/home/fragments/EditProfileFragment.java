@@ -21,12 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -74,7 +69,7 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Objects.requireNonNull(getActivity()).setTitle("Profile");
+        requireActivity().setTitle("Profile");
         // Inflate the layout for this fragment
         fragmentEditProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false);
         return fragmentEditProfileBinding.getRoot();
@@ -99,7 +94,7 @@ public class EditProfileFragment extends Fragment {
 
         progressBar = fragmentEditProfileBinding.pbImageLoading;
         profilePhoto.setOnClickListener(v -> {
-            FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.fadein, R.anim.scale_out)
                     .replace(R.id.containerSettings, profilePhotoEditFragment)
@@ -116,36 +111,10 @@ public class EditProfileFragment extends Fragment {
         fragmentEditProfileBinding.txtPhoneNumber.setText(MainActivity.mobileNumber);
         String imageUrl = MainActivity.imageUrl;
         if (imageUrl == null) {
-            Glide.with(Objects.requireNonNull(getActivity())).load(getActivity().getResources().getDrawable(R.drawable.photoe)).into(profilePhoto);
+            Glide.with(requireActivity()).load(requireActivity().getResources().getDrawable(R.drawable.photoe)).into(profilePhoto);
         } else {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
-            requestOptions.error(DisplayViewUI.getRandomDrawableColor());
-            requestOptions.centerCrop();
-            Glide.with(Objects.requireNonNull(getActivity()))
-                    .applyDefaultRequestOptions(requestOptions)
-                    .addDefaultRequestListener(new RequestListener<Object>() {
 
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Object> target, boolean isFirstResource) {
-                            if (isFirstResource) {
-                                progressBar.setVisibility(View.INVISIBLE);
-
-                            }
-                            progressBar.setVisibility(View.VISIBLE);
-
-                            return false;
-
-
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Object resource, Object model, Target<Object> target, DataSource dataSource, boolean isFirstResource) {
-                            progressBar.setVisibility(View.INVISIBLE);
-
-                            return false;
-                        }
-                    }).load(imageUrl).into(profilePhoto);
+            Glide.with(requireActivity()).load(imageUrl).into(profilePhoto);
         }
         fragmentEditProfileBinding.nameLayout.setOnClickListener(//open bottom sheet to edit name
                 this::onClick);
@@ -163,7 +132,7 @@ public class EditProfileFragment extends Fragment {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(16, 16)
-                .start(Objects.requireNonNull(getContext()), this);
+                .start(requireContext(), this);
     }
 
     private void onClick(View v) {
@@ -183,7 +152,7 @@ public class EditProfileFragment extends Fragment {
             name = String.valueOf(fragmentEditProfileBinding.txtFirstName.getText());
             bundle.putString(MyConstants.FIRST_NAME, name);
                 editItemBottomSheet.setArguments(bundle);
-            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.FIRST_NAME);
+            editItemBottomSheet.show(requireActivity().getSupportFragmentManager(), MyConstants.FIRST_NAME);
 
 
 
@@ -191,7 +160,7 @@ public class EditProfileFragment extends Fragment {
             name = String.valueOf(fragmentEditProfileBinding.txtLastName.getText());
             bundle.putString(MyConstants.LAST_NAME, name);
             editItemBottomSheet.setArguments(bundle);
-            editItemBottomSheet.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), MyConstants.LAST_NAME);
+            editItemBottomSheet.show(requireActivity().getSupportFragmentManager(), MyConstants.LAST_NAME);
         }
     }
 
@@ -208,7 +177,7 @@ public class EditProfileFragment extends Fragment {
                 assert result != null;
                 uri = result.getUri();
 
-                Glide.with(Objects.requireNonNull(getActivity()))
+                Glide.with(requireActivity())
                         .load(uri)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(profilePhoto);
@@ -228,22 +197,6 @@ public class EditProfileFragment extends Fragment {
         if (uri != null) {
             ProgressDialog progressDialog = DisplayViewUI.displayProgress(getActivity(), "updating profile picture please wait...");
             progressDialog.show();
-
-            // final File thumb_imageFile = new File(Objects.requireNonNull(uri.getPath()));
-
-          /*  try {
-                Bitmap thumb_imageBitmap = new Compressor(Objects.requireNonNull(getActivity()))
-                        .setMaxHeight(130)
-                        .setMaxWidth(13)
-                        .setQuality(100)
-                        .compressToBitmap(thumb_imageFile);
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                thumb_imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
 
             //  file path for the itemImage
             final StorageReference fileReference = mStorageReference.child(uid + "." + uri.getLastPathSegment());

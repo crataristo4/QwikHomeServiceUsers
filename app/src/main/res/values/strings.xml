@@ -305,5 +305,6 @@
     <string name="wkDeclined">work DECLINED</string>
     <string name="rateNow">Rate now</string>
     <string name="later">Later</string>
+    <string name="no_requests_available">No requests sent</string>
 
 </resources>

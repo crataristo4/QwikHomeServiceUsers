@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, RequestAdapter.RequestViewHolder> {
-
+    private static ConfirmPaymentButtonClick confirmPaymentButtonClick;
 
     public RequestAdapter(@NonNull FirebaseRecyclerOptions<RequestModel> options) {
         super(options);
@@ -161,16 +160,23 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         return new RequestViewHolder(layoutUserRequestSentBinding);
     }
 
-    public static class RequestViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(ConfirmPaymentButtonClick confirmPaymentButtonClick) {
+        RequestAdapter.confirmPaymentButtonClick = confirmPaymentButtonClick;
+    }
+
+    public interface ConfirmPaymentButtonClick {
+        void onPayButtonClicked(View view, int position);
+    }
+
+    public static class RequestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         LayoutUserRequestSentBinding layoutUserRequestSentBinding;
         RatingBar ratingBar;
         private ImageButton btnView, btnChat, btnRateServicePerson;
         private TextView txtResponse, txtPaymentStatus, txtWorkDone;
         private LinearLayoutCompat linearLayoutCompat;
-        private Button btnConfirmPayment;
 
-        RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
+        public RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
             super(layoutUserRequestSentBinding.getRoot());
             this.layoutUserRequestSentBinding = layoutUserRequestSentBinding;
             ratingBar = layoutUserRequestSentBinding.ratedResults;
@@ -180,8 +186,10 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             btnChat = layoutUserRequestSentBinding.btnChat;
             txtPaymentStatus = layoutUserRequestSentBinding.txtPaymentStatus;
             linearLayoutCompat = layoutUserRequestSentBinding.linearLayout;
-            btnConfirmPayment = layoutUserRequestSentBinding.btnConfirmPayment;
+
             txtWorkDone = layoutUserRequestSentBinding.txtWorkDone;
+
+            layoutUserRequestSentBinding.btnConfirmPayment.setOnClickListener(this);
         }
 
         //display the rating
@@ -243,5 +251,14 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             }
 
         }
+
+
+        @Override
+        public void onClick(View v) {
+
+            confirmPaymentButtonClick.onPayButtonClicked(v, getAdapterPosition());
+        }
     }
+
+
 }
