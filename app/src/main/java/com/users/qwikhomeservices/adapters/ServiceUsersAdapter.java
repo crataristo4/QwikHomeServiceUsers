@@ -63,25 +63,25 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
             Glide.with(allServicesViewHolder.itemView.getContext())
                     .load(servicePerson.image)
                     .apply(requestOptions)
+
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 
-                            if (isFirstResource) {
-                                allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
 
-                            }
-                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
                             return false;
+
                         }
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            if (isFirstResource)
-                                allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+
+                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
                             return false;
                         }
                     }).transition(DrawableTransitionOptions.withCrossFade())
+                    .error(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().getResources().getDrawable(R.drawable.photoe))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
 

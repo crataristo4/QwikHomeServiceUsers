@@ -37,6 +37,9 @@ public class RequestFragment extends Fragment {
     public static DatabaseReference requestDbRef;
     private RecyclerView recyclerView;
 
+    //Endpoint to verify transaction
+    private final String VERIFY_ENDPOINT = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
+
     public RequestFragment() {
         // Required empty public constructor
     }
@@ -60,7 +63,6 @@ public class RequestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         intViews();
-
 
     }
 
@@ -88,46 +90,40 @@ public class RequestFragment extends Fragment {
 
         loadData();
 
-
         requestAdapter.setOnItemClickListener((view, position) -> {
 
             double amountToPay = Double.parseDouble(requestAdapter.getItem(position).getPrice());
             String customerFirstName = requestAdapter.getItem(position).getFirstName();
             String customerLastName = requestAdapter.getItem(position).getLastName();
             String customerNumber = requestAdapter.getItem(position).getMobileNumber();
+            String number = "0244123567";
             //todo make request database include first and last name
 
-            proceedToPayment(amountToPay, customerFirstName, customerLastName, customerNumber);
+            proceedToPayment(amountToPay, customerFirstName, customerLastName, number);
 
         });
 
 
     }
 
-    private void proceedToPayment(double amountToPay, String customerFirstName, String customerLastName, String mobileNumber) {
+    private void proceedToPayment(double amountToPay, String customerFirstName, String customerLastName, String number) {
 
-
-        new RavePayManager(this).setAmount(amountToPay)
+        new RavePayManager(this)
+                .setAmount(amountToPay)
                 .setCountry("GH")
                 .setCurrency("GHS")
                 .setEmail("crataristo4@gmail.com")
                 .setfName(customerFirstName)
                 .setlName(customerLastName)
-                .setPhoneNumber(mobileNumber)
-                .setPublicKey("FLWPUBK-3e4c6a6dc349370f1655d4f5ac4fad4c-X")
-                .setEncryptionKey("f76fecbd701e759a310eab1a")
-                .setTxRef("logTrail")
+                .setPhoneNumber(number)
                 .acceptAccountPayments(true)
-                .acceptCardPayments(false)
-                .acceptMpesaPayments(false)
-                .acceptAchPayments(false)
+                .setPublicKey(String.valueOf(R.string.publicKey))
+                .setEncryptionKey(String.valueOf(R.string.encryptionKey))
+                .setTxRef("logTrail")
                 .acceptGHMobileMoneyPayments(true)
-                .acceptUgMobileMoneyPayments(false)
                 .onStagingEnv(false)
-                .allowSaveCardFeature(false)
                 .isPreAuth(true)
                 .initialize();
-
 
     }
 
@@ -149,16 +145,13 @@ public class RequestFragment extends Fragment {
         });
 
 
-
     }
-
 
     @Override
     public void onStart() {
         super.onStart();
         requestAdapter.startListening();
     }
-
 
     @Override
     public void onStop() {
@@ -173,6 +166,7 @@ public class RequestFragment extends Fragment {
             if (resultCode == RavePayActivity.RESULT_SUCCESS) {
 
                 //get data from json object and change database
+                DisplayViewUI.displayToast(requireActivity(), message);
 
 
             } else if (resultCode == RavePayActivity.RESULT_ERROR) {
