@@ -53,6 +53,10 @@ public class AllServicesAdapter extends FirebaseRecyclerAdapter<Users,
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        if (isFirstResource) {
+                            allServiceViewHolder.layoutListServicePersonsBinding.progressBar.setVisibility(View.INVISIBLE);
+
+                        }
                         allServiceViewHolder.layoutListServicePersonsBinding.progressBar.setVisibility(View.VISIBLE);
 
                         return false;
@@ -60,7 +64,8 @@ public class AllServicesAdapter extends FirebaseRecyclerAdapter<Users,
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        allServiceViewHolder.layoutListServicePersonsBinding.progressBar.setVisibility(View.INVISIBLE);
+                        if (resource.isVisible())
+                            allServiceViewHolder.layoutListServicePersonsBinding.progressBar.setVisibility(View.INVISIBLE);
                         return false;
                     }
                 }).transition(DrawableTransitionOptions.withCrossFade())
