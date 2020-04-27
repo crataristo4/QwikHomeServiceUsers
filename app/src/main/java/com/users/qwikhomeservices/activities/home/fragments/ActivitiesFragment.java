@@ -84,8 +84,6 @@ public class ActivitiesFragment extends Fragment {
         rvItems.setAdapter(activityItemAdapter);
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();

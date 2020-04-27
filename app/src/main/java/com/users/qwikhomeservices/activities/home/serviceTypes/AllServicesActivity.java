@@ -36,6 +36,20 @@ public class AllServicesActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
+        RecyclerView recyclerView = allServicesBinding.rvAllBarbers;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        //DISPLAY different layout for screen orientation
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        } else {
+
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
+        }
 
         Intent getIntent = getIntent();
 
@@ -116,38 +130,26 @@ public class AllServicesActivity extends AppCompatActivity {
 
         }
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                .getReference()
-                .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
-        databaseReference.keepSynced(true);
+        runOnUiThread(() -> {
 
-        RecyclerView recyclerView = allServicesBinding.rvAllBarbers;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
+            databaseReference.keepSynced(true);
 
-        //querying the database BY NAME
-        Query query = databaseReference.orderByChild("accountType").equalTo(accountType);
-        FirebaseRecyclerOptions<Users> options =
-                new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
-                        Users.class)
-                        .build();
-        adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
+            //querying the database BY NAME
+            Query query = databaseReference.orderByChild("accountType").equalTo(accountType);
+            FirebaseRecyclerOptions<Users> options =
+                    new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
+                            Users.class)
+                            .build();
+            adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
+            recyclerView.setAdapter(adapter);
 
+            adapter.notifyDataSetChanged();
 
-        //DISPLAY different layout for screen orientation
-        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+        });
 
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-        } else {
-
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-
-        }
-
-
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
 
     }
