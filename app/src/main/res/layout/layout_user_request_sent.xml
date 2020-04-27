@@ -38,14 +38,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@{@string/requestSentTo(String.valueOf(requestItems.servicePersonName))}"
                 android:textColor="@color/purple"
                 app:layout_constraintEnd_toStartOf="@+id/btnRateServicePerson"
                 app:layout_constraintStart_toEndOf="@+id/imgItemPhoto"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/imgItemPhoto" />
 
 
             <TextView
@@ -53,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@{@string/sentOn(String.valueOf(requestItems.dateRequested))}"
@@ -93,6 +92,7 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:theme="@style/CustomRatingBar"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="@+id/txtRequestDate"
@@ -100,25 +100,6 @@
                 app:layout_constraintStart_toStartOf="@+id/txtRequestDate"
                 app:layout_constraintTop_toBottomOf="@+id/txtRequestDate" />
 
-
-            <TextView
-                android:id="@+id/txtReason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/btnView"
-                app:layout_constraintStart_toStartOf="@+id/btnView"
-                app:layout_constraintTop_toBottomOf="@+id/btnView" />
-
-            <TextView
-                android:id="@+id/txtAccountType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/btnView"
-                app:layout_constraintStart_toStartOf="@+id/btnView"
-                app:layout_constraintTop_toBottomOf="@+id/txtReason" />
 
             <ImageButton
                 android:id="@+id/btnChat"

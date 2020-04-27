@@ -3,6 +3,7 @@ package com.users.qwikhomeservices.activities.home.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.users.qwikhomeservices.adapters.RequestAdapter;
 import com.users.qwikhomeservices.databinding.FragmentRequestBinding;
 import com.users.qwikhomeservices.models.RequestModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
+import com.users.qwikhomeservices.utils.MyConstants;
 
 
 public class RequestFragment extends Fragment {
@@ -36,6 +38,10 @@ public class RequestFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     public static DatabaseReference requestDbRef;
     private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private Parcelable mState;
+    private Bundle mBundleState;
+
 
     //Endpoint to verify transaction
     private final String VERIFY_ENDPOINT = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
@@ -44,10 +50,11 @@ public class RequestFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -70,8 +77,12 @@ public class RequestFragment extends Fragment {
         recyclerView = fragmentRequestBinding.rvRequests;
         swipeRefreshLayout = fragmentRequestBinding.swipeRefresh;
 
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(layoutManager);
 
         requestDbRef = FirebaseDatabase.getInstance().getReference("Requests");
         requestDbRef.keepSynced(true);
@@ -88,7 +99,7 @@ public class RequestFragment extends Fragment {
         }, 3000));
 
 
-        loadData();
+        requireActivity().runOnUiThread(this::loadData);
 
         requestAdapter.setOnItemClickListener((view, position) -> {
 
@@ -117,12 +128,14 @@ public class RequestFragment extends Fragment {
                 .setlName(customerLastName)
                 .setPhoneNumber(number)
                 .acceptAccountPayments(true)
-                .setPublicKey(String.valueOf(R.string.publicKey))
-                .setEncryptionKey(String.valueOf(R.string.encryptionKey))
+                .setPublicKey("FLWPUBK-ece94eea6997bfd0ee3054f5f2519f77-X")
+                .setEncryptionKey("d56907b8547b4423bbc875a0")
                 .setTxRef("logTrail")
                 .acceptGHMobileMoneyPayments(true)
                 .onStagingEnv(false)
                 .isPreAuth(true)
+                .acceptUssdPayments(true)
+                .shouldDisplayFee(true)
                 .initialize();
 
     }
@@ -137,13 +150,8 @@ public class RequestFragment extends Fragment {
                 setQuery(query, RequestModel.class).build();
         requestAdapter = new RequestAdapter(options);
 
-        requireActivity().runOnUiThread(() -> {
-            fragmentRequestBinding.noItems.setVisibility(View.GONE);
             recyclerView.setAdapter(requestAdapter);
             requestAdapter.notifyDataSetChanged();
-
-        });
-
 
     }
 
@@ -151,6 +159,34 @@ public class RequestFragment extends Fragment {
     public void onStart() {
         super.onStart();
         requestAdapter.startListening();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBundleState = new Bundle();
+        mState = layoutManager.onSaveInstanceState();
+        mBundleState.putParcelable(MyConstants.KEY, mState);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBundleState != null) {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    mState = mBundleState.getParcelable(MyConstants.KEY);
+                    layoutManager.onRestoreInstanceState(mState);
+                }
+            }, 50);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+        requestAdapter.notifyDataSetChanged();
     }
 
     @Override

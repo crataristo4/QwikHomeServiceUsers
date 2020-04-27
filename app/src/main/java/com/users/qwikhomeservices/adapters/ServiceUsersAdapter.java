@@ -48,44 +48,40 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
         allServicesViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allServicesViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
 
-        if (servicePerson.getImage().isEmpty()) {
-            Glide.with(allServicesViewHolder.itemView.getContext())
-                    .load(mContext.getResources().getDrawable(R.drawable.photoe))
-                    .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
-        } else if (!servicePerson.getImage().isEmpty()) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
+        requestOptions.error(DisplayViewUI.getRandomDrawableColor());
+        requestOptions.centerCrop();
 
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
-            requestOptions.error(DisplayViewUI.getRandomDrawableColor());
-            requestOptions.centerCrop();
+        Glide.with(allServicesViewHolder.itemView.getContext())
+                .load(servicePerson.image)
+                .apply(requestOptions)
 
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 
-            Glide.with(allServicesViewHolder.itemView.getContext())
-                    .load(servicePerson.image)
-                    .apply(requestOptions)
-
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-
-                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
-
-                            return false;
+                        if (isFirstResource) {
+                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
 
                         }
+                        allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
 
-                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
-                            return false;
-                        }
-                    }).transition(DrawableTransitionOptions.withCrossFade())
-                    .error(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().getResources().getDrawable(R.drawable.photoe))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
+                    }
 
-        }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                        allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                }).transition(DrawableTransitionOptions.withCrossFade())
+                .error(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().getResources().getDrawable(R.drawable.photoe))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
+
 
         //on item click listener
         allServicesViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {

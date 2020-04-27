@@ -165,4 +165,9 @@ public class AllServicesActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

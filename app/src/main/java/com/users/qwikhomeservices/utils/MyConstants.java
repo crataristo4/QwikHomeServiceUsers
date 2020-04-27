@@ -1,6 +1,7 @@
 package com.users.qwikhomeservices.utils;
 
 public final class MyConstants {
+    public static final String KEY = "key";
     public static final String PASS = "pass";
     public static final String CONFIRM_PASS = "confirmPass";
     public static final String PREFS = "prefs";

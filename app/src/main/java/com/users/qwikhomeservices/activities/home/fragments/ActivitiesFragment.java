@@ -23,11 +23,10 @@ import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.adapters.ActivityItemAdapter;
 import com.users.qwikhomeservices.databinding.FragmentActivitiesBinding;
 import com.users.qwikhomeservices.models.StylesItemModel;
+import com.users.qwikhomeservices.utils.MyConstants;
 
 
 public class ActivitiesFragment extends Fragment {
-
-    private static final String KEY = "key";
     private Bundle mBundleState;
     private static final String TAG = "ActivityFragment";
     private FragmentActivitiesBinding fragmentActivitiesBinding;
@@ -82,6 +81,7 @@ public class ActivitiesFragment extends Fragment {
 
         activityItemAdapter = new ActivityItemAdapter(options);
         rvItems.setAdapter(activityItemAdapter);
+        activityItemAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -103,7 +103,7 @@ public class ActivitiesFragment extends Fragment {
         super.onPause();
         mBundleState = new Bundle();
         mState = layoutManager.onSaveInstanceState();
-        mBundleState.putParcelable(KEY, mState);
+        mBundleState.putParcelable(MyConstants.KEY, mState);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ActivitiesFragment extends Fragment {
                 @Override
                 public void run() {
 
-                    mState = mBundleState.getParcelable(KEY);
+                    mState = mBundleState.getParcelable(MyConstants.KEY);
                     layoutManager.onRestoreInstanceState(mState);
                 }
             }, 50);

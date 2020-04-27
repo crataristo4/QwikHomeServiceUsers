@@ -47,85 +47,96 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         requestViewHolder.showWorkDoneStatus(requestModel.getIsWorkDone());
 
         //confirm work done status and rate user
-        requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                "Confirm work ",
-                "Please confirm that your job requested to " + requestModel.getServicePersonName() + " has been done",
-                "Job done",
-                "Not done", (dialog, which) -> {
-                    if (which == -1) {
-                        //positive button ,user selects work done
+        if (requestModel.getResponse().equals("Request Accepted")) {
+            requestViewHolder.btnRateServicePerson.setVisibility(View.VISIBLE);
+            requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                    "Confirm work ",
+                    "Please confirm that your job requested to " + requestModel.getServicePersonName() + " has been done",
+                    "Job done",
+                    "Not done", (dialog, which) -> {
+                        if (which == -1) {
+                            //positive button ,user selects work done
 
-                        Map<String, Object> jobDone = new HashMap<>();
-                        jobDone.put("isWorkDone", "YES");
-                        String adapterPosition = getRef(i).getKey();
+                            Map<String, Object> jobDone = new HashMap<>();
+                            jobDone.put("isWorkDone", "YES");
+                            String adapterPosition = getRef(i).getKey();
 
-                        RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition))
-                                .updateChildren(jobDone)
-                                .addOnCompleteListener((Activity) requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                                        new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
+                            RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition))
+                                    .updateChildren(jobDone)
+                                    .addOnCompleteListener((Activity) requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                            new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
 
-                                                if (task.isSuccessful()) {
-                                                    dialog.dismiss();
-                                                    //display rating dialog
-                                                    final Dialog ratingDialog = new Dialog(v.getContext());
-                                                    View view = LayoutInflater.from(v.getContext())
-                                                            .inflate(R.layout.layout_rating, null);
+                                                    if (task.isSuccessful()) {
+                                                        dialog.dismiss();
+                                                        //display rating dialog
+                                                        final Dialog ratingDialog = new Dialog(v.getContext());
+                                                        View view = LayoutInflater.from(v.getContext())
+                                                                .inflate(R.layout.layout_rating, null);
 
-                                                    LayoutRatingBinding ratingBinding = DataBindingUtil.bind(view);
-                                                    ratingDialog.setContentView(Objects.requireNonNull(ratingBinding).getRoot());
-                                                    ratingDialog.setCancelable(false);
-                                                    ratingBinding.txtRateUser.setText(MessageFormat.format("Please rate {0} to improve our services", requestModel.getServicePersonName()));
+                                                        LayoutRatingBinding ratingBinding = DataBindingUtil.bind(view);
+                                                        ratingDialog.setContentView(Objects.requireNonNull(ratingBinding).getRoot());
+                                                        ratingDialog.setCancelable(false);
+                                                        ratingBinding.txtRateUser.setText(MessageFormat.format("Please rate {0} to improve our services", requestModel.getServicePersonName()));
 
-                                                    ratingBinding.btnRateNow.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
+                                                        ratingBinding.btnRateNow.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View v) {
 
-                                                            if (ratingBinding.ratingBar.getRating() == 0) {
-                                                                DisplayViewUI.displayToast(v.getContext(), "Please tap on rating bar to rate " + requestModel.getServicePersonName());
-                                                            } else {
-                                                                float getRating = ratingBinding.ratingBar.getRating();
-                                                                //update database
-                                                                Map<String, Object> jobRating = new HashMap<>();
-                                                                jobRating.put("rating", getRating);
-                                                                RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition)).updateChildren(jobRating).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            ratingDialog.dismiss();
-                                                                            DisplayViewUI.displayToast(v.getContext(), "You have rated " + requestModel.getServicePersonName());
-                                                                        } else {
-                                                                            DisplayViewUI.displayToast(v.getContext(), "Please try again later.Thank you");
+                                                                if (ratingBinding.ratingBar.getRating() == 0) {
+                                                                    DisplayViewUI.displayToast(v.getContext(), "Please tap on rating bar to rate " + requestModel.getServicePersonName());
+                                                                } else {
+                                                                    float getRating = ratingBinding.ratingBar.getRating();
+                                                                    //update database
+                                                                    Map<String, Object> jobRating = new HashMap<>();
+                                                                    jobRating.put("rating", getRating);
+                                                                    RequestFragment.requestDbRef.child(Objects.requireNonNull(adapterPosition)).updateChildren(jobRating).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                ratingDialog.dismiss();
+                                                                                DisplayViewUI.displayToast(v.getContext(), "You have rated " + requestModel.getServicePersonName());
+                                                                            } else {
+                                                                                DisplayViewUI.displayToast(v.getContext(), "Please try again later.Thank you");
+                                                                            }
+
                                                                         }
+                                                                    });
+                                                                }
 
-                                                                    }
-                                                                });
+
                                                             }
+                                                        });
 
+                                                        ratingBinding.btnLater.setOnClickListener(v1 -> ratingDialog.dismiss());
 
-                                                        }
-                                                    });
+                                                        ratingDialog.show();
 
-                                                    ratingBinding.btnLater.setOnClickListener(v1 -> ratingDialog.dismiss());
-
-                                                    ratingDialog.show();
-
-                                                } else {
-                                                    DisplayViewUI.displayToast(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
-                                                            Objects.requireNonNull(task.getException()).getMessage());
+                                                    } else {
+                                                        DisplayViewUI.displayToast(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
+                                                                Objects.requireNonNull(task.getException()).getMessage());
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
 
-                    } else if (which == -2) {
-                        //negative button
-                        dialog.dismiss();
+                        } else if (which == -2) {
+                            //negative button
+                            dialog.dismiss();
 
-                    }
-                }));
+                        }
+                    }));
+        } else {
+            requestViewHolder.btnChat.setVisibility(View.GONE);
+            requestViewHolder.btnRateServicePerson.setVisibility(View.GONE);
+            requestViewHolder.txtWorkDone.setTextColor(requestViewHolder.layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
+            requestViewHolder.txtResponse.setTextColor(requestViewHolder.layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
 
+        }
+
+
+        //vie details of the request sent
         requestViewHolder.btnView.setOnClickListener(v -> {
             if (requestModel.getRating() == 0.0) {
                 new AlertDialog.Builder(v.getContext())
@@ -212,11 +223,12 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
             if (response.equals("Request Accepted")) {
                 btnRateServicePerson.setVisibility(View.VISIBLE);
                 btnChat.setVisibility(View.VISIBLE);
-                // btnShowRoute.setVisibility(View.VISIBLE);
                 txtResponse.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorGreen));
+                txtResponse.setText(response);
 
 
-            } else if (response.equals("Request Rejected")) {
+            }
+            if (response.equals("Request Rejected")) {
                 btnChat.setVisibility(View.GONE);
                 btnRateServicePerson.setVisibility(View.GONE);
                 txtWorkDone.setText(R.string.wkDeclined);
@@ -224,10 +236,11 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
                 txtWorkDone.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
 
                 txtResponse.setTextColor(layoutUserRequestSentBinding.getRoot().getResources().getColor(R.color.colorRed));
+                txtResponse.setText(response);
+
             }
 
 
-            txtResponse.setText(response);
         }
 
         void showWorkDoneStatus(String isWorkDone) {

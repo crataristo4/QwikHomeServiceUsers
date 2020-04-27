@@ -296,8 +296,8 @@
 
         ]]>
     </string>
-    <string name="publicKey" translatable="false">FLWPUBK-3e4c6a6dc349370f1655d4f5ac4fad4c-X</string>
-    <string name="encryptionKey" translatable="false">f76fecbd701e759a310eab1a</string>
+    <string name="publicKey">FLWPUBK-ece94eea6997bfd0ee3054f5f2519f77-X</string>
+    <string name="encryptionKey">d56907b8547b4423bbc875a0</string>
     <string name="plsWait">verifying please wait</string>
     <string name="presence_state">Presence State</string>
     <string name="agree_and_continue">Agree and continue</string>
