@@ -6,7 +6,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.users.quickhomeservices.activities.home.fragments.RequestFragment">
+        tools:context="com.users.qwikhomeservices.activities.home.fragments.RequestFragment">
+
+        <TextView
+            android:id="@+id/noItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_requests_available"
+            android:visibility="gone" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center|center_horizontal|center_vertical"
-        tools:context="com.users.quickhomeservices.activities.welcome.SplashScreenActivity">
+        tools:context="com.users.qwikhomeservices.activities.welcome.SplashScreenActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"

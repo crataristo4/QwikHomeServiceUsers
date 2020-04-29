@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.users.quickhomeservices.activities.home.serviceTypes.TestPaginatioinActivity">
+    tools:context="com.users.qwikhomeservices.activities.home.serviceTypes.TestPaginatioinActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

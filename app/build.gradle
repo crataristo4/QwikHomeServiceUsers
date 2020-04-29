@@ -4,7 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.users.quickhomeservices"
+        applicationId "com.users.qwikhomeservices"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -35,6 +35,7 @@ android {
         }
     }
 
+    
     compileOptions {
         targetCompatibility = 1.8
         sourceCompatibility = 1.8
@@ -100,6 +101,20 @@ dependencies {
     //itemImage slider
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
+    
+    //payment gateway
+    implementation 'com.github.Flutterwave:rave-android:1.0.49.1'
+
+    //retofit
+    implementation 'com.squareup.okhttp3:okhttp:3.14.7'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
+    //unirest
+    implementation 'com.mashape.unirest:unirest-android:1.0+'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0.rc1'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
 
 }

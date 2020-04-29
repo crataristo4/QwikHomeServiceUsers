@@ -19,6 +19,5 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
--keep class androidx.appcompat.widget.** { *; }
+-keepclasseswithmembers public class com.flutterwave.raveandroid.** { *; }
+-dontwarn com.flutterwave.raveandroid.card.CardFragment

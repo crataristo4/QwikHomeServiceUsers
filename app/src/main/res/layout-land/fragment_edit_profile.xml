@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.users.quickhomeservices.activities.home.fragments.EditProfileFragment">
+    tools:context="com.users.qwikhomeservices.activities.home.fragments.EditProfileFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -18,11 +18,11 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context="com.users.quickhomeservices.activities.home.about.ProfileActivity">
+                tools:context="com.users.qwikhomeservices.activities.home.about.ProfileActivity">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgUploadPhoto"
-                    android:layout_width="@dimen/OneFiftyDp"
+                    android:layout_width="@dimen/TwoHundredDp"
                     android:layout_height="@dimen/OneFiftyDp"
                     android:layout_marginTop="16dp"
                     android:contentDescription="@string/user_profile"
@@ -76,14 +76,14 @@
                         android:drawableEnd="@drawable/ic_edit_purple"
                         android:drawableRight="@drawable/ic_edit_purple"
                         android:padding="@dimen/eightDp"
-                        android:text="@string/name"
+                        android:text="@string/firstname"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/txtUserName"
+                        android:id="@+id/txtFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -97,7 +97,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/aboutLayout"
+                    android:id="@+id/lastNameLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -115,7 +115,7 @@
                         android:contentDescription="@string/app_name"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_info" />
+                        app:srcCompat="@drawable/ic_person_ash" />
 
                     <TextView
                         android:id="@+id/txtt"
@@ -126,14 +126,16 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:padding="@dimen/eightDp"
-                        android:text="@string/email"
+                        android:text="@string/last_name"
                         android:textSize="14sp"
+                        app:drawableEndCompat="@drawable/ic_edit_purple"
+                        app:drawableRightCompat="@drawable/ic_edit_purple"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imgInfo"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/txtEmail"
+                        android:id="@+id/txtLastName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -176,7 +178,7 @@
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/aboutLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/lastNameLayout" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/editPhoneLayout"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.users.quickhomeservices.activities.customeractivity.ShowRouteActivity">
+    tools:context="com.users.qwikhomeservices.activities.customeractivity.ShowRouteActivity">
 
     <fragment
         android:id="@+id/mapRoute"
@@ -15,6 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="com.users.quickhomeservices.activities.customeractivity.HandyManMapsActivity" />
+        tools:context="com.users.qwikhomeservices.activities.customeractivity.HandyManMapsActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

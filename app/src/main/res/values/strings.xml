@@ -2,6 +2,12 @@
     <string name="app_name">QwikHome Users</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+    <string name="phoneNumber">Enter your phone number</string>
+    <string name="cont">Continue</string>
+    <string name="final_step_verify_your_phone_number">Final step,verify your phone number</string>
+    <string name="tellUs">Tell us who you are.Be professional , users may interest you when you are real about what you can do.</string>
+    <string name="noInternet">No internet.Internet connection is needed to continue.\nCheck your internet connection.If problem still exist contact your service provider</string>
+    <string name="resend_code">Resend code</string>
     <string name="title_activity_main2">QwikHome Services</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -64,6 +70,22 @@
         <item>Roller</item>
         <item>Gardener</item>
         <item>Painter</item>
+    </string-array>
+
+    <string-array name="services">
+        <item>Women Hairstylists</item>
+        <item>Interior Decorators</item>
+        <item>Barbers</item>
+        <item>Carpenters</item>
+        <item>Mechanics</item>
+        <item>Pest Controls</item>
+        <item>Plumbers</item>
+        <item>Tv Installers</item>
+        <item>Tilers</item>
+        <item>Welders</item>
+        <item>Rollers</item>
+        <item>Gardeners</item>
+        <item>Painters</item>
     </string-array>
 
     <string-array name="userTypes">
@@ -236,7 +258,15 @@
     <string name="addPhoneNumber">Add phone number</string>
     <string name="welcome_to_qwik_home_services">Welcome to Qwik Home Services</string>
     <string name="complete_profile">Complete profile</string>
+    <string name="termAndConditions">
+        <![CDATA[
 
+        Agree to our <b><font color = #3AE212>terms and conditions</font></b> and our <font color = #3AE212>policies</font>
+        to continue.
+
+
+        ]]>
+    </string>
     <string name="welcomeNote">
         <![CDATA[
 
@@ -266,6 +296,17 @@
 
         ]]>
     </string>
+    <string name="publicKey">FLWPUBK-ece94eea6997bfd0ee3054f5f2519f77-X</string>
+    <string name="encryptionKey">d56907b8547b4423bbc875a0</string>
+    <string name="plsWait">verifying please wait</string>
     <string name="presence_state">Presence State</string>
+    <string name="agree_and_continue">Agree and continue</string>
+    <string name="searchForServices">Search for service</string>
+    <string name="wkDone">work IS DONE</string>
+    <string name="wkNtDone">work IS NOT DONE</string>
+    <string name="wkDeclined">work DECLINED</string>
+    <string name="rateNow">Rate now</string>
+    <string name="later">Later</string>
+    <string name="no_requests_available">No requests sent</string>
 
 </resources>

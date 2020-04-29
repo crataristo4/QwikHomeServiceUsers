@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    tools:context="com.users.quickhomeservices.activities.customeractivity.RatingActivity">
+    tools:context="com.users.qwikhomeservices.activities.customeractivity.RatingActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/rateHandyPhoto"

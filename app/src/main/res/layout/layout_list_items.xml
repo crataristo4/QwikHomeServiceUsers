@@ -6,7 +6,7 @@
 
         <variable
             name="serviceType"
-            type="com.users.quickhomeservices.models.Users" />
+            type="com.users.qwikhomeservices.models.Users" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -52,7 +52,7 @@
                 android:ellipsize="end"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:text="@{serviceType.name}"
+                android:text="@{serviceType.firstName}"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/purple"

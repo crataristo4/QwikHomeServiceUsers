@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.users.quickhomeservices.activities.customeractivity.MapFragment">
+    tools:context="com.users.qwikhomeservices.activities.customeractivity.MapFragment">
 
     <fragment
         android:id="@+id/myMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.users.quickhomeservices.activities.customeractivity.HandyManMapsActivity" />
+        tools:context="com.users.qwikhomeservices.activities.customeractivity.HandyManMapsActivity" />
 
 </FrameLayout>

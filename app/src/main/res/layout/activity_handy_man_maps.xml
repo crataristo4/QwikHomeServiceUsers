@@ -15,7 +15,7 @@
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
-        tools:context="com.users.quickhomeservices.activities.customeractivity.HandyManMapsActivity" />
+        tools:context="com.users.qwikhomeservices.activities.customeractivity.HandyManMapsActivity" />
 
     <Button
         android:id="@+id/btnRequest"
