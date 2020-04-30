@@ -22,9 +22,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        maven{
+      /*  maven{
             url 'https://raw.github.com/zeeshanejaz/unirest-android/mvn-repo'
-        }
+        }*/
         
     }
 }
