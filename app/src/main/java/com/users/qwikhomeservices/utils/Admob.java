@@ -83,7 +83,7 @@ public class Admob {
     }
 
     public static void createLoadBanner(final Context context, View view) {
-        List<String> testDeviceIds = Collections.singletonList("ca-app-pub-3940256099942544/6300978111");
+        List<String> testDeviceIds = Collections.singletonList("ca-app-pub-7358181102198543/4048024942");
         RequestConfiguration configuration =
                 new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
         MobileAds.setRequestConfiguration(configuration);
