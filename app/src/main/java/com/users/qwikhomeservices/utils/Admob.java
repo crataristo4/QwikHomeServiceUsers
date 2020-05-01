@@ -7,7 +7,12 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.users.qwikhomeservices.R;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class Admob {
@@ -78,6 +83,11 @@ public class Admob {
     }
 
     public static void createLoadBanner(final Context context, View view) {
+        List<String> testDeviceIds = Collections.singletonList("ca-app-pub-3940256099942544/6300978111");
+        RequestConfiguration configuration =
+                new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+        MobileAds.setRequestConfiguration(configuration);
+
         mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);

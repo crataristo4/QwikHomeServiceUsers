@@ -29,9 +29,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -67,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseUser firebaseUser;
     private static Object mContext;
     private ActivityMainBinding activityMainBinding;
-    //adds
-    private InterstitialAd interstitialAd;
-
     private double latitude, longitude;
 
     //Step 5
@@ -133,32 +127,10 @@ public class MainActivity extends AppCompatActivity {
         //step 9
         // getLastLocation();
 
-        //load add
-        // loadAdds();
 
 
     }
 
-    private void loadAdds() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        interstitialAd = new InterstitialAd(MainActivity.this);
-        interstitialAd.setAdUnitId(getString(R.string.adUnit));
-        interstitialAd.loadAd(adRequest);
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                displayInterstitial();
-            }
-        });
-    }
-
-    private void displayInterstitial() {
-
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        }
-    }
 
     //Step 1 CHECK PERMISSION
     private boolean checkPermission() {
