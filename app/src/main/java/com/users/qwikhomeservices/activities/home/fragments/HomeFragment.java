@@ -15,21 +15,27 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.serviceTypes.AllServicesActivity;
 import com.users.qwikhomeservices.databinding.FragmentHomeBinding;
+import com.users.qwikhomeservices.utils.Admob;
 import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding fragmentHomeBinding;
     private Intent intent;
     private ArrayAdapter<String> adapter;
-
+    public View view;
+    private AdView adView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,7 +64,7 @@ public class HomeFragment extends Fragment {
         //string list from xml
         List<String> serviceList = Arrays.asList(getResources().getStringArray(R.array.services));
 
-        adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_list_item_1, serviceList);
+        adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, serviceList);
         listView.setAdapter(adapter);
 
         //on item click
@@ -155,5 +161,24 @@ public class HomeFragment extends Fragment {
         });
 
 
+        showBanner();
+    }
+
+    private void showBanner() {
+        List<String> testDeviceIds = Collections.singletonList("ca-app-pub-7358181102198543/4048024942");
+        RequestConfiguration configuration =
+                new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+        MobileAds.setRequestConfiguration(configuration);
+
+        //   --- Admob ---
+        view = requireActivity().getWindow().getDecorView().getRootView();
+
+        Admob.createLoadBanner(requireActivity(), view);
+        // Admob.createLoadInterstitial(getApplicationContext(), null);
+        //   --- *** ---
+
+        adView = fragmentHomeBinding.adView;
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 }

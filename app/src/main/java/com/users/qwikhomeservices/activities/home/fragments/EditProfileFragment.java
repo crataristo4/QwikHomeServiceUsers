@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,7 +32,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.activities.home.bottomsheets.EditItemBottomSheet;
-import com.users.qwikhomeservices.activities.home.bottomsheets.VerifyPhoneBottomSheet;
 import com.users.qwikhomeservices.databinding.FragmentEditProfileBinding;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
 import com.users.qwikhomeservices.utils.MyConstants;
@@ -54,6 +54,8 @@ public class EditProfileFragment extends Fragment {
     private DatabaseReference usersDbAccountDbRef;
     private String uid, getImageUri, name;
     private ProgressBar progressBar;
+    public View view;
+    private AdView adView;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -138,7 +140,6 @@ public class EditProfileFragment extends Fragment {
     private void onClick(View v) {
         Bundle bundle = new Bundle();
         EditItemBottomSheet editItemBottomSheet = new EditItemBottomSheet();
-        VerifyPhoneBottomSheet verifyPhoneBottomSheet = new VerifyPhoneBottomSheet();
 
         if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
             return;

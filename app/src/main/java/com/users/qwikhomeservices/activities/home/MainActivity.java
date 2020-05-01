@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         //load add
         // loadAdds();
 
+
     }
 
     private void loadAdds() {

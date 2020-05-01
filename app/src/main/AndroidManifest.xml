@@ -82,7 +82,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7358181102198543/4103224639" />
+            android:value="ca-app-pub-7358181102198543~9661993486" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -107,7 +107,6 @@
             android:theme="@style/Base.Theme.AppCompat" />
 
         <activity android:name="com.users.qwikhomeservices.activities.handymanactivity.RequestHandyManActivity" />
-        <activity android:name="com.users.qwikhomeservices.activities.home.bottomsheets.AddPhoneNumberActivity" />
         <activity
             android:name="com.users.qwikhomeservices.activities.auth.login.SignInWithPhoneNumberActivity"
             android:configChanges="keyboardHidden|screenSize|screenLayout|orientation"

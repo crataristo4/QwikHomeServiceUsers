@@ -308,5 +308,7 @@
     <string name="rateNow">Rate now</string>
     <string name="later">Later</string>
     <string name="no_requests_available">No requests sent</string>
+    <string name="admobBanner">ca-app-pub-7358181102198543/4048024942</string>
+    <string name="admobInterstitial">ca-app-pub-7358181102198543/6527042145</string>
 
 </resources>
