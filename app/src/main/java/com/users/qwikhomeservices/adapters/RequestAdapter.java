@@ -2,6 +2,7 @@ package com.users.qwikhomeservices.adapters;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.users.qwikhomeservices.R;
+import com.users.qwikhomeservices.activities.ChatActivity;
 import com.users.qwikhomeservices.activities.home.fragments.RequestFragment;
 import com.users.qwikhomeservices.databinding.LayoutRatingBinding;
 import com.users.qwikhomeservices.databinding.LayoutUserRequestSentBinding;
@@ -48,6 +50,36 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
 
         //confirm work done status and rate user
         if (requestModel.getResponse().equals("Request Accepted")) {
+            requestViewHolder.btnChat.setVisibility(View.VISIBLE);
+
+            requestViewHolder.btnChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent chatIntent = new Intent(requestViewHolder
+                            .layoutUserRequestSentBinding
+                            .getRoot()
+                            .getContext(), ChatActivity.class);
+                    //pass users data
+                    String adapterPosition = getRef(i).getKey();
+                    chatIntent.putExtra("senderName", requestModel.getSenderName());
+                    chatIntent.putExtra("senderPhoto", requestModel.getSenderPhoto());
+                    chatIntent.putExtra("senderID", requestModel.getSenderId());
+                    chatIntent.putExtra("senderReason", requestModel.getReason());
+                    chatIntent.putExtra("adapterPosition", adapterPosition);
+                    chatIntent.putExtra("servicePersonName", requestModel.getServicePersonName());
+                    chatIntent.putExtra("servicePersonPhoto", requestModel.getSenderPhoto());
+                    chatIntent.putExtra("receiverID", requestModel.getReceiverId());
+
+
+                    requestViewHolder
+                            .layoutUserRequestSentBinding
+                            .getRoot()
+                            .getContext()
+                            .startActivity(chatIntent);
+                }
+            });
+
+
             requestViewHolder.btnRateServicePerson.setVisibility(View.VISIBLE);
             requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
                     "Confirm work ",

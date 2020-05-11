@@ -75,7 +75,7 @@
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.users.qwikhomeservices.activities.customeractivity.ChatActivity"
+            android:name="com.users.qwikhomeservices.activities.ChatActivity"
             android:configChanges="screenSize|orientation"
             android:parentActivityName="com.users.qwikhomeservices.activities.handymanactivity.RequestHandyManActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.activities.customeractivity.ChatActivity;
+import com.users.qwikhomeservices.activities.ChatActivity;
 import com.users.qwikhomeservices.activities.customeractivity.RatingActivity;
 import com.users.qwikhomeservices.activities.customeractivity.ShowRouteActivity;
 import com.users.qwikhomeservices.models.Users;

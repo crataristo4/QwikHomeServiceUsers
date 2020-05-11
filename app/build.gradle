@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-functions:19.0.2'
-    implementation 'com.google.firebase:firebase-core:17.4.0'
+    implementation 'com.google.firebase:firebase-core:17.4.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.firebaseui:firebase-ui-database:4.3.1'
     implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
@@ -108,10 +108,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
-   /* //unirest
-    implementation 'com.mashape.unirest:unirest-android:1.0+'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0.rc1'
-    implementation 'com.google.code.gson:gson:2.8.6'*/
+    implementation 'me.jahirfiquitiva:FABsMenu:1.1.4'
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.0'
+    implementation 'com.github.lguipeng:BubbleView:1.0.1'
 
 
 }

@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activity_main"
     android:orientation="vertical"
-    tools:context="com.users.qwikhomeservices.activities.customeractivity.ChatActivity">
+    tools:context="com.users.qwikhomeservices.activities.ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/chatToolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fb"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/purple"
+        android:theme="@style/ToolBarTheme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title=" " />
@@ -49,15 +50,15 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatToolBar">
+        app:layout_constraintTop_toBottomOf="@+id/chatToolBar"
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/txtShowReason"
@@ -69,6 +70,7 @@
             android:padding="@dimen/fourDp"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </ScrollView>
@@ -87,49 +89,71 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <ImageView
+            android:id="@+id/emoticonButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="7dp"
+            android:padding="4dp"
+            app:srcCompat="@drawable/satisfied_emo2" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtChatMsg"
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconEditText
+            android:id="@+id/emoticonEditTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="@dimen/eightDp"
+            android:layout_marginBottom="@dimen/eightDp"
             android:layout_weight="1"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxStrokeColor="@color/fb"
-            app:boxStrokeWidth="2dp"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:background="@drawable/typebox"
+            android:padding="6dp"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="12sp"
 
-            <android.support.design.widget.TextInputEditText
+            app:emojiconSize="28sp" />
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/eightDp"
-                android:hint="@string/write_your_message"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:selectAllOnFocus="true"
-                android:singleLine="false" />
-        </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- <com.google.android.material.textfield.TextInputLayout
+             android:id="@+id/edtChatMsg"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="8dp"
+             android:layout_marginLeft="8dp"
+             android:layout_marginEnd="8dp"
+             android:layout_marginRight="8dp"
+             android:layout_weight="1"
+             app:boxBackgroundMode="outline"
+             app:boxCornerRadiusBottomStart="10dp"
+             app:boxCornerRadiusTopEnd="20dp"
+             app:boxStrokeColor="@color/fb"
+             app:boxStrokeWidth="2dp"
+             app:errorEnabled="false"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent">
+
+             <com.google.android.material.textfield.TextInputEditText
+
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:drawablePadding="@dimen/eightDp"
+                 android:hint="@string/write_your_message"
+                 android:imeOptions="actionDone"
+                 android:inputType="textMultiLine"
+                 android:selectAllOnFocus="true"
+                 android:singleLine="false" />
+         </com.google.android.material.textfield.TextInputLayout>
+ -->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnReplyBack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:backgroundTint="#3F51B5"
+            app:backgroundTint="@color/colorAsh"
+            app:fabSize="mini"
             app:srcCompat="@drawable/ic_send" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
