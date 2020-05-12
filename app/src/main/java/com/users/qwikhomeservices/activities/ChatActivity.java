@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.adapters.MessageAdapter;
 import com.users.qwikhomeservices.models.Message;
 
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     EmojiconEditText emojiconEditText;
     ImageView emojiButton;
     EmojIconActions emojIconActions;
-    private CircleImageView handyManPhoto;
+    private CircleImageView imgServicePersonPhoto;
     private TextView txtName, txtContent;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
@@ -50,7 +50,8 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter adapter;
     private List<Message> messageList;
     private DatabaseReference chatsDbRef;
-    private String receiverId, servicePersonName, servicePersonPhoto, senderName, senderPhoto, reason, getAdapterPosition;
+    private String receiverId, servicePersonName, servicePersonPhotoUrl, senderID,
+            senderName, senderPhoto, reason, getAdapterPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,35 +72,36 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        Intent getDataIntent = getIntent();
+        if (getDataIntent != null) {
+            //get data from the view holder
+            servicePersonPhotoUrl = getIntent().getStringExtra("servicePersonPhoto");//itemImage
+            getAdapterPosition = getIntent().getStringExtra("adapterPosition");//adapter position of the item
+            servicePersonName = getIntent().getStringExtra("servicePersonName");//name of handyMan
+            reason = getIntent().getStringExtra("senderReason");//content of the report
+            senderName = getIntent().getStringExtra("senderName");//name of sender
+            senderID = getIntent().getStringExtra("senderID");//name of sender
+            senderPhoto = getIntent().getStringExtra("senderPhoto");//sender photo
+            receiverId = getIntent().getStringExtra("receiverID");//sender id
+
+
+            imgServicePersonPhoto = findViewById(R.id.imgHandyManPhoto);
+            txtName = findViewById(R.id.txtHandyManName);
+            //  txtContent = findViewById(R.id.txtShowReason);
+
+            txtName.setText(servicePersonName);
+            // txtContent.setText(reason);
+            Glide.with(this).load(servicePersonPhotoUrl).into(imgServicePersonPhoto);
+
+
+        }
+
         chatsDbRef = FirebaseDatabase.getInstance().getReference().child("Requests").child(getAdapterPosition);
         DatabaseReference postChatsDbRef = chatsDbRef.child("Chats");
         chatsDbRef.keepSynced(true);
         Query query = postChatsDbRef.orderByChild("messageDateTime");
 
         messageList = new ArrayList<>();
-
-        recyclerView = findViewById(R.id.recyclerViewChats);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new MessageAdapter(messageList);
-        recyclerView.setAdapter(adapter);
-
-
-        Intent getDataIntent = getIntent();
-        if (getDataIntent != null) {
-            //get data from the view holder
-            servicePersonPhoto = getIntent().getStringExtra("servicePersonPhoto");//itemImage
-            getAdapterPosition = getIntent().getStringExtra("adapterPosition");//adapter position of the item
-            servicePersonName = getIntent().getStringExtra("servicePersonName");//name of handyMan
-            reason = getIntent().getStringExtra("senderReason");//content of the report
-            senderName = getIntent().getStringExtra("senderName");//name of sender
-            senderPhoto = getIntent().getStringExtra("senderPhoto");//sender photo
-            receiverId = getIntent().getStringExtra("receiverID");//sender id
-
-
-        }
-
 
         ConstraintLayout activity_main = findViewById(R.id.activity_main);
         emojiButton = findViewById(R.id.emoticonButton);
@@ -108,13 +110,12 @@ public class ChatActivity extends AppCompatActivity {
         emojIconActions.ShowEmojicon();
 
 
-        handyManPhoto = findViewById(R.id.imgHandyManPhoto);
-        txtName = findViewById(R.id.txtHandyManName);
-        //  txtContent = findViewById(R.id.txtShowReason);
-
-        txtName.setText(servicePersonName);
-        // txtContent.setText(reason);
-        Glide.with(this).load(servicePersonPhoto).into(handyManPhoto);
+        recyclerView = findViewById(R.id.recyclerViewChats);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MessageAdapter(messageList);
+        recyclerView.setAdapter(adapter);
 
         runOnUiThread(() -> {
 
@@ -144,28 +145,21 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
-       /* FirebaseRecyclerOptions<Chat> options = new FirebaseRecyclerOptions.Builder<Chat>().
-                setQuery(query, Chat.class).build();
-
-        adapter = new ChatAdapter(options);*/
-
-
     }
 
 
     private void addChat() {
         String postChat = emojiconEditText.getText().toString();
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM HH:mm", Locale.ENGLISH);
 
         String dateTime = simpleDateFormat.format(calendar.getTime());
         if (!postChat.trim().isEmpty()) {
             HashMap<String, Object> chats = new HashMap<>();
             chats.put("message", postChat);
-            chats.put("senderId", MainActivity.uid);
-            chats.put("senderName", MainActivity.name);
-            chats.put("senderPhoto", MainActivity.imageUrl);
+            chats.put("senderId", senderID);
+            chats.put("senderName", senderName);
+            chats.put("senderPhoto", senderPhoto);
             chats.put("messageDateTime", dateTime);
             chats.put("receiverName", servicePersonName);
             chats.put("receiverId", receiverId);
