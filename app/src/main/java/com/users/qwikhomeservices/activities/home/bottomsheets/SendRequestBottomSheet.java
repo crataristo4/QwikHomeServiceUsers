@@ -93,8 +93,8 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             servicePersonPhoto = bundle.getString(MyConstants.SERVICE_PERSON_PHOTO);
             servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
             userName = bundle.getString(MyConstants.FULL_NAME);
-            // firstName = bundle.getString(MyConstants.FIRST_NAME);
-            // lastName = bundle.getString(MyConstants.LAST_NAME);
+            firstName = bundle.getString(MyConstants.FIRST_NAME);
+            lastName = bundle.getString(MyConstants.LAST_NAME);
             mobileNumber = bundle.getString(MyConstants.PHONE_NUMBER);
             uid = bundle.getString(MyConstants.UID);
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
@@ -171,11 +171,11 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
             progressBar.setVisibility(View.VISIBLE);
             RequestModel requestSent = new RequestModel(
-                    0, uid, servicePersonId, servicePersonPhoto,
-                    getReason, itemPrice, itemName,
-                    notApproved, itemImage, userPhotoUrl, userName,
-                    servicePersonName, dateRequested,
-                    "NO", mobileNumber);
+                    0, servicePersonId, servicePersonPhoto, servicePersonName, mobileNumber,
+                    getReason, itemPrice, itemName, itemImage,
+                    uid, userPhotoUrl, firstName, lastName
+                    , dateRequested, notApproved,
+                    "NO");
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

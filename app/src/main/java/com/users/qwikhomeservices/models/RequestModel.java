@@ -29,7 +29,6 @@ public class RequestModel extends BaseObservable {
     private String itemImage;
     private String distanceBetween;
     private String senderPhoto;
-    private String senderName;
     private String servicePersonName;
     private String servicePersonPhoto;
     private String dateRequested;
@@ -42,20 +41,21 @@ public class RequestModel extends BaseObservable {
     }
 
     public RequestModel(float rating,
-                        String senderId,
                         String receiverId,
                         String servicePersonPhoto,
+                        String servicePersonName,
+                        String mobileNumber,
                         String reason,
                         String price,
                         String itemName,
-                        String response,
                         String itemImage,
+                        String senderId,
                         String senderPhoto,
-                        String senderName,
-                        String servicePersonName,
+                        String firstName,
+                        String lastName,
+                        String response,
                         String dateRequested,
-                        String isWorkDone,
-                        String mobileNumber) {
+                        String isWorkDone) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -66,7 +66,8 @@ public class RequestModel extends BaseObservable {
         this.response = response;
         this.itemImage = itemImage;
         this.senderPhoto = senderPhoto;
-        this.senderName = senderName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.servicePersonName = servicePersonName;
         this.dateRequested = dateRequested;
         this.isWorkDone = isWorkDone;
@@ -229,9 +230,6 @@ public class RequestModel extends BaseObservable {
         return firstName.concat(" ").concat(lastName);
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
-    }
 
     @Bindable
     public String getServicePersonName() {
