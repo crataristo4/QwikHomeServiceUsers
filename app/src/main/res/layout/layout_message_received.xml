@@ -4,6 +4,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="@dimen/eightDp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -24,9 +25,6 @@
             android:id="@+id/txtMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
             android:padding="10dp"
             android:textColor="@android:color/white"
             app:angle="8dp"
@@ -37,13 +35,38 @@
             app:arrowWidth="8dp"
             app:bubbleColor="@color/purple"
             app:layout_constraintBottom_toTopOf="@+id/txtDateTime"
-            app:layout_constraintEnd_toStartOf="@+id/divider7"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+        <!--<com.daasuu.bl.BubbleLayout
+            android:id="@+id/bubbleLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:bl_arrowDirection="left"
+            app:bl_arrowHeight="8dp"
+            app:bl_arrowPosition="16dp"
+            app:bl_arrowWidth="8dp"
+            app:bl_bubbleColor="@color/purple"
+            app:bl_cornersRadius="8dp"
+            app:bl_strokeWidth="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtDateTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
+            <TextView
+                android:id="@+id/txtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:textColor="@color/white" />
+
+        </com.daasuu.bl.BubbleLayout>-->
         <TextView
             android:id="@+id/txtDateTime"
             android:layout_width="wrap_content"
@@ -53,18 +76,6 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txtMessage" />
-
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

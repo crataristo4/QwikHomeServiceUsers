@@ -86,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
             receiverId = getIntent().getStringExtra("receiverID");//sender id
 
 
+
         }
 
 
@@ -97,7 +98,9 @@ public class ChatActivity extends AppCompatActivity {
         emojiButton = findViewById(R.id.emoticonButton);
         emojiconEditText = findViewById(R.id.emoticonEditTxt);
         emojIconActions = new EmojIconActions(getApplicationContext(), activity_main, emojiButton, emojiconEditText);
-        emojIconActions.ShowEmojicon();
+        emojIconActions.onClick(emojiButton);
+        // emojIconActions.ShowEmojicon();
+        emojIconActions.onFocusChange(emojiButton, true);
 
 
         /*emojIconActions.setKeyboardListener(new EmojIconActions.KeyboardListener() {
@@ -113,8 +116,6 @@ public class ChatActivity extends AppCompatActivity {
         });*/
 
 
-        emojIconActions.setUseSystemEmoji(true);
-        emojiconEditText.setUseSystemDefault(true);
 
         txtName.setText(servicePersonName);
         // txtContent.setText(reason);
@@ -133,34 +134,38 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+
         DatabaseReference postChatsDbRef = chatsDbRef.child("Chats");
         chatsDbRef.keepSynced(true);
-
         Query query = postChatsDbRef.orderByChild("messageDateTime");
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
+        runOnUiThread(() -> {
 
-                    // messageList.clear();
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChildren()) {
 
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        // messageList.clear();
 
-                        Message message = ds.getValue(Message.class);
-                        messageList.add(message);
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                            Message message = ds.getValue(Message.class);
+                            messageList.add(message);
+                        }
+                        adapter.notifyDataSetChanged();
+
                     }
                 }
 
-                adapter.notifyDataSetChanged();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
+                }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
         });
+
 
 
        /* FirebaseRecyclerOptions<Chat> options = new FirebaseRecyclerOptions.Builder<Chat>().
@@ -181,33 +186,29 @@ public class ChatActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM HH:mm");
 
         String dateTime = simpleDateFormat.format(calendar.getTime());
+        if (!postChat.trim().isEmpty()) {
+            HashMap<String, Object> chats = new HashMap<>();
+            chats.put("message", postChat);
+            chats.put("senderId", MainActivity.uid);
+            chats.put("senderName", MainActivity.name);
+            chats.put("senderPhoto", MainActivity.imageUrl);
+            chats.put("messageDateTime", dateTime);
+            chats.put("receiverName", servicePersonName);
+            chats.put("receiverId", receiverId);
 
-        runOnUiThread(() -> {
+            String chatId = chatsDbRef.push().getKey();
+            assert chatId != null;
 
-            if (!postChat.isEmpty()) {
-                HashMap<String, Object> chats = new HashMap<>();
-                chats.put("message", postChat);
-                chats.put("senderId", MainActivity.uid);
-                chats.put("senderName", MainActivity.name);
-                chats.put("senderPhoto", MainActivity.imageUrl);
-                chats.put("messageDateTime", dateTime);
-                chats.put("receiverName", servicePersonName);
-                chats.put("receiverId", receiverId);
+            chatsDbRef.child("Chats").child(chatId).setValue(chats).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    emojiconEditText.getText().clear();
+                }
+            });
+        } else if (postChat.trim().isEmpty()) {
+            emojiconEditText.setError("Cannot send empty message");
+            //  makeToast("Comment cannot be empty");
+        }
 
-                String chatId = chatsDbRef.push().getKey();
-                assert chatId != null;
-
-                chatsDbRef.child("Chats").child(chatId).setValue(chats).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        emojiconEditText.getText().clear();
-                    }
-                });
-            } else {
-                emojiconEditText.setError("Cannot send empty message");
-                //  makeToast("Comment cannot be empty");
-            }
-
-        });
 
 
     }

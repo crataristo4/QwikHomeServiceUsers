@@ -111,6 +111,7 @@ dependencies {
     implementation 'me.jahirfiquitiva:FABsMenu:1.1.4'
     implementation 'com.github.hani-momanii:SuperNova-Emoji:1.0'
     implementation 'com.github.lguipeng:BubbleView:1.0.1'
+    implementation 'com.github.MasayukiSuda:BubbleLayout:v1.2.1'
 
 
 }

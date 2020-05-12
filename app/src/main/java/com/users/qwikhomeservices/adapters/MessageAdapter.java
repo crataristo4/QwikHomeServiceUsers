@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.models.Message;
@@ -16,11 +15,9 @@ import com.users.qwikhomeservices.models.Message;
 import java.util.List;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
-    public static String UID;
+    private static String UID;
     private List<Message> messageList;
 
     public MessageAdapter(List<Message> messageList) {
@@ -50,11 +47,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         Message messages = messageList.get(position);
         holder.txtMsg.setText(messages.getMessage());
         holder.txtDateTime.setText(messages.getMessageDateTime());
-        Glide.with(holder.itemView.getContext())
+        /*Glide.with(holder.itemView.getContext())
                 .load(messages.getSenderPhoto())
                 .error(holder.itemView.getResources().getDrawable(R.drawable.photoe))
-                .into(holder.imgPhoto);
-
+                .into(holder.imgPhoto);*/
 
     }
 
@@ -77,15 +73,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     static class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtMsg, txtDateTime;
-        public CircleImageView imgPhoto;
+        private TextView txtMsg, txtDateTime;
+        //private BubbleTextView txtMsg;
+        // public CircleImageView imgPhoto;
 
         MessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtMsg = itemView.findViewById(R.id.txtMessage);
             txtDateTime = itemView.findViewById(R.id.txtDateTime);
-            imgPhoto = itemView.findViewById(R.id.imgPhoto);
+            // imgPhoto = itemView.findViewById(R.id.imgPhoto);
 
         }
     }
