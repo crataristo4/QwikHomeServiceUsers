@@ -38,7 +38,6 @@ import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
 public class ChatActivity extends AppCompatActivity {
 
-    //Add Emojicon
     EmojiconEditText emojiconEditText;
     ImageView emojiButton;
     EmojIconActions emojIconActions;

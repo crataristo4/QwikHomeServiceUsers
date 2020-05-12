@@ -4,6 +4,7 @@ package com.users.qwikhomeservices.activities.home.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +16,33 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.adapters.ActivityItemAdapter;
+import com.users.qwikhomeservices.adapters.MultiViewTypeAdapter;
 import com.users.qwikhomeservices.databinding.FragmentActivitiesBinding;
-import com.users.qwikhomeservices.models.StylesItemModel;
+import com.users.qwikhomeservices.models.ActivityItemModel;
 import com.users.qwikhomeservices.utils.MyConstants;
+
+import java.util.ArrayList;
 
 
 public class ActivitiesFragment extends Fragment {
     private Bundle mBundleState;
+    private static final String KEY = "key";
     private static final String TAG = "ActivityFragment";
+    private static final int INITIAL_LOAD = 15;
+    private boolean userScrolled = false;
+    private int currentPage = 1;
     private FragmentActivitiesBinding fragmentActivitiesBinding;
-    private RecyclerView rvBarbers, rvHairStylist, rvInteriorDeco, rvItems;
-    private DatabaseReference dbRef;
-    private ActivityItemAdapter activityItemAdapter;
+    private RecyclerView recyclerView;
+    private MultiViewTypeAdapter adapter;
+    private ArrayList<ActivityItemModel> arrayList = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private Parcelable mState;
+    private ListenerRegistration registration;
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -61,33 +69,115 @@ public class ActivitiesFragment extends Fragment {
     }
 
     private void loadActivityData() {
-        rvItems = fragmentActivitiesBinding.rvItems;
-        rvItems.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        rvItems.setLayoutManager(layoutManager);
+        recyclerView = fragmentActivitiesBinding.rvItems;
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
 
-        dbRef = FirebaseDatabase.getInstance().getReference()
-                .child("Activity");
-        dbRef.keepSynced(true);
+        adapter = new MultiViewTypeAdapter(arrayList, getContext());
+        recyclerView.setAdapter(adapter);
 
-        //querying the database base of the time posted
-        Query query = dbRef.orderByValue();
-        FirebaseRecyclerOptions<StylesItemModel> options =
-                new FirebaseRecyclerOptions.Builder<StylesItemModel>().setQuery(query,
-                        StylesItemModel.class)
-                        .build();
 
-        activityItemAdapter = new ActivityItemAdapter(options);
-        rvItems.setAdapter(activityItemAdapter);
-        activityItemAdapter.notifyDataSetChanged();
+        fetchDataFromFireStore();
+
     }
+
+
+    private void fetchDataFromFireStore() {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Activity");
+
+        // Create a query against the collection.
+        com.google.firebase.firestore.Query query = collectionReference.orderBy("timeStamp", com.google.firebase.firestore.Query.Direction.DESCENDING).limit(INITIAL_LOAD);
+
+
+        registration = query.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e);
+                return;
+            }
+            arrayList.clear();
+
+
+            assert queryDocumentSnapshots != null;
+            for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
+                if (ds != null) {
+
+                    Log.i(TAG, "onEvent: " + ds.getData());
+                    ActivityItemModel itemModel = ds.toObject(ActivityItemModel.class);
+//group data by status
+                    if (ds.getData().containsKey("status")) {
+                        Log.i(TAG, "status: " + ds.getData().get("status"));
+
+                        arrayList.add(new ActivityItemModel(ActivityItemModel.TEXT_TYPE,
+                                itemModel.getStatus(),
+                                itemModel.getUserName(),
+                                itemModel.getUserPhoto(),
+                                itemModel.getTimeStamp()));
+
+                    }
+                    //group data by item description
+                    else if (ds.getData().containsKey("itemDescription")) {
+                        Log.i(TAG, "itemDescription: " + ds.getData().get("itemDescription"));
+
+                        arrayList.add(new ActivityItemModel(ActivityItemModel.IMAGE_TYPE,
+                                itemModel.getItemImage(),
+                                itemModel.getItemDescription(),
+                                itemModel.getUserName(),
+                                itemModel.getUserPhoto(),
+                                itemModel.getTimeStamp()));
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+
+
+        });
+
+       /* //get all items from fire store
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot ds : Objects.requireNonNull(task.getResult())) {
+                    Log.i(TAG, "onComplete: " + ds.getId() + " " + ds.getData());
+
+                    ActivityItemModel itemModel = ds.toObject(ActivityItemModel.class);
+
+                    //group data by status
+                    if (ds.getData().containsKey("status")) {
+                        Log.i(TAG, "status: " + ds.getData().get("status"));
+
+                        arrayList.add(new ActivityItemModel(ActivityItemModel.TEXT_TYPE,
+                                itemModel.getStatus(),
+                                itemModel.getUserName(),
+                                itemModel.getUserPhoto(),
+                                itemModel.getTimeStamp()));
+
+                    }
+                    //group data by item description
+                    else if (ds.getData().containsKey("itemDescription")) {
+                        Log.i(TAG, "itemDescription: " + ds.getData().get("itemDescription"));
+
+                        arrayList.add(new ActivityItemModel(ActivityItemModel.IMAGE_TYPE,
+                                itemModel.getItemImage(),
+                                itemModel.getItemDescription(),
+                                itemModel.getUserName(),
+                                itemModel.getUserPhoto(),
+                                itemModel.getTimeStamp()));
+                    }
+
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+        });*/
+    }
+
 
     @Override
     public void onStart() {
         super.onStart();
-        activityItemAdapter.startListening();
+        // activityItemAdapter.startListening();
 
     }
 
@@ -95,7 +185,8 @@ public class ActivitiesFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        activityItemAdapter.stopListening();
+        // activityItemAdapter.stopListening();
+        registration.remove();
     }
 
     @Override
@@ -121,7 +212,7 @@ public class ActivitiesFragment extends Fragment {
             }, 50);
         }
 
-        rvItems.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
 
