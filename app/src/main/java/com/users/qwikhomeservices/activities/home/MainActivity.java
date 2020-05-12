@@ -92,9 +92,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                name = (String) dataSnapshot.child("fullName").getValue();
+                //name = (String) dataSnapshot.child("fullName").getValue();
                 firstName = (String) dataSnapshot.child("firstName").getValue();
                 lastName = (String) dataSnapshot.child("lastName").getValue();
+                name = firstName.concat(" ").concat(lastName);
                 dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
                 mobileNumber = (String) dataSnapshot.child("mobileNumber").getValue();
                 imageUrl = (String) dataSnapshot.child("image").getValue();
@@ -255,25 +256,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent gotoSettingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(gotoSettingsIntent);
+        if (item.getItemId() == R.id.action_settings) {
+            Intent gotoSettingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(gotoSettingsIntent);
 
-                break;
-
-        /*    case R.id.action_logout:
+                /*    case R.id.action_logout:
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, SplashScreenActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
 
                 break;*/
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-
+        } else {
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }

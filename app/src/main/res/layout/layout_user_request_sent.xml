@@ -40,6 +40,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{@string/requestSentTo(String.valueOf(requestItems.servicePersonName))}"
                 android:textColor="@color/purple"
                 app:layout_constraintEnd_toStartOf="@+id/btnRateServicePerson"

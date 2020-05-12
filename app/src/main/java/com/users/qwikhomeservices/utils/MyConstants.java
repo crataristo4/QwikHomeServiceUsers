@@ -42,6 +42,7 @@ public final class MyConstants {
     public static int REQUEST_CODE = 100;
     public static String SERVICE_PERSON_NAME = "servicePersonName";
     public static String SERVICE_PERSON_ID = "servicePersonId";
+    public static String SERVICE_PERSON_PHOTO = "servicePersonPhoto";
 
 
 }

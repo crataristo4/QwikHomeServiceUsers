@@ -44,6 +44,7 @@ public class RequestModel extends BaseObservable {
     public RequestModel(float rating,
                         String senderId,
                         String receiverId,
+                        String servicePersonPhoto,
                         String reason,
                         String price,
                         String itemName,
@@ -54,12 +55,11 @@ public class RequestModel extends BaseObservable {
                         String servicePersonName,
                         String dateRequested,
                         String isWorkDone,
-                        String firstName,
-                        String lastName,
                         String mobileNumber) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
+        this.servicePersonPhoto = servicePersonPhoto;
         this.reason = reason;
         this.price = price;
         this.itemName = itemName;
@@ -70,8 +70,6 @@ public class RequestModel extends BaseObservable {
         this.servicePersonName = servicePersonName;
         this.dateRequested = dateRequested;
         this.isWorkDone = isWorkDone;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.mobileNumber = mobileNumber;
     }
 
@@ -228,7 +226,7 @@ public class RequestModel extends BaseObservable {
 
     @Bindable
     public String getSenderName() {
-        return senderName;
+        return firstName.concat(" ").concat(lastName);
     }
 
     public void setSenderName(String senderName) {

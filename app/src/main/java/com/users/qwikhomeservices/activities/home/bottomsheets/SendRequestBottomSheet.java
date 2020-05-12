@@ -39,7 +39,8 @@ import java.util.Objects;
 public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
     private LayoutSendRequestBinding layoutSendRequestBinding;
-    private String servicePersonName, userName, userPhotoUrl, uid, servicePersonId, firstName, lastName, mobileNumber;
+    private String servicePersonName, userName, userPhotoUrl, servicePersonPhoto,
+            uid, servicePersonId, firstName, lastName, mobileNumber;
     private String notApproved = "Not yet Approved";
     private String itemName, itemPrice, itemImage;
     private String dateRequested, getReason;
@@ -89,10 +90,11 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
             itemPrice = bundle.getString(MyConstants.PRICE);
             itemImage = bundle.getString(MyConstants.IMAGE_URL);
             servicePersonName = bundle.getString(MyConstants.SERVICE_PERSON_NAME);
+            servicePersonPhoto = bundle.getString(MyConstants.SERVICE_PERSON_PHOTO);
             servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
             userName = bundle.getString(MyConstants.FULL_NAME);
-            firstName = bundle.getString(MyConstants.FIRST_NAME);
-            lastName = bundle.getString(MyConstants.LAST_NAME);
+            // firstName = bundle.getString(MyConstants.FIRST_NAME);
+            // lastName = bundle.getString(MyConstants.LAST_NAME);
             mobileNumber = bundle.getString(MyConstants.PHONE_NUMBER);
             uid = bundle.getString(MyConstants.UID);
             userPhotoUrl = bundle.getString(MyConstants.USER_IMAGE_URL);
@@ -169,11 +171,11 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
 
             progressBar.setVisibility(View.VISIBLE);
             RequestModel requestSent = new RequestModel(
-                    0, uid, servicePersonId,
+                    0, uid, servicePersonId, servicePersonPhoto,
                     getReason, itemPrice, itemName,
-                    notApproved, itemImage, userPhotoUrl,
-                    userName, servicePersonName, dateRequested,
-                    "NO", firstName, lastName, mobileNumber);
+                    notApproved, itemImage, userPhotoUrl, userName,
+                    servicePersonName, dateRequested,
+                    "NO", mobileNumber);
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

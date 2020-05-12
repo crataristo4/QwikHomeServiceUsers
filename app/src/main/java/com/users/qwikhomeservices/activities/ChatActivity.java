@@ -71,8 +71,20 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        chatsDbRef = FirebaseDatabase.getInstance().getReference().child("Requests").child(getAdapterPosition);
+        DatabaseReference postChatsDbRef = chatsDbRef.child("Chats");
+        chatsDbRef.keepSynced(true);
+        Query query = postChatsDbRef.orderByChild("messageDateTime");
 
         messageList = new ArrayList<>();
+
+        recyclerView = findViewById(R.id.recyclerViewChats);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MessageAdapter(messageList);
+        recyclerView.setAdapter(adapter);
+
 
         Intent getDataIntent = getIntent();
         if (getDataIntent != null) {
@@ -86,58 +98,23 @@ public class ChatActivity extends AppCompatActivity {
             receiverId = getIntent().getStringExtra("receiverID");//sender id
 
 
-
         }
+
+
+        ConstraintLayout activity_main = findViewById(R.id.activity_main);
+        emojiButton = findViewById(R.id.emoticonButton);
+        emojiconEditText = findViewById(R.id.emoticonEditTxt);
+        emojIconActions = new EmojIconActions(getApplicationContext(), activity_main, emojiButton, emojiconEditText);
+        emojIconActions.ShowEmojicon();
 
 
         handyManPhoto = findViewById(R.id.imgHandyManPhoto);
         txtName = findViewById(R.id.txtHandyManName);
         //  txtContent = findViewById(R.id.txtShowReason);
 
-        ConstraintLayout activity_main = findViewById(R.id.activity_main);
-        emojiButton = findViewById(R.id.emoticonButton);
-        emojiconEditText = findViewById(R.id.emoticonEditTxt);
-        emojIconActions = new EmojIconActions(getApplicationContext(), activity_main, emojiButton, emojiconEditText);
-        emojIconActions.onClick(emojiButton);
-        // emojIconActions.ShowEmojicon();
-        emojIconActions.onFocusChange(emojiButton, true);
-
-
-        /*emojIconActions.setKeyboardListener(new EmojIconActions.KeyboardListener() {
-            @Override
-            public void onKeyboardOpen() {
-
-            }
-
-            @Override
-            public void onKeyboardClose() {
-
-            }
-        });*/
-
-
-
         txtName.setText(servicePersonName);
         // txtContent.setText(reason);
-        Glide.with(this).load(senderPhoto).into(handyManPhoto);
-
-
-        chatsDbRef = FirebaseDatabase.getInstance().getReference().child("Requests").child(getAdapterPosition);
-
-
-        recyclerView = findViewById(R.id.recyclerViewChats);
-        layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new MessageAdapter(messageList);
-        recyclerView.setAdapter(adapter);
-
-
-
-        DatabaseReference postChatsDbRef = chatsDbRef.child("Chats");
-        chatsDbRef.keepSynced(true);
-        Query query = postChatsDbRef.orderByChild("messageDateTime");
+        Glide.with(this).load(servicePersonPhoto).into(handyManPhoto);
 
         runOnUiThread(() -> {
 
@@ -174,10 +151,7 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new ChatAdapter(options);*/
 
 
-
-
     }
-
 
 
     private void addChat() {
@@ -208,7 +182,6 @@ public class ChatActivity extends AppCompatActivity {
             emojiconEditText.setError("Cannot send empty message");
             //  makeToast("Comment cannot be empty");
         }
-
 
 
     }

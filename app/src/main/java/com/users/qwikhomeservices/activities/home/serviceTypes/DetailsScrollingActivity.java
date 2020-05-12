@@ -41,7 +41,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     private ActivityDetailsScrollingBinding activityDetailsScrollingBinding;
     private DatabaseReference databaseReference;
     private StylesAdapter adapter;
-    private String name, about, image, servicePersonId, mobileNumber;
+    private String servicePersonName, servicePersonAbout, servicePersonPhoto, servicePersonId, servicePersonMobileNumber;
     private long mLastClickTime = 0;
 
 
@@ -59,15 +59,15 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         if (intent != null) {
             String position = intent.getStringExtra("position");
             assert position != null;
-            name = intent.getStringExtra("fullName");
-            about = intent.getStringExtra("about");
-            image = intent.getStringExtra("image");
+            servicePersonName = intent.getStringExtra("fullName");
+            servicePersonAbout = intent.getStringExtra("about");
+            servicePersonPhoto = intent.getStringExtra("image");
             servicePersonId = intent.getStringExtra("servicePersonId");
-            mobileNumber = intent.getStringExtra("mobileNumber");
+            servicePersonMobileNumber = intent.getStringExtra("mobileNumber");
         }
 
         activityDetailsScrollingBinding.fabCall.setOnClickListener(view -> Snackbar.make(view,
-                "Call ".concat(name),
+                "Call ".concat(servicePersonName),
                 Snackbar.LENGTH_LONG)
                 .setActionTextColor(Color.WHITE)
                 .setTextColor(Color.WHITE)
@@ -75,7 +75,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
                 .setDuration(8000)
                 .setAction("CALL NOW", v -> {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.fromParts("tel", mobileNumber, null));
+                    callIntent.setData(Uri.fromParts("tel", servicePersonMobileNumber, null));
                     callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(callIntent);
 
@@ -117,11 +117,11 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             }
         });
 
-        activityDetailsScrollingBinding.collapsingToolBar.setTitle(name);
-        activityDetailsScrollingBinding.contentDetails.txtAbout.setText(about);
+        activityDetailsScrollingBinding.collapsingToolBar.setTitle(servicePersonName);
+        activityDetailsScrollingBinding.contentDetails.txtAbout.setText(servicePersonAbout);
 
         Glide.with(this)
-                .load(image)
+                .load(servicePersonPhoto)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(activityDetailsScrollingBinding.userImage);
 
@@ -174,13 +174,14 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             bundle.putString(MyConstants.IMAGE_URL, imageItem);
 
             //pass details of service person to bottom sheet
-            bundle.putString(MyConstants.SERVICE_PERSON_NAME, name);
+            bundle.putString(MyConstants.SERVICE_PERSON_NAME, servicePersonName);
             bundle.putString(MyConstants.SERVICE_PERSON_ID, servicePersonId);
+            bundle.putString(MyConstants.SERVICE_PERSON_PHOTO, servicePersonPhoto);
 
             //pass users name , user photo , user id to bundle
             String fullName = MainActivity.name;
-            String firstName = MainActivity.firstName;
-            String lastName = MainActivity.lastName;
+            //String firstName = MainActivity.firstName;
+            // String lastName = MainActivity.lastName;
             String userMobileNumber = MainActivity.mobileNumber;
             String userId = MainActivity.uid;
             String userPhoto = MainActivity.imageUrl;
@@ -188,8 +189,8 @@ public class DetailsScrollingActivity extends AppCompatActivity {
             bundle.putString(MyConstants.FULL_NAME, fullName);
             bundle.putString(MyConstants.UID, userId);
             bundle.putString(MyConstants.USER_IMAGE_URL, userPhoto);
-            bundle.putString(MyConstants.FIRST_NAME, firstName);
-            bundle.putString(MyConstants.LAST_NAME, lastName);
+            // bundle.putString(MyConstants.FIRST_NAME, firstName);
+            // bundle.putString(MyConstants.LAST_NAME, lastName);
             bundle.putString(MyConstants.PHONE_NUMBER, userMobileNumber);
 
             SendRequestBottomSheet sendRequestBottomSheet = new SendRequestBottomSheet();
