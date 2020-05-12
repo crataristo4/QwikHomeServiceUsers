@@ -121,16 +121,18 @@ public class ChatActivity extends AppCompatActivity {
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChildren()) {
-
-                        // messageList.clear();
+                    if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
+                        messageList.clear();
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                             Message message = ds.getValue(Message.class);
                             messageList.add(message);
                         }
+
+                        recyclerView.scrollToPosition(messageList.size() - 1);
                         adapter.notifyDataSetChanged();
+
 
                     }
                 }
