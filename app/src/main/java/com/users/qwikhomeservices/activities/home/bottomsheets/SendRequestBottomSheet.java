@@ -183,7 +183,7 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
                     servicePersonName,
                     servicePersonPhoto,
                     dateRequested,
-                    "Not Paid  ",
+                    "Not Paid",
                     "NO",
                     firstName,
                     lastName);

@@ -55,7 +55,7 @@
 
         <activity
             android:name="com.users.qwikhomeservices.activities.home.MainActivity"
-            android:configChanges="keyboardHidden"
+            android:alwaysRetainTaskState="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

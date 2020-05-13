@@ -48,6 +48,13 @@ public class ActivitiesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -73,10 +80,8 @@ public class ActivitiesFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
         adapter = new MultiViewTypeAdapter(arrayList, getContext());
         recyclerView.setAdapter(adapter);
-
 
         fetchDataFromFireStore();
 
@@ -88,7 +93,6 @@ public class ActivitiesFragment extends Fragment {
 
         // Create a query against the collection.
         com.google.firebase.firestore.Query query = collectionReference.orderBy("timeStamp", com.google.firebase.firestore.Query.Direction.DESCENDING).limit(INITIAL_LOAD);
-
 
         registration = query.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
@@ -173,7 +177,6 @@ public class ActivitiesFragment extends Fragment {
         });*/
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -202,13 +205,10 @@ public class ActivitiesFragment extends Fragment {
         super.onResume();
         if (mBundleState != null) {
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            new Handler().postDelayed(() -> {
 
-                    mState = mBundleState.getParcelable(MyConstants.KEY);
-                    layoutManager.onRestoreInstanceState(mState);
-                }
+                mState = mBundleState.getParcelable(MyConstants.KEY);
+                layoutManager.onRestoreInstanceState(mState);
             }, 50);
         }
 
