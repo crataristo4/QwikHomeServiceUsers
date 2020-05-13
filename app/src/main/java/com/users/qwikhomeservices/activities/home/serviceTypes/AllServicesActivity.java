@@ -130,12 +130,14 @@ public class AllServicesActivity extends AppCompatActivity {
 
         }
 
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
+        databaseReference.keepSynced(true);
+
         runOnUiThread(() -> {
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
-            databaseReference.keepSynced(true);
 
             //querying the database BY NAME
             Query query = databaseReference.orderByChild("accountType").equalTo(accountType);

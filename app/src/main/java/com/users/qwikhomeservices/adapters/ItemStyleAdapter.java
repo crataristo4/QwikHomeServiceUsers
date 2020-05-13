@@ -2,8 +2,6 @@ package com.users.qwikhomeservices.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +9,7 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,16 +21,14 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.users.qwikhomeservices.R;
-import com.users.qwikhomeservices.activities.home.bottomsheets.SendRequestBottomSheet;
 import com.users.qwikhomeservices.databinding.LayoutStylesListItemBinding;
 import com.users.qwikhomeservices.models.StylesItemModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
-import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.List;
 
 public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.ItemStyleAdapterViewHolder> {
-    private static onItemClickListener onItemClickListener;
+    public static onItemClickListener onItemClickListener;
     private Context context;
     private List<StylesItemModel> stylesItemModelList;
     private long mLastClickTime = 0;
@@ -60,9 +54,9 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemStyleAdapterViewHolder itemStyleAdapterViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ItemStyleAdapterViewHolder itemStyleAdapterViewHolder, int position) {
 
-        StylesItemModel stylesItemModel = stylesItemModelList.get(i);
+        StylesItemModel stylesItemModel = stylesItemModelList.get(position);
         itemStyleAdapterViewHolder.layoutStylesListItemBinding.setItem(stylesItemModel);
 
         RequestOptions requestOptions = new RequestOptions();
@@ -93,7 +87,14 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
         itemStyleAdapterViewHolder.layoutStylesListItemBinding.mCardViewItem.startAnimation(AnimationUtils.loadAnimation(itemStyleAdapterViewHolder.layoutStylesListItemBinding.getRoot().getContext()
                 , R.anim.fade_scale_animation));
 
+
+        itemStyleAdapterViewHolder.
+                layoutStylesListItemBinding.
+                mCardViewItem.
+                setOnClickListener(v -> onItemClickListener.onClick(v, stylesItemModel));
+
         //on item click
+        /*
         itemStyleAdapterViewHolder.layoutStylesListItemBinding.mCardViewItem.setOnClickListener(v -> {
 
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
@@ -104,13 +105,13 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
 
             int adapterPosition = itemStyleAdapterViewHolder.getAdapterPosition();
             String price = String.valueOf(stylesItemModel.getPrice());
-            String itemStyleName = String.valueOf(stylesItemModel.getStyleItem());
+            String itemStyleName = String.valueOf(stylesItemModel.getItemDescription());
             String itemImage = String.valueOf(stylesItemModel.getItemImage());
 
 
             Bundle bundle = new Bundle();
             bundle.putString(MyConstants.PRICE, price);
-            bundle.putString(MyConstants.STYLE, itemStyleName);
+            bundle.putString(MyConstants.ITEM_DESCRIPTION, itemStyleName);
             bundle.putString(MyConstants.IMAGE_URL, itemImage);
 
             AppCompatActivity appCompatActivity = new AppCompatActivity();
@@ -122,7 +123,7 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
             sendRequestBottomSheet.show(fragmentManager, "sendRequest");
 
         });
-
+*/
 
     }
 
@@ -131,25 +132,27 @@ public class ItemStyleAdapter extends RecyclerView.Adapter<ItemStyleAdapter.Item
         return stylesItemModelList == null ? 0 : stylesItemModelList.size();
     }
 
-    interface onItemClickListener {
-        void onClick(View view, int position);
+    public interface onItemClickListener {
+        void onClick(View view, StylesItemModel stylesItemModel);
     }
 
-    public static class ItemStyleAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class ItemStyleAdapterViewHolder extends RecyclerView.ViewHolder {
 
         LayoutStylesListItemBinding layoutStylesListItemBinding;
 
         ItemStyleAdapterViewHolder(@NonNull LayoutStylesListItemBinding layoutStylesListItemBinding) {
             super(layoutStylesListItemBinding.getRoot());
             this.layoutStylesListItemBinding = layoutStylesListItemBinding;
-            layoutStylesListItemBinding.getRoot().setOnClickListener(this);
+            // layoutStylesListItemBinding.getRoot().setOnClickListener(this);
         }
 
-        @Override
+       /* @Override
         public void onClick(View v) {
-            onItemClickListener.onClick(layoutStylesListItemBinding.getRoot(), getAdapterPosition());
 
-        }
+            StylesItemModel stylesItemModel = stylesItemModelList.get(getAdapterPosition());
+            onItemClickListener.onClick(layoutStylesListItemBinding.getRoot(), stylesItemModel);
+
+        }*/
     }
 
 }

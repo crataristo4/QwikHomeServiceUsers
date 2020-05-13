@@ -86,13 +86,13 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             //pass value to items
-            itemName = bundle.getString(MyConstants.STYLE);
+            itemName = bundle.getString(MyConstants.ITEM_DESCRIPTION);
             itemPrice = bundle.getString(MyConstants.PRICE);
             itemImage = bundle.getString(MyConstants.IMAGE_URL);
             servicePersonName = bundle.getString(MyConstants.SERVICE_PERSON_NAME);
             servicePersonPhoto = bundle.getString(MyConstants.SERVICE_PERSON_PHOTO);
             servicePersonId = bundle.getString(MyConstants.SERVICE_PERSON_ID);
-            userName = bundle.getString(MyConstants.FULL_NAME);
+            // userName = bundle.getString(MyConstants.FULL_NAME);
             firstName = bundle.getString(MyConstants.FIRST_NAME);
             lastName = bundle.getString(MyConstants.LAST_NAME);
             mobileNumber = bundle.getString(MyConstants.PHONE_NUMBER);

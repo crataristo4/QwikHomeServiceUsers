@@ -38,6 +38,7 @@ public final class MyConstants {
     public static String USER_IMAGE_URL = "userImageUrl";
     public static String SEND_REQUEST_TAG = "sendRequest";
     public static String STYLE = "style";
+    public static String ITEM_DESCRIPTION = "itemDescription";
     public static String PRICE = "price";
     public static int REQUEST_CODE = 100;
     public static String SERVICE_PERSON_NAME = "servicePersonName";

@@ -6,7 +6,7 @@ import androidx.databinding.Bindable;
 public class StylesItemModel extends BaseObservable {
 
     public String price;
-    public String styleItem;
+    public String itemDescription;
     public String itemImage;
     public double rating;
     public String userPhoto;
@@ -18,10 +18,10 @@ public class StylesItemModel extends BaseObservable {
     public StylesItemModel() {
     }
 
-    public StylesItemModel(String price, String styleItem, String itemImage, String userImage, String userName,
+    public StylesItemModel(String price, String itemDescription, String itemImage, String userImage, String userName,
                            Object timestamp, String accountType) {
         this.price = price;
-        this.styleItem = styleItem;
+        this.itemDescription = itemDescription;
         this.itemImage = itemImage;
         this.userPhoto = userImage;
         this.userName = userName;
@@ -30,17 +30,17 @@ public class StylesItemModel extends BaseObservable {
 
     }
 
-    public StylesItemModel(String price, String styleItem, String itemImage, double rating) {
+    public StylesItemModel(String price, String itemDescription, String itemImage, double rating) {
         this.price = price;
-        this.styleItem = styleItem;
+        this.itemDescription = itemDescription;
         this.itemImage = itemImage;
         this.rating = rating;
     }
 
-    public StylesItemModel(String price, String styleItem, String itemImage,
+    public StylesItemModel(String price, String itemDescription, String itemImage,
                            String userPhoto, String userName, Object timeStamp) {
         this.price = price;
-        this.styleItem = styleItem;
+        this.itemDescription = itemDescription;
         this.itemImage = itemImage;
         this.userPhoto = userPhoto;
         this.userName = userName;
@@ -67,12 +67,12 @@ public class StylesItemModel extends BaseObservable {
     }
 
     @Bindable
-    public String getStyleItem() {
-        return styleItem;
+    public String getItemDescription() {
+        return itemDescription;
     }
 
-    public void setStyleItem(String styleItem) {
-        this.styleItem = styleItem;
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
     @Bindable

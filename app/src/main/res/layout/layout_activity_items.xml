@@ -84,7 +84,7 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{items.styleItem}"
+                android:text="@{items.itemDescription}"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imgItemPhoto"
