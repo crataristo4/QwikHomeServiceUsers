@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.activities.home.bottomsheets.EditItemBottomSheet;
@@ -106,7 +105,7 @@ public class EditProfileFragment extends Fragment {
 
         });
 
-        fragmentEditProfileBinding.fabUploadPhoto.setOnClickListener(v -> openGallery());
+        fragmentEditProfileBinding.fabUploadPhoto.setOnClickListener(v -> DisplayViewUI.openGallery(requireContext(), this));
 
         fragmentEditProfileBinding.txtFirstName.setText(MainActivity.firstName);
         fragmentEditProfileBinding.txtLastName.setText(MainActivity.lastName);
@@ -130,13 +129,6 @@ public class EditProfileFragment extends Fragment {
 
     }
 
-    private void openGallery() {
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(16, 16)
-                .start(requireContext(), this);
-    }
-
     private void onClick(View v) {
         Bundle bundle = new Bundle();
         EditItemBottomSheet editItemBottomSheet = new EditItemBottomSheet();
@@ -147,14 +139,12 @@ public class EditProfileFragment extends Fragment {
 
         mLastClickTime = SystemClock.elapsedRealtime();
 
-
         if (v.getId() == R.id.nameLayout) {
 
             name = String.valueOf(fragmentEditProfileBinding.txtFirstName.getText());
             bundle.putString(MyConstants.FIRST_NAME, name);
-                editItemBottomSheet.setArguments(bundle);
+            editItemBottomSheet.setArguments(bundle);
             editItemBottomSheet.show(requireActivity().getSupportFragmentManager(), MyConstants.FIRST_NAME);
-
 
 
         } else if (v.getId() == R.id.lastNameLayout) {
@@ -183,7 +173,7 @@ public class EditProfileFragment extends Fragment {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(profilePhoto);
 
-                uploadFile();
+                requireActivity().runOnUiThread(this::uploadFile);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 // progressDialog.dismiss();
@@ -241,7 +231,6 @@ public class EditProfileFragment extends Fragment {
             });
         }
     }
-
 
 
     @Override

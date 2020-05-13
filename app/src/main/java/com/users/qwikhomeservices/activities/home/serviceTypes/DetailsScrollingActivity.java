@@ -44,13 +44,11 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     //  private StylesAdapter adapter;
     private ItemStyleAdapter adapter;
     private List<StylesItemModel> itemsList;
-    private String servicePersonName, servicePersonAbout, servicePersonPhoto, servicePersonId, servicePersonMobileNumber;
+    private String servicePersonName, servicePersonAbout, servicePersonPhoto,
+            servicePersonId, servicePersonMobileNumber;
     private long mLastClickTime = 0;
     private Intent intent;
     private RecyclerView recyclerView;
-
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -129,7 +127,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
 
         itemsList = new ArrayList<>();
-
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Styles")
@@ -159,7 +156,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
         adapter = new ItemStyleAdapter(this, itemsList);
         recyclerView.setAdapter(adapter);
 
-
         adapter.setOnItemClickListener((view, stylesItemModel) -> {
             //scroll app bar to state collapsed when item is clicked
             activityDetailsScrollingBinding.appBar.setExpanded(false, true);
@@ -170,22 +166,18 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
             mLastClickTime = SystemClock.elapsedRealtime();
 
-
             String price = stylesItemModel.getPrice();
             String itemStyleName = stylesItemModel.getItemDescription();
             String imageItem = stylesItemModel.getItemImage();
-
 
             Bundle bundle = new Bundle();
             bundle.putString(MyConstants.PRICE, price);
             bundle.putString(MyConstants.ITEM_DESCRIPTION, itemStyleName);
             bundle.putString(MyConstants.IMAGE_URL, imageItem);
-
             //pass details of service person to bottom sheet
             bundle.putString(MyConstants.SERVICE_PERSON_NAME, servicePersonName);
             bundle.putString(MyConstants.SERVICE_PERSON_ID, servicePersonId);
             bundle.putString(MyConstants.SERVICE_PERSON_PHOTO, servicePersonPhoto);
-
             //pass users name , user photo , user id to bundle
             // String fullName = MainActivity.name;
             String firstName = MainActivity.firstName;

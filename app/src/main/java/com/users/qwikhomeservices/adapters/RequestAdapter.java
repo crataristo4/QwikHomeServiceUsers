@@ -52,33 +52,29 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         if (requestModel.getResponse().equals("Request Accepted")) {
             requestViewHolder.btnChat.setVisibility(View.VISIBLE);
 
-            requestViewHolder.btnChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent chatIntent = new Intent(requestViewHolder
-                            .layoutUserRequestSentBinding
-                            .getRoot()
-                            .getContext(), ChatActivity.class);
-                    //pass users data
-                    String adapterPosition = getRef(i).getKey();
-                    chatIntent.putExtra("senderName", requestModel.getSenderName());
-                    chatIntent.putExtra("senderPhoto", requestModel.getSenderPhoto());
-                    chatIntent.putExtra("senderID", requestModel.getSenderId());
-                    chatIntent.putExtra("senderReason", requestModel.getReason());
-                    chatIntent.putExtra("adapterPosition", adapterPosition);
-                    chatIntent.putExtra("servicePersonName", requestModel.getServicePersonName());
-                    chatIntent.putExtra("servicePersonPhoto", requestModel.getServicePersonPhoto());
-                    chatIntent.putExtra("receiverID", requestModel.getReceiverId());
+            requestViewHolder.btnChat.setOnClickListener(v -> {
+                Intent chatIntent = new Intent(requestViewHolder
+                        .layoutUserRequestSentBinding
+                        .getRoot()
+                        .getContext(), ChatActivity.class);
+                //pass users data
+                String adapterPosition = getRef(i).getKey();
+                chatIntent.putExtra("senderName", requestModel.getSenderName());
+                chatIntent.putExtra("senderPhoto", requestModel.getSenderPhoto());
+                chatIntent.putExtra("senderID", requestModel.getSenderId());
+                chatIntent.putExtra("senderReason", requestModel.getReason());
+                chatIntent.putExtra("adapterPosition", adapterPosition);
+                chatIntent.putExtra("servicePersonName", requestModel.getServicePersonName());
+                chatIntent.putExtra("servicePersonPhoto", requestModel.getServicePersonPhoto());
+                chatIntent.putExtra("receiverID", requestModel.getReceiverId());
 
 
-                    requestViewHolder
-                            .layoutUserRequestSentBinding
-                            .getRoot()
-                            .getContext()
-                            .startActivity(chatIntent);
-                }
+                requestViewHolder
+                        .layoutUserRequestSentBinding
+                        .getRoot()
+                        .getContext()
+                        .startActivity(chatIntent);
             });
-
 
             requestViewHolder.btnRateServicePerson.setVisibility(View.VISIBLE);
             requestViewHolder.btnRateServicePerson.setOnClickListener(v -> DisplayViewUI.displayAlertDialog(requestViewHolder.layoutUserRequestSentBinding.getRoot().getContext(),
@@ -219,7 +215,7 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
         private TextView txtResponse, txtPaymentStatus, txtWorkDone;
         private LinearLayoutCompat linearLayoutCompat;
 
-        public RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
+        RequestViewHolder(@NonNull LayoutUserRequestSentBinding layoutUserRequestSentBinding) {
             super(layoutUserRequestSentBinding.getRoot());
             this.layoutUserRequestSentBinding = layoutUserRequestSentBinding;
             ratingBar = layoutUserRequestSentBinding.ratedResults;
@@ -297,10 +293,8 @@ public class RequestAdapter extends FirebaseRecyclerAdapter<RequestModel, Reques
 
         }
 
-
         @Override
         public void onClick(View v) {
-
             confirmPaymentButtonClick.onPayButtonClicked(v, getAdapterPosition());
         }
     }

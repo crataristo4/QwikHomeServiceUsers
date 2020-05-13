@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/TwoHundredDp"
                 android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txtStyleName"

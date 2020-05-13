@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
 import com.users.qwikhomeservices.databinding.FragmentAboutBinding;
@@ -90,17 +89,17 @@ public class AboutFragment extends Fragment {
                 .child(uid);
         mStorageReference = FirebaseStorage.getInstance().getReference("photos");
         fragmentAboutBinding.btnFinish.setOnClickListener(this::onClick);
-        fragmentAboutBinding.fabUploadPhoto.setOnClickListener(v -> openGallery());
-        profileImage.setOnClickListener(v -> openGallery());
+        fragmentAboutBinding.fabUploadPhoto.setOnClickListener(v -> DisplayViewUI.openGallery(requireContext(), this));
+        profileImage.setOnClickListener(v -> DisplayViewUI.openGallery(requireContext(), this));
 
     }
 
-    private void openGallery() {
+    /*private void openGallery() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(16, 16)
-                .start(Objects.requireNonNull(getContext()), this);
-    }
+                .start(requireContext(), this);
+    }*/
 
     private void onClick(View view) {
         TextInputLayout txtAbout = fragmentAboutBinding.txtAbout;
@@ -139,7 +138,7 @@ public class AboutFragment extends Fragment {
             final File thumb_imageFile = new File(Objects.requireNonNull(uri.getPath()));
 
             try {
-                Bitmap thumb_imageBitmap = new Compressor(Objects.requireNonNull(getContext()))
+                Bitmap thumb_imageBitmap = new Compressor(requireContext())
                         .setMaxHeight(130)
                         .setMaxWidth(13)
                         .setQuality(100)
@@ -198,7 +197,7 @@ public class AboutFragment extends Fragment {
                         if (task1.isSuccessful()) {
                             progressDialog.dismiss();
                             DisplayViewUI.displayToast(getActivity(), "Successfully updated");
-                            Objects.requireNonNull(getActivity()).finish();
+                            requireActivity().finish();
 
 
                         } else {
@@ -228,7 +227,7 @@ public class AboutFragment extends Fragment {
                 assert result != null;
                 uri = result.getUri();
                 Log.i(TAG, "URI: " + uri);
-                Glide.with(Objects.requireNonNull(getActivity()))
+                Glide.with(requireActivity())
                         .load(uri)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(profileImage);
