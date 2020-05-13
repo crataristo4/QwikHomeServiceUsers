@@ -170,12 +170,23 @@ public class SendRequestBottomSheet extends BottomSheetDialogFragment {
         requireActivity().runOnUiThread(() -> {
 
             progressBar.setVisibility(View.VISIBLE);
-            RequestModel requestSent = new RequestModel(
-                    0, servicePersonId, servicePersonPhoto, servicePersonName, mobileNumber,
-                    getReason, itemPrice, itemName, itemImage,
-                    uid, userPhotoUrl, firstName, lastName
-                    , dateRequested, notApproved,
-                    "NO");
+            RequestModel requestSent = new RequestModel(0,
+                    uid,
+                    servicePersonId,
+                    getReason,
+                    itemPrice,
+                    itemName,
+                    notApproved,
+                    mobileNumber,
+                    itemImage,
+                    userPhotoUrl,
+                    servicePersonName,
+                    servicePersonPhoto,
+                    dateRequested,
+                    "Not Paid  ",
+                    "NO",
+                    firstName,
+                    lastName);
 
             String requestId = requestDbRef.push().getKey();
             assert requestId != null;

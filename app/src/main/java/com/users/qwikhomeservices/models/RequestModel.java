@@ -41,37 +41,38 @@ public class RequestModel extends BaseObservable {
     }
 
     public RequestModel(float rating,
+                        String senderId,
                         String receiverId,
-                        String servicePersonPhoto,
-                        String servicePersonName,
-                        String mobileNumber,
                         String reason,
                         String price,
                         String itemName,
-                        String itemImage,
-                        String senderId,
-                        String senderPhoto,
-                        String firstName,
-                        String lastName,
                         String response,
+                        String mobileNumber,
+                        String itemImage,
+                        String senderPhoto,
+                        String servicePersonName,
+                        String servicePersonPhoto,
                         String dateRequested,
-                        String isWorkDone) {
+                        String paymentStatus,
+                        String isWorkDone,
+                        String firstName, String lastName) {
         this.rating = rating;
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.servicePersonPhoto = servicePersonPhoto;
         this.reason = reason;
         this.price = price;
         this.itemName = itemName;
         this.response = response;
+        this.mobileNumber = mobileNumber;
         this.itemImage = itemImage;
         this.senderPhoto = senderPhoto;
+        this.servicePersonName = servicePersonName;
+        this.servicePersonPhoto = servicePersonPhoto;
+        this.dateRequested = dateRequested;
+        this.paymentStatus = paymentStatus;
+        this.isWorkDone = isWorkDone;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.servicePersonName = servicePersonName;
-        this.dateRequested = dateRequested;
-        this.isWorkDone = isWorkDone;
-        this.mobileNumber = mobileNumber;
     }
 
     @BindingAdapter("imageItemUrl")
