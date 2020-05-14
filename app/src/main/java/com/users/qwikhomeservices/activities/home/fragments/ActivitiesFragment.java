@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 
 public class ActivitiesFragment extends Fragment {
-    private Bundle mBundleState;
     private static final String KEY = "key";
     private static final String TAG = "ActivityFragment";
     private static final int INITIAL_LOAD = 15;
@@ -42,6 +41,7 @@ public class ActivitiesFragment extends Fragment {
     private ArrayList<ActivityItemModel> arrayList = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private Parcelable mState;
+    private Bundle mBundleState;
     private ListenerRegistration registration;
 
     public ActivitiesFragment() {
@@ -53,8 +53,6 @@ public class ActivitiesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -71,7 +69,6 @@ public class ActivitiesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         requireActivity().runOnUiThread(this::loadActivityData);
-
 
     }
 

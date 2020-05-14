@@ -22,29 +22,29 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.qwikhomeservices.databinding.LayoutListItemsBinding;
 import com.users.qwikhomeservices.models.Users;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
 
-//TODO change class name
-public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
-        ServiceUsersAdapter.AllServicesViewHolder> {
-    private Context mContext;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ServiceUsersAdapter(@NonNull FirebaseRecyclerOptions<Users> options, Context context) {
-        super(options);
+public class ServiceUsersAdapter extends RecyclerView.Adapter<ServiceUsersAdapter.AllServicesViewHolder> {
+    private Context mContext;
+    private List<Users> artisanList;
+
+    public ServiceUsersAdapter(ArrayList<Users> artisanList, Context context) {
+        this.artisanList = artisanList;
         mContext = context;
 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AllServicesViewHolder allServicesViewHolder,
-                                    int i, @NonNull Users servicePerson) {
+    public void onBindViewHolder(@NonNull AllServicesViewHolder allServicesViewHolder, int position) {
 
+        Users servicePerson = artisanList.get(position);
         allServicesViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allServicesViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
 
@@ -86,10 +86,10 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
         //on item click listener
         allServicesViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {
 
-            String position = getRef(i).getKey();
+            int adapterPosition = allServicesViewHolder.getAdapterPosition();
             Intent gotoDetailsIntent = new Intent(mContext,
                     DetailsScrollingActivity.class);
-            gotoDetailsIntent.putExtra("position", position);
+            gotoDetailsIntent.putExtra("position", adapterPosition);
             gotoDetailsIntent.putExtra("fullName", servicePerson.getFullName());
             gotoDetailsIntent.putExtra("about", servicePerson.getAbout());
             gotoDetailsIntent.putExtra("image", servicePerson.getImage());
@@ -111,6 +111,12 @@ public class ServiceUsersAdapter extends FirebaseRecyclerAdapter<Users,
                         R.layout.layout_list_items, viewGroup, false);
 
         return new AllServicesViewHolder(listItemsServicesBinding);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return artisanList == null ? 0 : artisanList.size();
     }
 
     static class AllServicesViewHolder extends RecyclerView.ViewHolder {

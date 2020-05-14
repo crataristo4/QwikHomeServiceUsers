@@ -3,53 +3,45 @@ package com.users.qwikhomeservices.activities.home.serviceTypes;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.adapters.ServiceUsersAdapter;
 import com.users.qwikhomeservices.databinding.ActivityAllServicesBinding;
 import com.users.qwikhomeservices.models.Users;
 import com.users.qwikhomeservices.utils.MyConstants;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AllServicesActivity extends AppCompatActivity {
     private ActivityAllServicesBinding allServicesBinding;
     private ServiceUsersAdapter adapter;
     private String accountType;
+    private ArrayList<Users> arrayList = new ArrayList<>();
+    private DatabaseReference databaseReference;
+    private GridLayoutManager layoutManager;
+    private Parcelable mState;
+    private Bundle mBundleState;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         allServicesBinding = DataBindingUtil.setContentView(this, R.layout.activity_all_services);
-
-        initRecyclerView();
-
-    }
-
-    private void initRecyclerView() {
-        RecyclerView recyclerView = allServicesBinding.rvAllBarbers;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-        //DISPLAY different layout for screen orientation
-        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-        } else {
-
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-
-        }
 
         Intent getIntent = getIntent();
 
@@ -131,41 +123,91 @@ public class AllServicesActivity extends AppCompatActivity {
         }
 
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+        databaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(MyConstants.SERVICES).child(MyConstants.SERVICE_TYPE);
         databaseReference.keepSynced(true);
+        initRecyclerView();
 
-        runOnUiThread(() -> {
+    }
+
+    private void initRecyclerView() {
+        recyclerView = allServicesBinding.rvAllBarbers;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+
+            layoutManager = new GridLayoutManager(this, 2);
+            recyclerView.setLayoutManager(layoutManager);
+
+        } else {
+
+            layoutManager = new GridLayoutManager(this, 3);
+            recyclerView.setLayoutManager(layoutManager);
+
+        }
+
+        adapter = new ServiceUsersAdapter(arrayList, AllServicesActivity.this);
+        recyclerView.setAdapter(adapter);
+
+        runOnUiThread(this::loadData);
 
 
-            //querying the database BY NAME
-            Query query = databaseReference.orderByChild("accountType").equalTo(accountType);
-            FirebaseRecyclerOptions<Users> options =
-                    new FirebaseRecyclerOptions.Builder<Users>().setQuery(query,
-                            Users.class)
-                            .build();
-            adapter = new ServiceUsersAdapter(options, AllServicesActivity.this);
-            recyclerView.setAdapter(adapter);
 
-            adapter.notifyDataSetChanged();
+    }
 
+    private void loadData() {
+
+        //querying the database BY artisan type
+        Query query = databaseReference.orderByChild("accountType").equalTo(accountType);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Users artisans = ds.getValue(Users.class);
+                        arrayList.add(artisans);
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
 
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mBundleState = new Bundle();
+        mState = layoutManager.onSaveInstanceState();
+        mBundleState.putParcelable(MyConstants.KEY, mState);
 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
+    protected void onResume() {
+        super.onResume();
+        if (mBundleState != null) {
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
+            new Handler().postDelayed(() -> {
+
+                mState = mBundleState.getParcelable(MyConstants.KEY);
+                layoutManager.onRestoreInstanceState(mState);
+            }, 50);
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
+
     }
 
     @Override

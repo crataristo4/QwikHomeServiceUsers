@@ -168,11 +168,9 @@ public class ChatActivity extends AppCompatActivity {
             String chatId = chatsDbRef.push().getKey();
             assert chatId != null;
 
-            chatsDbRef.child("Chats").child(chatId).setValue(chats).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    emojiconEditText.getText().clear();
-                }
-            });
+            chatsDbRef.child("Chats").child(chatId).setValue(chats);
+            emojiconEditText.getText().clear();
+
         } else if (postChat.trim().isEmpty()) {
             emojiconEditText.setError("Cannot send empty message");
             //  makeToast("Comment cannot be empty");
