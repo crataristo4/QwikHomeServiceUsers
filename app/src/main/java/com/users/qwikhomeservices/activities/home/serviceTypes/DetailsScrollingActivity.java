@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,6 @@ public class DetailsScrollingActivity extends AppCompatActivity {
     private int numberOfItems = 0;
     private ActivityDetailsScrollingBinding activityDetailsScrollingBinding;
     private DatabaseReference databaseReference;
-    //  private StylesAdapter adapter;
     private ItemStyleAdapter adapter;
     private List<StylesItemModel> itemsList;
     private String servicePersonName, servicePersonAbout, servicePersonPhoto,
@@ -84,6 +84,7 @@ public class DetailsScrollingActivity extends AppCompatActivity {
 
                     activityDetailsScrollingBinding.contentDetails.txtStyleLabel.setText(getString(R.string.styles_offered));
 
+                    Log.i("Number of items: ", " " + numberOfItems);
 
                 }
 
