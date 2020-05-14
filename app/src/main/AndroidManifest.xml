@@ -50,6 +50,7 @@
             android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity" />
 
         <activity
+            android:alwaysRetainTaskState="true"
             android:name="com.users.qwikhomeservices.activities.home.serviceTypes.AllServicesActivity"
             android:parentActivityName="com.users.qwikhomeservices.activities.home.MainActivity" />
 
@@ -77,6 +78,7 @@
         <activity
             android:name="com.users.qwikhomeservices.activities.ChatActivity"
             android:configChanges="screenSize|orientation"
+            android:alwaysRetainTaskState="true"
             android:parentActivityName="com.users.qwikhomeservices.activities.handymanactivity.RequestHandyManActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -113,6 +115,8 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.home.about.FinishAccountSetUpActivity" />
+
+        <service android:name=".utils.AppFirebaseMessagingService" />
     </application>
 
 </manifest>

@@ -62,16 +62,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgUserPhoto" />
 
-            <ProgressBar
-                android:id="@+id/pbLoading"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/imgUserPhoto"
-                app:layout_constraintEnd_toEndOf="@+id/imgUserPhoto"
-                app:layout_constraintStart_toStartOf="@+id/imgUserPhoto"
-                app:layout_constraintTop_toTopOf="@+id/imgUserPhoto" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

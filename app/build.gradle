@@ -50,23 +50,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.firebase:firebase-ads:19.1.0'
     testImplementation 'junit:junit:4.13-beta-3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.1.0'
 
-    //google play services
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.android.gms:play-services-base:17.2.1'
-    implementation 'com.google.android.gms:play-services-places:17.0.0'
-    implementation 'com.google.android.gms:play-services-nearby:17.0.0'
-    implementation 'com.google.firebase:firebase-ads:19.1.0'
-    implementation 'androidx.preference:preference:1.1.1'
-
-
     //firebase
+    implementation 'com.google.firebase:firebase-ads:19.1.0'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-functions:19.0.2'
@@ -75,11 +65,19 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.3.1'
     implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
     implementation 'com.firebaseui:firebase-ui-storage:6.2.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.7'
+
+    //google play services
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-base:17.2.1'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.gms:play-services-nearby:17.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
 
     //room , paging
     implementation 'android.arch.paging:runtime:2.1.2'
     def room_version = "2.2.5"
-
     implementation "androidx.room:room-runtime:$room_version"
 
     //others
@@ -95,9 +93,12 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'id.zelory:compressor:2.1.0'
-    //itemImage slider
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'me.jahirfiquitiva:FABsMenu:1.1.4'
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.0'
+    implementation 'com.github.lguipeng:BubbleView:1.0.1'
+    implementation 'com.github.MasayukiSuda:BubbleLayout:v1.2.1'
 
     //payment gateway
     implementation 'com.github.Flutterwave:rave-android:1.0.49.1'
@@ -107,11 +108,4 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-
-    implementation 'me.jahirfiquitiva:FABsMenu:1.1.4'
-    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.0'
-    implementation 'com.github.lguipeng:BubbleView:1.0.1'
-    implementation 'com.github.MasayukiSuda:BubbleLayout:v1.2.1'
-
-
 }

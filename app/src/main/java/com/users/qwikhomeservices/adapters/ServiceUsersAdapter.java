@@ -2,31 +2,21 @@ package com.users.qwikhomeservices.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.serviceTypes.DetailsScrollingActivity;
 import com.users.qwikhomeservices.databinding.LayoutListItemsBinding;
 import com.users.qwikhomeservices.models.Users;
-import com.users.qwikhomeservices.utils.DisplayViewUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,40 +38,12 @@ public class ServiceUsersAdapter extends RecyclerView.Adapter<ServiceUsersAdapte
         allServicesViewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
         allServicesViewHolder.listItemsServicesBinding.setServiceType(servicePerson);
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(DisplayViewUI.getRandomDrawableColor());
-        requestOptions.error(DisplayViewUI.getRandomDrawableColor());
-        requestOptions.centerCrop();
-
-        Glide.with(allServicesViewHolder.itemView.getContext())
+        Glide.with(mContext)
                 .load(servicePerson.image)
-                .apply(requestOptions)
-
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-
-                        if (isFirstResource) {
-                            allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.VISIBLE);
-
-                        }
-                        allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
-
-                        return false;
-
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-
-                        allServicesViewHolder.listItemsServicesBinding.pbLoading.setVisibility(View.INVISIBLE);
-                        return false;
-                    }
-                }).transition(DrawableTransitionOptions.withCrossFade())
-                .error(allServicesViewHolder.listItemsServicesBinding.getRoot().getContext().getResources().getDrawable(R.drawable.photoe))
+                .thumbnail(0.5f)
+                .error(mContext.getResources().getDrawable(R.drawable.photoe))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(allServicesViewHolder.listItemsServicesBinding.imgUserPhoto);
-
 
         //on item click listener
         allServicesViewHolder.listItemsServicesBinding.mMaterialCard.setOnClickListener(v -> {
