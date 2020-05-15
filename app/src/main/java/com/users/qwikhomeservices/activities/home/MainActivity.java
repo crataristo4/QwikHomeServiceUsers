@@ -92,14 +92,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //name = (String) dataSnapshot.child("fullName").getValue();
-                firstName = (String) dataSnapshot.child("firstName").getValue();
-                lastName = (String) dataSnapshot.child("lastName").getValue();
-                name = firstName.concat(" ").concat(lastName);
-                dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
-                mobileNumber = (String) dataSnapshot.child("mobileNumber").getValue();
-                imageUrl = (String) dataSnapshot.child("image").getValue();
+                if (dataSnapshot.exists() && dataSnapshot.hasChildren()) {
+                    //name = (String) dataSnapshot.child("fullName").getValue();
+                    firstName = (String) dataSnapshot.child("firstName").getValue();
+                    lastName = (String) dataSnapshot.child("lastName").getValue();
+                    name = firstName.concat(" ").concat(lastName);
+                    dateJoined = (String) dataSnapshot.child("dateJoined").getValue();
+                    mobileNumber = (String) dataSnapshot.child("mobileNumber").getValue();
+                    imageUrl = (String) dataSnapshot.child("image").getValue();
 
+                }
 
             }
 
@@ -128,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
         //step 9
         // getLastLocation();
 
+        //todo check this in splash screen
+        // checkUid();
 
 
     }
@@ -342,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                     .child(uid);
             usersAccountDbRef.keepSynced(true);
             checkDisplayAlertDialog();
-            retrieveSingleUserDetails();
+            runOnUiThread(MainActivity::retrieveSingleUserDetails);
         }
         //todo check null db
 

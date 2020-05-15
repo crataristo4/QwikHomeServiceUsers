@@ -42,7 +42,7 @@ public class SignInWithPhoneNumberActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private String uid;
-    String phoneNumber = "+16505554566";
+    String phoneNumber = "+16505554568";
     String smsCode = "123456";
 
     private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
