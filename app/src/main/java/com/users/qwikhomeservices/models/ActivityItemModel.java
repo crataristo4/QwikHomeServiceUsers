@@ -11,7 +11,9 @@ public class ActivityItemModel extends BaseObservable {
     public static final int AUDIO_TYPE = 2;
 
     public int type, data;
-    public String itemImage, itemDescription, userName, userPhoto, status, accountType, price, documentId;
+    public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
+    @Exclude
+    private String id;
     public int numOfLikes, numOfComments;
     public Object timeStamp;
 
@@ -138,12 +140,11 @@ public class ActivityItemModel extends BaseObservable {
     }
 
 
-    @Exclude
-    public String getDocumentId() {
-        return documentId;
+    public String getId() {
+        return id;
     }
 
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
+    public void setId(String Id) {
+        this.id = Id;
     }
 }

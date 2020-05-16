@@ -106,7 +106,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                         @Override
                         public void onDoubleClick(View view) {
 
-                            onItemClickListener.onClick(view, object);
+                            onItemClickListener.onClick(view, holder.getAdapterPosition());
 
                         }
                     });
@@ -172,7 +172,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public interface onItemClickListener {
-        void onClick(View view, ActivityItemModel activityItemModel);
+        void onClick(View view, int position);
     }
 
     //view holder for text
