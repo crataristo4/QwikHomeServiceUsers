@@ -17,13 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.adapters.MultiViewTypeAdapter;
 import com.users.qwikhomeservices.databinding.FragmentActivitiesBinding;
 import com.users.qwikhomeservices.models.ActivityItemModel;
+import com.users.qwikhomeservices.utils.DisplayViewUI;
 import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.ArrayList;
@@ -42,7 +45,10 @@ public class ActivitiesFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private Parcelable mState;
     private Bundle mBundleState;
+    public static CollectionReference collectionReference;
+    private DocumentReference documentReferenceId;
     private ListenerRegistration registration;
+    private String documentId;
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -70,6 +76,12 @@ public class ActivitiesFragment extends Fragment {
 
         requireActivity().runOnUiThread(this::loadActivityData);
 
+        adapter.setOnItemClickListener((view1, activityItemModel) -> {
+
+            DisplayViewUI.displayToast(view1.getContext(), "Doc Ref oops " + activityItemModel.getDocumentId());
+            // TODO: 15-May-20 implement like
+        });
+
     }
 
     private void loadActivityData() {
@@ -80,16 +92,18 @@ public class ActivitiesFragment extends Fragment {
         adapter = new MultiViewTypeAdapter(arrayList, getContext());
         recyclerView.setAdapter(adapter);
 
+        collectionReference = FirebaseFirestore.getInstance().collection("Activity");
+
+
         fetchDataFromFireStore();
 
     }
 
 
     private void fetchDataFromFireStore() {
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Activity");
 
         // Create a query against the collection.
-        com.google.firebase.firestore.Query query = collectionReference.orderBy("timeStamp", com.google.firebase.firestore.Query.Direction.DESCENDING).limit(INITIAL_LOAD);
+        Query query = collectionReference.orderBy("timeStamp", Query.Direction.DESCENDING).limit(INITIAL_LOAD);
 
         registration = query.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
@@ -101,13 +115,16 @@ public class ActivitiesFragment extends Fragment {
 
             assert queryDocumentSnapshots != null;
             for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
-                if (ds != null) {
+                // Log.i(TAG, "ids: " + ds.getReference().getId());
 
-                    Log.i(TAG, "onEvent: " + ds.getData());
+
+                //  Log.i(TAG, "onEvent: " + ds.getData());
                     ActivityItemModel itemModel = ds.toObject(ActivityItemModel.class);
+                itemModel.setDocumentId(ds.getId());
+                documentId = itemModel.getDocumentId();
 //group data by status
                     if (ds.getData().containsKey("status")) {
-                        Log.i(TAG, "status: " + ds.getData().get("status"));
+                        // Log.i(TAG, "status: " + ds.getData().get("status"));
 
                         arrayList.add(new ActivityItemModel(ActivityItemModel.TEXT_TYPE,
                                 itemModel.getStatus(),
@@ -126,9 +143,11 @@ public class ActivitiesFragment extends Fragment {
                                 itemModel.getUserName(),
                                 itemModel.getUserPhoto(),
                                 itemModel.getTimeStamp()));
+
+
                     }
                 }
-            }
+
             adapter.notifyDataSetChanged();
 
 

@@ -3,13 +3,16 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.google.firebase.firestore.Exclude;
+
 public class ActivityItemModel extends BaseObservable {
     public static final int TEXT_TYPE = 0;
     public static final int IMAGE_TYPE = 1;
     public static final int AUDIO_TYPE = 2;
 
     public int type, data;
-    public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
+    public String itemImage, itemDescription, userName, userPhoto, status, accountType, price, documentId;
+    public int numOfLikes, numOfComments;
     public Object timeStamp;
 
     public ActivityItemModel() {
@@ -116,5 +119,31 @@ public class ActivityItemModel extends BaseObservable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getNumOfLikes() {
+        return numOfLikes;
+    }
+
+    public void setNumOfLikes(int numOfLikes) {
+        this.numOfLikes = numOfLikes;
+    }
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
+    }
+
+
+    @Exclude
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }

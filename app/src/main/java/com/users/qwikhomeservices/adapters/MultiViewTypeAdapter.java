@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,41 +25,17 @@ import com.users.qwikhomeservices.databinding.ImageTypeBinding;
 import com.users.qwikhomeservices.databinding.TextTypeBinding;
 import com.users.qwikhomeservices.models.ActivityItemModel;
 import com.users.qwikhomeservices.utils.DisplayViewUI;
+import com.users.qwikhomeservices.utils.DoubleClickListener;
 import com.users.qwikhomeservices.utils.GetTimeAgo;
 
 import java.util.ArrayList;
 
 
-public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static onItemClickListener onItemClickListener;
     private ArrayList<ActivityItemModel> dataSet;
     private Context mContext;
-
-
-    public MultiViewTypeAdapter(ArrayList<ActivityItemModel> data, Context context) {
-        this.dataSet = data;
-        this.mContext = context;
-
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        switch (viewType) {
-            case ActivityItemModel.TEXT_TYPE:
-
-                return new TextTypeViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.text_type, parent, false));
-
-            case ActivityItemModel.IMAGE_TYPE:
-
-                return new ImageTypeViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.image_type, parent, false));
-
-        }
-        return null;
-
-
-    }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int listPosition) {
@@ -124,10 +101,51 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into((((ImageTypeViewHolder) holder).imageTypeBinding.imgContentPhoto));
 
+                    //set on image item click listener
+                    ((ImageTypeViewHolder) holder).imageView.setOnClickListener(new DoubleClickListener() {
+                        @Override
+                        public void onDoubleClick(View view) {
+
+                            onItemClickListener.onClick(view, object);
+
+                        }
+                    });
+
                     break;
 
             }
         }
+
+    }
+
+
+    public MultiViewTypeAdapter(ArrayList<ActivityItemModel> data, Context context) {
+        this.dataSet = data;
+        this.mContext = context;
+
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        switch (viewType) {
+            case ActivityItemModel.TEXT_TYPE:
+
+                return new TextTypeViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.text_type, parent, false));
+
+            case ActivityItemModel.IMAGE_TYPE:
+
+                return new ImageTypeViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.image_type, parent, false));
+
+        }
+        return null;
+
+
+    }
+
+    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
+        MultiViewTypeAdapter.onItemClickListener = onItemClickListener;
 
     }
 
@@ -153,6 +171,10 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
         return dataSet == null ? 0 : dataSet.size();
     }
 
+    public interface onItemClickListener {
+        void onClick(View view, ActivityItemModel activityItemModel);
+    }
+
     //view holder for text
     static class TextTypeViewHolder extends RecyclerView.ViewHolder {
         TextTypeBinding textTypeBinding;
@@ -168,10 +190,12 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
     //view holder for images
     static class ImageTypeViewHolder extends RecyclerView.ViewHolder {
         ImageTypeBinding imageTypeBinding;
+        ImageView imageView;
 
         ImageTypeViewHolder(@NonNull ImageTypeBinding imageTypeBinding) {
             super(imageTypeBinding.getRoot());
             this.imageTypeBinding = imageTypeBinding;
+            imageView = imageTypeBinding.imgContentPhoto;
 
         }
 
