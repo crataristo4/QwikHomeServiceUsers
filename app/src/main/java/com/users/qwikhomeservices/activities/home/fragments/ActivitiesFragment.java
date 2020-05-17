@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
@@ -41,12 +40,12 @@ public class ActivitiesFragment extends Fragment {
     private FragmentActivitiesBinding fragmentActivitiesBinding;
     private RecyclerView recyclerView;
     private MultiViewTypeAdapter adapter;
-    private ArrayList<ActivityItemModel> arrayList = new ArrayList<>();
+    private ArrayList<ActivityItemModel> arrayList;
     private LinearLayoutManager layoutManager;
     private Parcelable mState;
     private Bundle mBundleState;
-    public static CollectionReference collectionReference;
-    private DocumentReference documentReferenceId;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public CollectionReference collectionReference = db.collection("Activity");
     private ListenerRegistration registration;
     private String documentId;
     private ActivityItemModel activityItemModel;
@@ -81,10 +80,9 @@ public class ActivitiesFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        arrayList = new ArrayList<>();
         adapter = new MultiViewTypeAdapter(arrayList, getContext());
         recyclerView.setAdapter(adapter);
-
-        collectionReference = FirebaseFirestore.getInstance().collection("Activity");
 
         requireActivity().runOnUiThread(this::fetchDataFromFireStore); //fetchDataFromFireStore();
 
@@ -94,7 +92,6 @@ public class ActivitiesFragment extends Fragment {
 
     private void fetchDataFromFireStore() {
         Query query = collectionReference.orderBy("timeStamp", Query.Direction.DESCENDING).limit(INITIAL_LOAD);
-        final ActivityItemModel[] itemModel = new ActivityItemModel[1];
 
         registration = query.addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
@@ -106,30 +103,43 @@ public class ActivitiesFragment extends Fragment {
             assert queryDocumentSnapshots != null;
             for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
 
-                itemModel[0] = ds.toObject(ActivityItemModel.class);
-                documentId = itemModel[0].getId();
+                ActivityItemModel itemModel = ds.toObject(ActivityItemModel.class);
+                //get data from model
+                String userName = itemModel.getUserName();
+                String userPhoto = itemModel.getUserPhoto();
+                String itemDescription = itemModel.getItemDescription();
+                String status = itemModel.getStatus();
+                String itemImage = itemModel.getItemImage();
+                long timeStamp = itemModel.getTimeStamp();
+                int numOfLikes = itemModel.getNumOfLikes();
+                int numOfComments = itemModel.getNumOfComments();
+                String id = ds.getId();
 
-//group data by status
+
+                //group data by status
                 if (Objects.requireNonNull(ds.getData()).containsKey("status")) {
-                    Log.i(TAG, "ids : " + documentId + "status: " + ds.getData().get("status"));
-
                     arrayList.add(new ActivityItemModel(ActivityItemModel.TEXT_TYPE,
-                            itemModel[0].getStatus(),
-                            itemModel[0].getUserName(),
-                            itemModel[0].getUserPhoto(),
-                            itemModel[0].getTimeStamp()));
+                            status,
+                            userName,
+                            userPhoto,
+                            timeStamp,
+                            id,
+                            numOfLikes,
+                            numOfComments));
 
                 }
                 //group data by item description
                 else if (ds.getData().containsKey("itemDescription")) {
-                    // Log.i(TAG, "itemDescription: " + ds.getData().get("itemDescription"));
-
                     arrayList.add(new ActivityItemModel(ActivityItemModel.IMAGE_TYPE,
-                            itemModel[0].getItemImage(),
-                            itemModel[0].getItemDescription(),
-                            itemModel[0].getUserName(),
-                            itemModel[0].getUserPhoto(),
-                            itemModel[0].getTimeStamp()));
+                            itemImage,
+                            itemDescription,
+                            userName,
+                            userPhoto,
+                            timeStamp,
+                            id,
+                            numOfLikes,
+                            numOfComments
+                    ));
 
 
                 }

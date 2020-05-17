@@ -2,6 +2,7 @@ package com.users.qwikhomeservices.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,17 +102,6 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into((((ImageTypeViewHolder) holder).imageTypeBinding.imgContentPhoto));
 
-                    //set on image item click listener
-                    ((ImageTypeViewHolder) holder).imageView.setOnClickListener(new DoubleClickListener() {
-                        @Override
-                        public void onDoubleClick(View view) {
-
-                            ActivityItemModel activityItemModel = dataSet.get(holder.getAdapterPosition());
-
-                            onItemClickListener.onClick(view, activityItemModel);
-
-                        }
-                    });
 
                     break;
 
@@ -190,7 +180,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     //view holder for images
-    static class ImageTypeViewHolder extends RecyclerView.ViewHolder {
+    class ImageTypeViewHolder extends RecyclerView.ViewHolder {
         ImageTypeBinding imageTypeBinding;
         ImageView imageView;
 
@@ -198,6 +188,18 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
             super(imageTypeBinding.getRoot());
             this.imageTypeBinding = imageTypeBinding;
             imageView = imageTypeBinding.imgContentPhoto;
+
+
+            imageView.setOnClickListener(new DoubleClickListener() {
+                @Override
+                public void onDoubleClick(View view) {
+                    ActivityItemModel activityItemModel = dataSet.get(getAdapterPosition());
+                    DisplayViewUI.displayToast(view.getContext(), activityItemModel.getItemDescription());
+                    Log.i("id: ", " ... " + activityItemModel.getId());
+
+                }
+            });
+
 
         }
 

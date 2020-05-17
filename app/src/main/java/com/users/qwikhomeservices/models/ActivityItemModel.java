@@ -3,7 +3,6 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.google.firebase.firestore.Exclude;
 
 public class ActivityItemModel extends BaseObservable {
     public static final int TEXT_TYPE = 0;
@@ -14,45 +13,42 @@ public class ActivityItemModel extends BaseObservable {
     public int numOfLikes, numOfComments;
     public Object timeStamp;
     public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
-    @Exclude
-    private String id;
+    public String id;
 
 
     public ActivityItemModel() {
     }
 
     //constructor to load image type
-    public ActivityItemModel(int type, String itemImage, String itemDescription, String userName, String userPhoto, Object timeStamp) {
+    public ActivityItemModel(int type, String itemImage, String itemDescription,
+                             String userName, String userPhoto, Object timeStamp,
+                             String id, int numOfLikes, int numOfComments) {
         this.type = type;
         this.itemImage = itemImage;
         this.itemDescription = itemDescription;
         this.userName = userName;
         this.userPhoto = userPhoto;
         this.timeStamp = timeStamp;
+        this.id = id;
+        this.numOfLikes = numOfLikes;
+        this.numOfComments = numOfComments;
+
     }
 
     //constructor to load text type
-    public ActivityItemModel(int type, String status, String userName, String userPhoto, Object timeStamp) {
+    public ActivityItemModel(int type, String status, String userName,
+                             String userPhoto, Object timeStamp,
+                             String id, int numOfLikes, int numOfComments) {
         this.type = type;
         this.status = status;
         this.userName = userName;
         this.userPhoto = userPhoto;
         this.timeStamp = timeStamp;
+        this.id = id;
+        this.numOfLikes = numOfLikes;
+        this.numOfComments = numOfComments;
     }
 
-    public ActivityItemModel(int type, String itemDescription, String itemImage) {
-        this.type = type;
-        this.itemDescription = itemDescription;
-        this.itemImage = itemImage;
-
-    }
-
-    public ActivityItemModel(int type, String itemDescription, int data) {
-        this.type = type;
-        this.itemDescription = itemDescription;
-        this.data = data;
-
-    }
 
     public String getItemImage() {
         return itemImage;
@@ -124,6 +120,7 @@ public class ActivityItemModel extends BaseObservable {
         this.price = price;
     }
 
+    @Bindable
     public int getNumOfLikes() {
         return numOfLikes;
     }
@@ -132,6 +129,7 @@ public class ActivityItemModel extends BaseObservable {
         this.numOfLikes = numOfLikes;
     }
 
+    @Bindable
     public int getNumOfComments() {
         return numOfComments;
     }
@@ -145,7 +143,7 @@ public class ActivityItemModel extends BaseObservable {
         return id;
     }
 
-    public void setId(String Id) {
-        this.id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 }

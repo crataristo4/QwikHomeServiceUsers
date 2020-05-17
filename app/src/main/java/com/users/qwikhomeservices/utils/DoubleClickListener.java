@@ -5,7 +5,7 @@ import android.view.View;
 public abstract class DoubleClickListener implements View.OnClickListener {
 
     public static final long DOUBLE_CLICK_TIME = 300;
-    long last_click_time = 0;
+    private long last_click_time = 0;
 
     @Override
     public void onClick(View v) {
