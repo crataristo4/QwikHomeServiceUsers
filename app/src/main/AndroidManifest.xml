@@ -29,11 +29,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity" />
         <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestPaginatioinActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.users.qwikhomeservices.activities.home.serviceTypes.DetailsScrollingActivity"
@@ -64,6 +60,12 @@
             android:name="com.users.qwikhomeservices.activities.home.MainActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

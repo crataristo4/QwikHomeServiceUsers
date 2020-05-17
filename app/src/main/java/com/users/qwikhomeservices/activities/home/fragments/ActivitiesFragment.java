@@ -45,10 +45,9 @@ public class ActivitiesFragment extends Fragment {
     private Parcelable mState;
     private Bundle mBundleState;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public CollectionReference collectionReference = db.collection("Activity");
+    private CollectionReference collectionReference = db.collection("Activity");
     private ListenerRegistration registration;
-    private String documentId;
-    private ActivityItemModel activityItemModel;
+
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -72,6 +71,7 @@ public class ActivitiesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loadActivityData();
+        requireActivity().runOnUiThread(this::fetchDataFromFireStore);
 
     }
 
@@ -84,7 +84,11 @@ public class ActivitiesFragment extends Fragment {
         adapter = new MultiViewTypeAdapter(arrayList, getContext());
         recyclerView.setAdapter(adapter);
 
-        requireActivity().runOnUiThread(this::fetchDataFromFireStore); //fetchDataFromFireStore();
+        adapter.setOnItemClickListener((view, activityItemModel) -> {
+            Log.i(TAG, "id: " + activityItemModel.getId());
+            Log.i(TAG, "id: " + activityItemModel.getNumOfLikes());
+            Log.i(TAG, "id: " + activityItemModel.getNumOfComments());
+        });
 
 
     }
@@ -98,7 +102,7 @@ public class ActivitiesFragment extends Fragment {
                 Log.w(TAG, "Listen failed.", e);
                 return;
             }
-            //  arrayList.clear();
+            arrayList.clear();
 
             assert queryDocumentSnapshots != null;
             for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
@@ -192,20 +196,6 @@ public class ActivitiesFragment extends Fragment {
         });*/
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // activityItemAdapter.startListening();
-
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // activityItemAdapter.stopListening();
-        registration.remove();
-    }
 
     @Override
     public void onPause() {

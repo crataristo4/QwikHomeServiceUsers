@@ -141,7 +141,7 @@ public class TestPaginatioinActivity extends AppCompatActivity {
                 Log.w(TAG, "Listen failed.", e);
                 return;
             }
-            //  arrayList.clear();
+            arrayList.clear();
 
             assert queryDocumentSnapshots != null;
             for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
