@@ -97,7 +97,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                                     ((ImageTypeViewHolder) holder).imageTypeBinding.progressBar.setVisibility(View.INVISIBLE);
                                     return false;
                                 }
-                            }).transition(DrawableTransitionOptions.withCrossFade())
+                            }).transition(DrawableTransitionOptions.withCrossFade()).centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into((((ImageTypeViewHolder) holder).imageTypeBinding.imgContentPhoto));
 
@@ -106,7 +106,9 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                         @Override
                         public void onDoubleClick(View view) {
 
-                            onItemClickListener.onClick(view, holder.getAdapterPosition());
+                            ActivityItemModel activityItemModel = dataSet.get(holder.getAdapterPosition());
+
+                            onItemClickListener.onClick(view, activityItemModel);
 
                         }
                     });
@@ -172,7 +174,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public interface onItemClickListener {
-        void onClick(View view, int position);
+        void onClick(View view, ActivityItemModel activityItemModel);
     }
 
     //view holder for text

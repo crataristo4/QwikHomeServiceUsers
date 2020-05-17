@@ -11,11 +11,12 @@ public class ActivityItemModel extends BaseObservable {
     public static final int AUDIO_TYPE = 2;
 
     public int type, data;
+    public int numOfLikes, numOfComments;
+    public Object timeStamp;
     public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
     @Exclude
     private String id;
-    public int numOfLikes, numOfComments;
-    public Object timeStamp;
+
 
     public ActivityItemModel() {
     }

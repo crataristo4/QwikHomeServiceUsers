@@ -18,19 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.adapters.MultiViewTypeAdapter;
 import com.users.qwikhomeservices.databinding.FragmentActivitiesBinding;
 import com.users.qwikhomeservices.models.ActivityItemModel;
-import com.users.qwikhomeservices.utils.DisplayViewUI;
 import com.users.qwikhomeservices.utils.MyConstants;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -51,6 +49,7 @@ public class ActivitiesFragment extends Fragment {
     private DocumentReference documentReferenceId;
     private ListenerRegistration registration;
     private String documentId;
+    private ActivityItemModel activityItemModel;
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -72,13 +71,8 @@ public class ActivitiesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().runOnUiThread(this::loadActivityData);
 
-        adapter.setOnItemClickListener((view1, activityItemModel) -> {
-
-            DisplayViewUI.displayToast(view1.getContext(), "Doc Ref oops " + activityItemModel.userName);
-            // TODO: 15-May-20 implement like
-        });
+        loadActivityData();
 
     }
 
@@ -92,13 +86,13 @@ public class ActivitiesFragment extends Fragment {
 
         collectionReference = FirebaseFirestore.getInstance().collection("Activity");
 
-        fetchDataFromFireStore();
+        requireActivity().runOnUiThread(this::fetchDataFromFireStore); //fetchDataFromFireStore();
+
 
     }
 
 
     private void fetchDataFromFireStore() {
-        // Create a query against the collection.
         Query query = collectionReference.orderBy("timeStamp", Query.Direction.DESCENDING).limit(INITIAL_LOAD);
         final ActivityItemModel[] itemModel = new ActivityItemModel[1];
 
@@ -107,23 +101,17 @@ public class ActivitiesFragment extends Fragment {
                 Log.w(TAG, "Listen failed.", e);
                 return;
             }
-            // arrayList.clear();
+            //  arrayList.clear();
 
             assert queryDocumentSnapshots != null;
-            List<DocumentSnapshot> documentSnapshots =
-                    queryDocumentSnapshots.getDocuments();
-
-            for (DocumentSnapshot ds : documentSnapshots) {
+            for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
 
                 itemModel[0] = ds.toObject(ActivityItemModel.class);
-                assert itemModel[0] != null;
-                itemModel[0].setId(ds.getId());
                 documentId = itemModel[0].getId();
-                Log.i(TAG, "ids : " + documentId);
 
 //group data by status
                 if (Objects.requireNonNull(ds.getData()).containsKey("status")) {
-                    Log.i(TAG, "status: " + ds.getData().get("status"));
+                    Log.i(TAG, "ids : " + documentId + "status: " + ds.getData().get("status"));
 
                     arrayList.add(new ActivityItemModel(ActivityItemModel.TEXT_TYPE,
                             itemModel[0].getStatus(),
@@ -134,7 +122,7 @@ public class ActivitiesFragment extends Fragment {
                 }
                 //group data by item description
                 else if (ds.getData().containsKey("itemDescription")) {
-                    Log.i(TAG, "itemDescription: " + ds.getData().get("itemDescription"));
+                    // Log.i(TAG, "itemDescription: " + ds.getData().get("itemDescription"));
 
                     arrayList.add(new ActivityItemModel(ActivityItemModel.IMAGE_TYPE,
                             itemModel[0].getItemImage(),
