@@ -44,9 +44,11 @@ public class ActivitiesFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private Parcelable mState;
     private Bundle mBundleState;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = db.collection("Activity");
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static CollectionReference collectionReference = db.collection("Activity");
     private ListenerRegistration registration;
+    int numOfLikes = 0;
+    private boolean isLiked = false;
 
 
     public ActivitiesFragment() {
@@ -85,9 +87,8 @@ public class ActivitiesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, activityItemModel) -> {
-            Log.i(TAG, "id: " + activityItemModel.getId());
-            Log.i(TAG, "id: " + activityItemModel.getNumOfLikes());
-            Log.i(TAG, "id: " + activityItemModel.getNumOfComments());
+
+
         });
 
 

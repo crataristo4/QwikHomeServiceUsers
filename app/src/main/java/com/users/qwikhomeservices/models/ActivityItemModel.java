@@ -3,6 +3,8 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import java.util.Map;
+
 
 public class ActivityItemModel extends BaseObservable {
     public static final int TEXT_TYPE = 0;
@@ -14,6 +16,7 @@ public class ActivityItemModel extends BaseObservable {
     public Object timeStamp;
     public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
     public String id;
+    Map<String, Boolean> isLiked;
 
 
     public ActivityItemModel() {
@@ -145,5 +148,13 @@ public class ActivityItemModel extends BaseObservable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Map<String, Boolean> getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(Map<String, Boolean> isLiked) {
+        this.isLiked = isLiked;
     }
 }
