@@ -1,6 +1,7 @@
 package com.users.qwikhomeservices.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.users.qwikhomeservices.R;
 import com.users.qwikhomeservices.activities.home.MainActivity;
+import com.users.qwikhomeservices.activities.home.serviceTypes.CommentsActivity;
 import com.users.qwikhomeservices.databinding.ImageTypeBinding;
 import com.users.qwikhomeservices.databinding.TextTypeBinding;
 import com.users.qwikhomeservices.models.ActivityItemModel;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 
 public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "MultiViewTypeAdapter";
-    public static onItemClickListener onItemClickListener;
+    private static onItemClickListener onItemClickListener;
     private ArrayList<ActivityItemModel> dataSet;
     private Context mContext;
     private String uid = MainActivity.uid;
@@ -73,6 +75,22 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                     ((TextTypeViewHolder) holder).isLiked(object.getId(), ((TextTypeViewHolder) holder).imgBtnLike);
                     ((TextTypeViewHolder) holder).numOfLikes(((TextTypeViewHolder) holder).txtLikes, object.getId());
 
+                    ((TextTypeViewHolder) holder).imgBtnLike.setOnClickListener(v -> {
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child("Likes")
+                                .child(object.getId())
+                                .child(uid);
+
+                        if (((TextTypeViewHolder) holder).imgBtnLike.getTag().equals("like")) {
+
+                            dbRef.setValue(true);
+
+                        } else {
+
+                            dbRef.removeValue();
+                        }
+                    });
 
                     break;
                 case ActivityItemModel.IMAGE_TYPE:
@@ -91,6 +109,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                     Glide.with(((ImageTypeViewHolder) holder).imageTypeBinding.getRoot().getContext())
                             .load(object.getItemImage())
                             .thumbnail(0.5f)
+                            .centerCrop()
                             .apply(requestOptions)
                             .listener(new RequestListener<Drawable>() {
                                 @Override
@@ -110,12 +129,30 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
                                     ((ImageTypeViewHolder) holder).imageTypeBinding.progressBar.setVisibility(View.INVISIBLE);
                                     return false;
                                 }
-                            }).transition(DrawableTransitionOptions.withCrossFade()).centerCrop()
+                            }).transition(DrawableTransitionOptions.withCrossFade())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into((((ImageTypeViewHolder) holder).imageTypeBinding.imgContentPhoto));
 
                     ((ImageTypeViewHolder) holder).isLiked(object.getId(), ((ImageTypeViewHolder) holder).imgBtnLike);
+
                     ((ImageTypeViewHolder) holder).numOfLikes(((ImageTypeViewHolder) holder).txtLikes, object.getId());
+
+                    ((ImageTypeViewHolder) holder).numOfComments(((ImageTypeViewHolder) holder).txtComments, object.getId());
+
+                    ((ImageTypeViewHolder) holder).txtComments.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent commentsIntent = new Intent(view.getContext(), CommentsActivity.class);
+                            commentsIntent.putExtra("postId", object.getId());
+                            commentsIntent.putExtra("itemImage", object.getItemImage());
+                            commentsIntent.putExtra("itemDescription", object.getItemDescription());
+
+                            view.getContext().startActivity(commentsIntent);
+
+
+                        }
+                    });
 
                     ((ImageTypeViewHolder) holder).imageView.setOnClickListener(new DoubleClickListener() {
                         @Override
@@ -272,7 +309,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
     static class ImageTypeViewHolder extends RecyclerView.ViewHolder {
         ImageTypeBinding imageTypeBinding;
         ImageView imageView, imgBtnLike;
-        TextView txtLikes;
+        TextView txtLikes, txtComments;
 
         ImageTypeViewHolder(@NonNull ImageTypeBinding imageTypeBinding) {
             super(imageTypeBinding.getRoot());
@@ -280,6 +317,7 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
             imageView = imageTypeBinding.imgContentPhoto;
             txtLikes = imageTypeBinding.txtLikes;
             imgBtnLike = imageTypeBinding.imgBtnLike;
+            txtComments = imageTypeBinding.txtComments;
 
         }
 
@@ -331,6 +369,26 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
         }
+
+        private void numOfComments(TextView txtComments, String postId) {
+            DatabaseReference likesDbRef = FirebaseDatabase.getInstance()
+                    .getReference().child("Comments").child(postId);
+
+            likesDbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    txtComments.setText(MessageFormat.format("{0} Comments", dataSnapshot.getChildrenCount()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
 
     }
 

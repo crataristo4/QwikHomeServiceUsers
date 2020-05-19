@@ -27,7 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestAcceptOrRejectActivity" />
+        <activity
+            android:name="com.users.qwikhomeservices.activities.home.serviceTypes.CommentsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.users.qwikhomeservices.activities.home.serviceTypes.TestPaginatioinActivity">
 
         </activity>

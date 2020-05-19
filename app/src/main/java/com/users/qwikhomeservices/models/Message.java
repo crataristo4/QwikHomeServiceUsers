@@ -22,10 +22,10 @@ public class Message extends BaseObservable {
     public static final int ITEM_TYPE_SENT = 0;
     public static final int ITEM_TYPE_RECEIVED = 1;
     private String senderId, receiverId;
-    private String senderName, receiverName;
+    public String senderName, receiverName;
     private String senderPhoto, receiverPhoto;
-    private String messageDateTime;
-    private String message;
+    public String messageDateTime;
+    public String message;
 
     public Message() {
     }

@@ -90,6 +90,7 @@
                 android:drawableStart="@drawable/ic_messagewhite"
                 android:drawableLeft="@drawable/ic_messagewhite"
                 android:text="@string/comments"
+                android:visibility="gone"
                 card_view:layout_constraintStart_toEndOf="@+id/imgBtnLike"
                 card_view:layout_constraintTop_toTopOf="@+id/txtLikes" />
 
