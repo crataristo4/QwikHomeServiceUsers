@@ -3,8 +3,6 @@ package com.users.qwikhomeservices.models;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import java.util.Map;
-
 
 public class ActivityItemModel extends BaseObservable {
     public static final int TEXT_TYPE = 0;
@@ -16,7 +14,6 @@ public class ActivityItemModel extends BaseObservable {
     public Object timeStamp;
     public String itemImage, itemDescription, userName, userPhoto, status, accountType, price;
     public String id;
-    Map<String, Boolean> isLiked;
 
 
     public ActivityItemModel() {
@@ -25,7 +22,7 @@ public class ActivityItemModel extends BaseObservable {
     //constructor to load image type
     public ActivityItemModel(int type, String itemImage, String itemDescription,
                              String userName, String userPhoto, Object timeStamp,
-                             String id, int numOfLikes, int numOfComments) {
+                             String id) {
         this.type = type;
         this.itemImage = itemImage;
         this.itemDescription = itemDescription;
@@ -33,23 +30,21 @@ public class ActivityItemModel extends BaseObservable {
         this.userPhoto = userPhoto;
         this.timeStamp = timeStamp;
         this.id = id;
-        this.numOfLikes = numOfLikes;
-        this.numOfComments = numOfComments;
+
 
     }
 
     //constructor to load text type
     public ActivityItemModel(int type, String status, String userName,
                              String userPhoto, Object timeStamp,
-                             String id, int numOfLikes, int numOfComments) {
+                             String id) {
         this.type = type;
         this.status = status;
         this.userName = userName;
         this.userPhoto = userPhoto;
         this.timeStamp = timeStamp;
         this.id = id;
-        this.numOfLikes = numOfLikes;
-        this.numOfComments = numOfComments;
+
     }
 
 
@@ -150,11 +145,4 @@ public class ActivityItemModel extends BaseObservable {
         this.id = id;
     }
 
-    public Map<String, Boolean> getIsLiked() {
-        return isLiked;
-    }
-
-    public void setIsLiked(Map<String, Boolean> isLiked) {
-        this.isLiked = isLiked;
-    }
 }

@@ -116,8 +116,6 @@ public class ActivitiesFragment extends Fragment {
                 String status = itemModel.getStatus();
                 String itemImage = itemModel.getItemImage();
                 long timeStamp = itemModel.getTimeStamp();
-                int numOfLikes = itemModel.getNumOfLikes();
-                int numOfComments = itemModel.getNumOfComments();
                 String id = ds.getId();
 
 
@@ -128,9 +126,7 @@ public class ActivitiesFragment extends Fragment {
                             userName,
                             userPhoto,
                             timeStamp,
-                            id,
-                            numOfLikes,
-                            numOfComments));
+                            id));
 
                 }
                 //group data by item description
@@ -141,9 +137,7 @@ public class ActivitiesFragment extends Fragment {
                             userName,
                             userPhoto,
                             timeStamp,
-                            id,
-                            numOfLikes,
-                            numOfComments
+                            id
                     ));
 
 

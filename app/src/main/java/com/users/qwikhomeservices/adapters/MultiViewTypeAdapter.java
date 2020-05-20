@@ -139,19 +139,16 @@ public class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     ((ImageTypeViewHolder) holder).numOfComments(((ImageTypeViewHolder) holder).txtComments, object.getId());
 
-                    ((ImageTypeViewHolder) holder).txtComments.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                    ((ImageTypeViewHolder) holder).txtComments.setOnClickListener(view -> {
 
-                            Intent commentsIntent = new Intent(view.getContext(), CommentsActivity.class);
-                            commentsIntent.putExtra("postId", object.getId());
-                            commentsIntent.putExtra("itemImage", object.getItemImage());
-                            commentsIntent.putExtra("itemDescription", object.getItemDescription());
+                        Intent commentsIntent = new Intent(view.getContext(), CommentsActivity.class);
+                        commentsIntent.putExtra("postId", object.getId());
+                        commentsIntent.putExtra("itemImage", object.getItemImage());
+                        commentsIntent.putExtra("itemDescription", object.getItemDescription());
 
-                            view.getContext().startActivity(commentsIntent);
+                        view.getContext().startActivity(commentsIntent);
 
 
-                        }
                     });
 
                     ((ImageTypeViewHolder) holder).imageView.setOnClickListener(new DoubleClickListener() {

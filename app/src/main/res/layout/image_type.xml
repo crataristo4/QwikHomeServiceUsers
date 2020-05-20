@@ -96,7 +96,6 @@
                         android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/app_name"
-                        android:scaleType="centerCrop"
                         card_view:layout_constraintBottom_toBottomOf="parent"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
