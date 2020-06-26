@@ -154,8 +154,7 @@ public class TestPaginatioinActivity extends AppCompatActivity {
                 String status = itemModel.getStatus();
                 String itemImage = itemModel.getItemImage();
                 long timeStamp = itemModel.getTimeStamp();
-                int numOfLikes = itemModel.getNumOfLikes();
-                int numOfComments = itemModel.getNumOfComments();
+
                 String id = ds.getId();
 
                 //group data by status
@@ -166,9 +165,7 @@ public class TestPaginatioinActivity extends AppCompatActivity {
                             userName,
                             userPhoto,
                             timeStamp,
-                            id,
-                            numOfLikes,
-                            numOfComments));
+                            id));
 
                 }
                 //group data by item description
@@ -179,9 +176,7 @@ public class TestPaginatioinActivity extends AppCompatActivity {
                             userName,
                             userPhoto,
                             timeStamp,
-                            id,
-                            numOfLikes,
-                            numOfComments
+                            id
                     ));
 
 

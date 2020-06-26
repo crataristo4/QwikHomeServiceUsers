@@ -89,9 +89,9 @@
     </string-array>
 
     <string-array name="userTypes">
-        <item>Barbers</item>
-        <item>Women Hairstylists</item>
-        <item>Interior Decorators</item>
+        <item>Carpenters</item>
+        <item>Painters</item>
+        <item>Plumbers</item>
 
     </string-array>
     <string name="adUnit" templateMergeStrategy="preserve" translatable="false">ca-app-pub-7358181102198543~9661993486</string>

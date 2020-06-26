@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         ListView listView = fragmentHomeBinding.servicesListView;
         //string list from xml
-        List<String> serviceList = Arrays.asList(getResources().getStringArray(R.array.services));
+        List<String> serviceList = Arrays.asList(getResources().getStringArray(R.array.userTypes));
 
         adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, serviceList);
         listView.setAdapter(adapter);
